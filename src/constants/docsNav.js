@@ -74,6 +74,7 @@ export const NAV = [
       { label: 'JavaScript', url: `${ffiBase}/coinswap-js/README.md`,     repoUrl: LINKS.ffi_js_repo },
       { label: 'Python',     url: `${ffiBase}/coinswap-python/README.md`, repoUrl: LINKS.ffi_python_repo },
       { label: 'Kotlin',     url: `${ffiBase}/coinswap-kotlin/README.md`, repoUrl: LINKS.ffi_kotlin_repo },
+      { label: 'React Native', url: `${ffiBase}/coinswap-react-native/README.md`, repoUrl: LINKS.ffi_react_native_repo },
       { label: 'Swift',      url: `${ffiBase}/coinswap-swift/README.md`,  repoUrl: LINKS.ffi_swift_repo },
       { label: 'Ruby',       url: `${ffiBase}/coinswap-ruby/README.md`,   repoUrl: LINKS.ffi_ruby_repo },
     ],

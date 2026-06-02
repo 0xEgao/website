@@ -144,7 +144,7 @@ function GetStartedPanel() {
             { label: 'Run a Taker', desc: 'Start swapping with the CLI', section: 'manuals', item: 'Taker' },
             { label: 'Deploy a Maker', desc: 'Provide liquidity and earn fees', section: 'manuals', item: 'Makerd' },
             { label: 'Protocol Specs', desc: 'Understand the cryptographic protocol', section: 'protocol-specs' },
-            { label: 'FFI Bindings', desc: 'Build apps in JS, Python, Kotlin, Swift, or Ruby', section: 'ffis' },
+            { label: 'FFI Bindings', desc: 'Build apps in JS, React Native, Python, Kotlin, Swift, or Ruby', section: 'ffis' },
           ].map(card => (
             <div
               key={card.label}

@@ -131,6 +131,59 @@ val report = taker.doCoinswap(
 )
 println("Swap ID: \${report?.swapId}")`
 
+const CODE_FFI_REACT_NATIVE_BUILD = `cd coinswap-react-native
+npm install
+
+# Build Rust library and generate Android JSI/TurboModule glue
+npm run ubrn:android
+
+# Build Rust library and generate iOS JSI/TurboModule glue
+npm run ubrn:ios
+
+npm run typecheck
+npm test`
+
+const CODE_FFI_REACT_NATIVE = `import { AddressType, CoinswapTaker } from 'coinswap-react-native'
+
+await CoinswapTaker.setupLogging(null, 'info')
+
+const taker = await CoinswapTaker.init({
+  dataDir: null,
+  walletFileName: 'taker_wallet',
+  rpcConfig: {
+    url: 'localhost:38332',
+    username: 'user',
+    password: 'password',
+    walletName: 'taker_wallet',
+  },
+  controlPort: 9051,
+  torAuthPassword: 'coinswap',
+  zmqAddr: 'tcp://127.0.0.1:28332',
+  password: '',
+})
+
+await taker.syncOfferbookAndWait()
+await taker.syncAndSave()
+
+const balances = await taker.getBalances()
+const address = await taker.getNextExternalAddress(AddressType.P2WPKH)
+
+const swapId = await taker.prepareCoinswap({
+  protocol: 'Taproot',
+  sendAmount: 1_000_000n,
+  makerCount: 2,
+  txCount: 1,
+  requiredConfirms: 1,
+})
+
+const report = await taker.startCoinswap(swapId)
+
+console.log('spendable:', balances.spendable, 'sats')
+console.log('receive to:', address.address)
+console.log('swap id:', report.swapId)
+
+await taker.dispose()`
+
 const CODE_FFI_SWIFT_BUILD = `# Dev build (fast; targets host + iOS device + iOS simulator)
 bash ./build-xcframework-dev.sh`
 
@@ -297,6 +350,26 @@ const FFI_TABS = [
         <p className="type-meta text-cream/65 font-body uppercase tracking-widest">Generate bindings</p>
         <CodeBlock code={CODE_FFI_KOTLIN_BUILD} language="bash" />
         <CodeBlock code={CODE_FFI_KOTLIN} language="kotlin" />
+      </div>
+    ),
+  },
+  {
+    label: 'React Native',
+    content: (
+      <div className="space-y-4">
+        <p className="type-small text-cream/70 font-body">
+          JSI TurboModule bindings for React Native 0.76+ apps. Supports Android arm64-v8a,
+          armeabi-v7a, x86_64, plus iOS device and simulator targets through generated native glue.
+        </p>
+        <p className="type-meta text-cream/65 font-body uppercase tracking-widest">Build & test</p>
+        <CodeBlock code={CODE_FFI_REACT_NATIVE_BUILD} language="bash" />
+        <CodeBlock code={CODE_FFI_REACT_NATIVE} language="typescript" />
+        <p className="type-meta text-cream/65 font-body">
+          Full README:{' '}
+          <a href={LINKS.ffi_react_native_repo} target="_blank" rel="noopener noreferrer" className="simple-link">
+            coinswap-react-native ↗
+          </a>
+        </p>
       </div>
     ),
   },
@@ -661,7 +734,7 @@ export default function Takers() {
             wraps the core Rust taker logic in a UniFFI-generated foreign function interface, exposing{' '}
             <code className="inline-code">Taker.init()</code>, <code className="inline-code">getBalances()</code>,{' '}
             <code className="inline-code">fetchOffers()</code>, and <code className="inline-code">doSwap()</code>{' '}
-            across five languages. The Electron Taker App is itself built on top of the JS binding.
+            across desktop, mobile, and server-side bindings. The Electron Taker App is itself built on top of the JS binding.
           </p>
 
           {/* Requirements callout */}
