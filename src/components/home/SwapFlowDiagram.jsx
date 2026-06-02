@@ -311,7 +311,7 @@ export default function SwapFlowDiagram() {
               <feDropShadow dx="0" dy="10" stdDeviation="10" floodColor="#000000" floodOpacity="0.22" />
             </filter>
             <marker id="pentagon-arrowhead" markerWidth="18" markerHeight="14" refX="15" refY="7" orient="auto" markerUnits="userSpaceOnUse">
-              <path d="M 0 0 L 18 7 L 0 14 z" fill="#111111" />
+              <path d="M 0 0 L 18 7 L 0 14 z" fill="var(--cream)" opacity="0.86" />
             </marker>
             <marker id="route-arrowhead" markerWidth="13" markerHeight="13" refX="10" refY="6.5" orient="auto" markerUnits="userSpaceOnUse">
               <path d="M 0 0 L 13 6.5 L 0 13 z" fill="#fbbf24" />
@@ -342,8 +342,8 @@ export default function SwapFlowDiagram() {
                   y1={from.y}
                   x2={to.x}
                   y2={to.y}
-                  stroke="#111111"
-                  strokeOpacity="0.88"
+                  stroke="var(--cream)"
+                  strokeOpacity="0.42"
                   strokeWidth="4"
                   strokeLinecap="round"
                   markerEnd="url(#pentagon-arrowhead)"
@@ -359,7 +359,8 @@ export default function SwapFlowDiagram() {
                             : `M ${callout.anchorX} ${callout.anchorY} L ${callout.x + callout.width} ${callout.y}`
                       }
                       fill="none"
-                      stroke="rgba(17,17,17,0.72)"
+                      stroke="var(--cream)"
+                      strokeOpacity="0.38"
                       strokeWidth="1.2"
                       strokeDasharray={callout.id === 'maker1-to-maker2' ? undefined : '4 4'}
                     />
@@ -556,8 +557,9 @@ export default function SwapFlowDiagram() {
             x={CENTER_X}
             y={CENTER_Y + 4}
             textAnchor="middle"
-            fill="#010101"
-            stroke="rgba(237,243,255,0.82)"
+            fill="var(--navy)"
+            stroke="var(--cream)"
+            opacity="0.9"
             strokeWidth="1.4"
             paintOrder="stroke"
             fontSize="14.2"
