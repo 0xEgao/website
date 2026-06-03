@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ExternalLink } from 'lucide-react'
 import { marked } from 'marked'
 import CodeBlock from '../ui/CodeBlock.jsx'
 import { useDocContent } from '../../hooks/useDocContent.js'
@@ -64,7 +65,7 @@ function GitHubLink({ url }) {
       className="inline-flex items-center gap-1.5 font-mono text-sm text-black/65 underline decoration-black/20 underline-offset-[0.18em] transition-colors hover:text-black hover:decoration-black/50"
     >
       View on GitHub
-      <span aria-hidden="true">&rarr;</span>
+      <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
     </a>
   )
 }
