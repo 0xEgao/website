@@ -166,7 +166,7 @@ export default function HowItWorks() {
                 route, and relays protocol messages between adjacent parties. That keeps maker
                 software simple and limits what any single maker can learn about the full swap.
               </p>
-              <div className="type-ui border border-dotted border-black/20 bg-[#fbf8f2] px-4 py-5 font-mono text-black/80">
+              <div className="route-snippet-panel type-ui border border-dotted border-black/20 px-4 py-5 font-mono text-black/80">
                 <p>Taker -&gt; Maker0 -&gt; Maker1 -&gt; ... -&gt; Taker</p>
                 <p className="mt-2 text-black/55">same hash across all hops, different keys and locktimes per hop</p>
               </div>

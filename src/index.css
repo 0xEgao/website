@@ -318,6 +318,10 @@ a {
   color: rgba(23, 23, 23, 0.65);
 }
 
+html[data-theme='dark'] .section-label {
+  color: rgb(237 243 255 / 0.62);
+}
+
 .inline-code {
   border: 1px solid rgba(23, 23, 23, 0.14);
   background: rgba(23, 23, 23, 0.04);
@@ -366,6 +370,39 @@ a {
 
 .simple-table tbody tr:last-child td {
   border-bottom: 0;
+}
+
+html[data-theme='dark'] .simple-table thead tr {
+  border-bottom-color: rgb(237 243 255 / 0.28);
+}
+
+html[data-theme='dark'] .simple-table th {
+  color: rgb(237 243 255 / 0.68);
+}
+
+html[data-theme='dark'] .simple-table td {
+  border-bottom-color: rgb(237 243 255 / 0.16);
+  color: rgb(237 243 255 / 0.76);
+}
+
+html[data-theme='dark'] .simple-table td code {
+  color: #edf3ff;
+}
+
+.route-snippet-panel {
+  background: #fbf8f2;
+}
+
+html[data-theme='dark'] .route-snippet-panel {
+  background: rgb(255 255 255 / 0.07);
+}
+
+html[data-theme='dark'] .route-snippet-panel p {
+  color: rgb(237 243 255 / 0.82);
+}
+
+html[data-theme='dark'] .route-snippet-panel p + p {
+  color: rgb(237 243 255 / 0.62);
 }
 
 /* ── Docs prose ────────────────────────────────────────────── */
