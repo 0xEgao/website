@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ExternalLink } from 'lucide-react'
 import { marked } from 'marked'
 import CodeBlock from '../ui/CodeBlock.jsx'
 import { useDocContent } from '../../hooks/useDocContent.js'
@@ -64,7 +65,7 @@ function GitHubLink({ url }) {
       className="inline-flex items-center gap-1.5 font-mono text-sm text-black/65 underline decoration-black/20 underline-offset-[0.18em] transition-colors hover:text-black hover:decoration-black/50"
     >
       View on GitHub
-      <span aria-hidden="true">&rarr;</span>
+      <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
     </a>
   )
 }
@@ -144,7 +145,7 @@ function GetStartedPanel() {
             { label: 'Run a Taker', desc: 'Start swapping with the CLI', section: 'manuals', item: 'Taker' },
             { label: 'Deploy a Maker', desc: 'Provide liquidity and earn fees', section: 'manuals', item: 'Makerd' },
             { label: 'Protocol Specs', desc: 'Understand the cryptographic protocol', section: 'protocol-specs' },
-            { label: 'FFI Bindings', desc: 'Build apps in JS, Python, Kotlin, Swift, or Ruby', section: 'ffis' },
+            { label: 'FFI Bindings', desc: 'Build apps in JS, React Native, Python, Kotlin, Swift, or Ruby', section: 'ffis' },
           ].map(card => (
             <div
               key={card.label}

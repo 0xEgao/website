@@ -1,3 +1,4 @@
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { LINKS } from '../constants/links'
 import CodeBlock from '../components/ui/CodeBlock'
 import TabGroup from '../components/ui/TabGroup'
@@ -131,6 +132,59 @@ val report = taker.doCoinswap(
 )
 println("Swap ID: \${report?.swapId}")`
 
+const CODE_FFI_REACT_NATIVE_BUILD = `cd coinswap-react-native
+npm install
+
+# Build Rust library and generate Android JSI/TurboModule glue
+npm run ubrn:android
+
+# Build Rust library and generate iOS JSI/TurboModule glue
+npm run ubrn:ios
+
+npm run typecheck
+npm test`
+
+const CODE_FFI_REACT_NATIVE = `import { AddressType, CoinswapTaker } from 'coinswap-react-native'
+
+await CoinswapTaker.setupLogging(null, 'info')
+
+const taker = await CoinswapTaker.init({
+  dataDir: null,
+  walletFileName: 'taker_wallet',
+  rpcConfig: {
+    url: 'localhost:38332',
+    username: 'user',
+    password: 'password',
+    walletName: 'taker_wallet',
+  },
+  controlPort: 9051,
+  torAuthPassword: 'coinswap',
+  zmqAddr: 'tcp://127.0.0.1:28332',
+  password: '',
+})
+
+await taker.syncOfferbookAndWait()
+await taker.syncAndSave()
+
+const balances = await taker.getBalances()
+const address = await taker.getNextExternalAddress(AddressType.P2WPKH)
+
+const swapId = await taker.prepareCoinswap({
+  protocol: 'Taproot',
+  sendAmount: 1_000_000n,
+  makerCount: 2,
+  txCount: 1,
+  requiredConfirms: 1,
+})
+
+const report = await taker.startCoinswap(swapId)
+
+console.log('spendable:', balances.spendable, 'sats')
+console.log('receive to:', address.address)
+console.log('swap id:', report.swapId)
+
+await taker.dispose()`
+
 const CODE_FFI_SWIFT_BUILD = `# Dev build (fast; targets host + iOS device + iOS simulator)
 bash ./build-xcframework-dev.sh`
 
@@ -262,8 +316,9 @@ const INSTALL_TABS = [
         </div>
         <p className="type-meta text-cream/65 font-body">
           Repo:{' '}
-          <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link">
-            citadel-tech/taker-app ↗
+          <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+            citadel-tech/taker-app
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
       </div>
@@ -297,6 +352,27 @@ const FFI_TABS = [
         <p className="type-meta text-cream/65 font-body uppercase tracking-widest">Generate bindings</p>
         <CodeBlock code={CODE_FFI_KOTLIN_BUILD} language="bash" />
         <CodeBlock code={CODE_FFI_KOTLIN} language="kotlin" />
+      </div>
+    ),
+  },
+  {
+    label: 'React Native',
+    content: (
+      <div className="space-y-4">
+        <p className="type-small text-cream/70 font-body">
+          JSI TurboModule bindings for React Native 0.76+ apps. Supports Android arm64-v8a,
+          armeabi-v7a, x86_64, plus iOS device and simulator targets through generated native glue.
+        </p>
+        <p className="type-meta text-cream/65 font-body uppercase tracking-widest">Build & test</p>
+        <CodeBlock code={CODE_FFI_REACT_NATIVE_BUILD} language="bash" />
+        <CodeBlock code={CODE_FFI_REACT_NATIVE} language="typescript" />
+        <p className="type-meta text-cream/65 font-body">
+          Full README:{' '}
+          <a href={LINKS.ffi_react_native_repo} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+            coinswap-react-native
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
+          </a>
+        </p>
       </div>
     ),
   },
@@ -453,7 +529,11 @@ export default function Takers() {
                 Electron desktop application. No terminal required for day-to-day use.
                 Built on <code className="inline-code">coinswap-ffi</code> — the same library powering all language bindings.
               </p>
-              <p className="type-meta text-cream/65 font-mono">npm install → npm run dev</p>
+              <p className="type-meta inline-flex items-center gap-1.5 text-cream/65 font-mono">
+                npm install
+                <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
+                npm run dev
+              </p>
             </div>
             <div className="border border-dotted border-black/20 bg-black/[0.02] p-5 flex flex-col">
               <p className="type-caption font-mono uppercase tracking-[0.18em] text-orange/70 mb-2">[ CLI ]</p>
@@ -462,7 +542,11 @@ export default function Takers() {
                 Terminal-first, full control. Build from source with cargo, install system-wide,
                 and run swaps from the command line with full access to all subcommands.
               </p>
-              <p className="type-meta text-cream/65 font-mono">cargo build --release → taker --help</p>
+              <p className="type-meta inline-flex items-center gap-1.5 text-cream/65 font-mono">
+                cargo build --release
+                <ArrowRight size={13} strokeWidth={2} aria-hidden="true" />
+                taker --help
+              </p>
             </div>
           </div>
         </section>
@@ -508,8 +592,9 @@ export default function Takers() {
           <p className="type-small text-cream/60 font-body mb-5">
             An Electron GUI built on <code className="inline-code">coinswap-ffi</code>. Manages wallet balance,
             offer discovery, and swap execution without touching the terminal.{' '}
-            <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link">
-              citadel-tech/taker-app ↗
+            <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+              citadel-tech/taker-app
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
           <div className="grid gap-4 md:grid-cols-2">
@@ -552,8 +637,9 @@ export default function Takers() {
           </div>
           <p className="type-meta text-cream/65 font-body mt-2">
             Full docs:{' '}
-            <a href={LINKS.taker_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-              docs/taker.md ↗
+            <a href={LINKS.taker_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+              docs/taker.md
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
         </section>
@@ -641,11 +727,13 @@ export default function Takers() {
               <div className="flex flex-wrap gap-3">
                 <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer"
                   className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Explorer ↗
+                  Explorer
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
                 <a href={LINKS.mutinynet_faucet} target="_blank" rel="noopener noreferrer"
                   className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Faucet ↗
+                  Faucet
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -661,7 +749,7 @@ export default function Takers() {
             wraps the core Rust taker logic in a UniFFI-generated foreign function interface, exposing{' '}
             <code className="inline-code">Taker.init()</code>, <code className="inline-code">getBalances()</code>,{' '}
             <code className="inline-code">fetchOffers()</code>, and <code className="inline-code">doSwap()</code>{' '}
-            across five languages. The Electron Taker App is itself built on top of the JS binding.
+            across desktop, mobile, and server-side bindings. The Electron Taker App is itself built on top of the JS binding.
           </p>
 
           {/* Requirements callout */}
@@ -685,8 +773,9 @@ export default function Takers() {
 
           <p className="type-meta text-cream/65 font-body mt-4">
             Full repo:{' '}
-            <a href={LINKS.coinswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link">
-              citadel-tech/coinswap-ffi ↗
+            <a href={LINKS.coinswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+              citadel-tech/coinswap-ffi
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
         </section>
@@ -701,8 +790,9 @@ export default function Takers() {
             { href: LINKS.issues,        label: 'Open an issue' },
           ].map(({ href, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-              className="type-ui text-blue-l hover:underline font-body">
-              {label} ↗
+              className="type-ui inline-flex items-center gap-1.5 text-blue-l hover:underline font-body">
+              {label}
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           ))}
         </section>

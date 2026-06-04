@@ -1,3 +1,4 @@
+import { ArrowRight, ExternalLink } from 'lucide-react'
 import { LINKS } from '../constants/links'
 import CodeBlock from '../components/ui/CodeBlock'
 import TabGroup from '../components/ui/TabGroup'
@@ -175,8 +176,9 @@ const DEPLOY_TABS = [
         </div>
         <p className="type-meta text-cream/65 font-body">
           Docs:{' '}
-          <a href={LINKS.maker_docker_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-            docs/docker.md ↗
+          <a href={LINKS.maker_docker_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+            docs/docker.md
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
       </div>
@@ -205,8 +207,9 @@ const DEPLOY_TABS = [
         </div>
         <p className="type-meta text-cream/65 font-body">
           Docs:{' '}
-          <a href={LINKS.makerd_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-            docs/makerd.md ↗
+          <a href={LINKS.makerd_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+            docs/makerd.md
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
       </div>
@@ -224,8 +227,9 @@ const DEPLOY_TABS = [
         <CodeBlock code={CODE_DASHBOARD} language="bash" />
         <p className="type-meta text-cream/65 font-body">
           Repo:{' '}
-          <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link">
-            citadel-tech/maker-dashboard ↗
+          <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+            citadel-tech/maker-dashboard
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
       </div>
@@ -339,7 +343,13 @@ export default function Makers() {
         {/* ── No Active Maintenance ── */}
         <section className="section-rule">
           <div className="border border-dotted border-black/20 bg-black/[0.02] p-5">
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.18em] text-green/70 mb-2">Install → Fund → Forget</p>
+            <p className="inline-flex items-center gap-1.5 font-mono text-[0.72rem] uppercase tracking-[0.18em] text-green/70 mb-2">
+              Install
+              <ArrowRight size={12} strokeWidth={2} aria-hidden="true" />
+              Fund
+              <ArrowRight size={12} strokeWidth={2} aria-hidden="true" />
+              Forget
+            </p>
             <p className="type-body font-body text-cream/75">
               <code className="inline-code">makerd</code> handles everything automatically: wallet
               creation, fidelity bond creation and renewal, directory registration, and swap routing.
@@ -371,7 +381,7 @@ export default function Makers() {
                   <>Expired bonds are redeemed and a new bond is created automatically</>,
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
-                    <span className="mt-0.5 shrink-0 text-cream font-mono">→</span>
+                    <ArrowRight size={14} strokeWidth={2} className="mt-1 shrink-0 text-cream" aria-hidden="true" />
                     <p className="type-small font-body text-cream/70">{item}</p>
                   </div>
                 ))}
@@ -449,8 +459,9 @@ export default function Makers() {
               <>
                 <strong className="text-cream">Tor</strong> running locally — all maker communication
                 happens over <code className="inline-code">.onion</code> hidden services via SOCKS5.{' '}
-                <a href={LINKS.tor_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-                  Setup guide ↗
+                <a href={LINKS.tor_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+                  Setup guide
+                  <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
                 </a>
               </>,
               <>
@@ -480,8 +491,9 @@ export default function Makers() {
           <p className="type-small text-cream/60 font-body mb-5">
             A browser-based dashboard for tracking balances, swap history, fidelity bond state,
             and node status while <code className="inline-code">makerd</code> is running.{' '}
-            <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link">
-              citadel-tech/maker-dashboard ↗
+            <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+              citadel-tech/maker-dashboard
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
           <div className="grid gap-4 md:grid-cols-2">
@@ -525,8 +537,9 @@ export default function Makers() {
             <CodeBlock code={CODE_MAKERD_HELP} language="text" />
             <p className="type-meta text-cream/65 font-body mt-2">
               Full docs:{' '}
-              <a href={LINKS.makerd_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-                docs/makerd.md ↗
+              <a href={LINKS.makerd_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+                docs/makerd.md
+                <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
               </a>
             </p>
           </div>
@@ -558,8 +571,9 @@ export default function Makers() {
               RPC port default: <code className="inline-code">127.0.0.1:6103</code>. Override with{' '}
               <code className="inline-code">-p &lt;port&gt;</code>.{' '}
               Full docs:{' '}
-              <a href={LINKS.maker_cli_docs} target="_blank" rel="noopener noreferrer" className="simple-link">
-                docs/maker-cli.md ↗
+              <a href={LINKS.maker_cli_docs} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+                docs/maker-cli.md
+                <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
               </a>
             </p>
           </div>
@@ -605,11 +619,13 @@ export default function Makers() {
               <div className="flex flex-wrap gap-3">
                 <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Explorer ↗
+                  Explorer
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
                 <a href={LINKS.mutinynet_faucet} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Faucet ↗
+                  Faucet
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
               </div>
             </div>
@@ -627,8 +643,9 @@ export default function Makers() {
             { href: LINKS.issues,            label: 'Open an issue' },
           ].map(({ href, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"
-              className="text-blue-l hover:underline text-sm font-body">
-              {label} ↗
+              className="inline-flex items-center gap-1.5 text-blue-l hover:underline text-sm font-body">
+              {label}
+              <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           ))}
         </section>

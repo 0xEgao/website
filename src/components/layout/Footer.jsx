@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ExternalLink } from 'lucide-react'
 import { LINKS } from '../../constants/links'
 import CoinSwapLogo from '../brand/CoinSwapLogo'
 
@@ -65,9 +66,10 @@ export default function Footer() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="type-small font-mono text-black/65 transition-colors hover:text-black"
+                      className="type-small inline-flex items-center gap-1.5 font-mono text-black/65 transition-colors hover:text-black"
                     >
-                      &gt; {label} ↗
+                      &gt; {label}
+                      <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
                     </a>
                   </li>
                 )

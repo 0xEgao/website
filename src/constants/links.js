@@ -53,6 +53,7 @@ export const LINKS = {
   ffi_js_repo:     'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-js',
   ffi_python_repo: 'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-python',
   ffi_kotlin_repo: 'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-kotlin',
+  ffi_react_native_repo: 'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-react-native',
   ffi_swift_repo:  'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-swift',
   ffi_ruby_repo:   'https://github.com/citadel-tech/coinswap-ffi/tree/main/coinswap-ruby',
   maker_dashboard_mynode_repo: 'https://github.com/citadel-tech/maker-dashboard/tree/main/packaging/mynode',

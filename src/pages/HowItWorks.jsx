@@ -1,3 +1,4 @@
+import { ExternalLink } from 'lucide-react'
 import { LINKS } from '../constants/links'
 import CodeBlock from '../components/ui/CodeBlock'
 
@@ -380,25 +381,28 @@ export default function HowItWorks() {
             href={LINKS.protocol_v2}
             target="_blank"
             rel="noopener noreferrer"
-            className="simple-link type-ui font-body"
+            className="simple-link type-ui inline-flex items-center gap-1.5 font-body"
           >
-            Protocol v2 spec ↗
+            Protocol v2 spec
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
           <a
             href={LINKS.protocol_spec}
             target="_blank"
             rel="noopener noreferrer"
-            className="simple-link type-ui font-body"
+            className="simple-link type-ui inline-flex items-center gap-1.5 font-body"
           >
-            Full specification repo ↗
+            Full specification repo
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
           <a
             href={LINKS.coinswap_repo}
             target="_blank"
             rel="noopener noreferrer"
-            className="simple-link type-ui font-body"
+            className="simple-link type-ui inline-flex items-center gap-1.5 font-body"
           >
-            Core implementation ↗
+            Core implementation
+            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </section>
       </div>

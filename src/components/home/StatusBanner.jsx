@@ -1,3 +1,5 @@
+import { ExternalLink } from 'lucide-react'
+
 export default function StatusBanner({ releaseTag, releaseUrl }) {
   return (
     <div className="border-b border-dotted border-black/15 bg-gradient-to-r from-black/[0.04] via-white/25 to-black/[0.04]">
@@ -10,7 +12,8 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-1.5 border border-[#f7931a]/20 bg-[#f7931a]/10 px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_10px_28px_rgba(247,147,26,0.12)] transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]"
             >
-              LATEST: {releaseTag} ↗
+              LATEST: {releaseTag}
+              <ExternalLink size={12} strokeWidth={1.9} aria-hidden="true" />
             </a>
           )}
 
