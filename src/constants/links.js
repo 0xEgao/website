@@ -35,8 +35,8 @@ export const LINKS = {
   mutinynet_faucet: "https://faucet.mutinynet.com/",
 
   // Market data
-  market_makers_api: "http://170.75.166.88:3005/api/makers",
-  market_explorer_tx_base: "http://170.75.166.88:8080/tx",
+  market_makers_api: "https://market.citadelfoss.xyz/api/makers",
+  market_explorer_tx_base: "https://mempool.citadelfoss.xyz/tx",
 
   // Taker App screenshots (hosted in taker-app repo)
   screenshot_wallet:  "https://github.com/citadel-tech/taker-app/raw/main/screenshot/wallet.png",
