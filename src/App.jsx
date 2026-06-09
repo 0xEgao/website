@@ -6,6 +6,7 @@ const Home = lazy(() => import('./pages/Home'))
 const HowItWorks = lazy(() => import('./pages/HowItWorks'))
 const Takers = lazy(() => import('./pages/Takers'))
 const Makers = lazy(() => import('./pages/Makers'))
+const Market = lazy(() => import('./pages/Market'))
 const Docs = lazy(() => import('./pages/Docs'))
 const NotFound = lazy(() => import('./pages/NotFound'))
 
@@ -19,6 +20,7 @@ export default function App() {
             <Route path="how-it-works" element={<HowItWorks />} />
             <Route path="takers" element={<Takers />} />
             <Route path="makers" element={<Makers />} />
+            <Route path="market" element={<Market />} />
             <Route path="docs" element={<Docs />} />
             <Route path="*" element={<NotFound />} />
           </Route>
