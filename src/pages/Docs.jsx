@@ -73,7 +73,7 @@ export default function Docs() {
         className={`
           app-docs-sidebar fixed left-0 z-20 w-65 shrink-0
           top-31 h-[calc(100vh-7.75rem)]
-          border-r border-dotted border-black/12
+          overflow-hidden border-r border-dotted border-black/12
           transition-transform duration-200
           md:sticky md:top-18 md:h-[calc(100vh-4.5rem)] md:translate-x-0
           ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
