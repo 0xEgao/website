@@ -59,7 +59,7 @@ npm run dev
 npm run dist
 # outputs: TakerApp-0.2.1.AppImage  taker-app_0.2.1_amd64.snap`
 
-const CODE_BITCOIN_CONF = `# ~/.bitcoin/bitcoin.conf — Mutinynet (custom signet)
+const CODE_BITCOIN_CONF = `# ~/.bitcoin/bitcoin.conf — Signet
 signet=1
 
 [signet]
@@ -71,7 +71,7 @@ rpcpassword=password
 fallbackfee=0.00001000
 blockfilterindex=1
 addnode=172.81.178.3:38333
-signetchallenge=0014c9e9f8875a25c3cc6d99ad3e5fd54254d00fed44`
+signetchallenge=0014a3ec9c731da66d9725d54947aede5c830623f33d`
 
 // ─── FFI code snippets ────────────────────────────────────────────────────────
 
@@ -558,7 +558,7 @@ export default function Takers() {
             {[
               <>
                 <strong className="text-cream">Bitcoin Core</strong> running on{' '}
-                <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer" className="simple-link">Mutinynet</a>
+                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer" className="simple-link">Signet</a>
                 {' '}(custom signet) for testing, or mainnet when stable
               </>,
               <>
@@ -575,7 +575,7 @@ export default function Takers() {
               </li>
             ))}
           </ul>
-          <p className="type-small text-cream/60 font-body mb-2">Mutinynet bitcoin.conf:</p>
+          <p className="type-small text-cream/60 font-body mb-2">Signet bitcoin.conf:</p>
           <CodeBlock code={CODE_BITCOIN_CONF} language="ini" />
         </section>
 
@@ -712,25 +712,25 @@ export default function Takers() {
           </div>
         </section>
 
-        {/* ── Test on Mutinynet ── */}
+        {/* ── Test on Signet ── */}
         <section className="section-rule">
           <div className="flex items-start gap-4">
             <span className="text-2xl">⚡</span>
             <div>
               <h2 className="type-card-title font-display font-semibold text-cream mb-2">
-                Test on Mutinynet (Signet)
+                Test on Signet
               </h2>
               <p className="type-small text-cream/70 font-body mb-4">
-                Mutinynet is a public custom signet with ~2-minute block times — the live marketplace for testing.
+                Signet is a public custom signet with ~2-minute block times — the live marketplace for testing.
                 Get test coins from the faucet, then run through a full swap before touching mainnet.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer"
+                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer"
                   className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
                   Explorer
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
-                <a href={LINKS.mutinynet_faucet} target="_blank" rel="noopener noreferrer"
+                <a href={LINKS.signet_faucet} target="_blank" rel="noopener noreferrer"
                   className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
                   Faucet
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />

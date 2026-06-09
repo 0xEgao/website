@@ -30,9 +30,9 @@ export const LINKS = {
   matrix:           "https://app.element.io/#/room/#coinswap:matrix.org",
   deep_wiki:        "https://deepwiki.com/citadel-tech/coinswap",
 
-  // Testnet
-  mutinynet:        "https://mutinynet.com/",
-  mutinynet_faucet: "https://faucet.mutinynet.com/",
+  // Testnet (Signet)
+  signet:        "https://mempool.citadelfoss.xyz/",
+  signet_faucet: "https://faucet.citadelfoss.xyz/",
 
   // Market data
   market_makers_api: "http://170.75.166.88:3005/api/makers",
@@ -46,6 +46,7 @@ export const LINKS = {
 
   // Docs raw content bases
   docs_manuals_base:          'https://raw.githubusercontent.com/citadel-tech/coinswap/master/docs',
+  docs_demo:                  'https://raw.githubusercontent.com/citadel-tech/coinswap/master/docs/demo.md',
   docs_examples_base:         'https://raw.githubusercontent.com/citadel-tech/coinswap/master/examples',
   docs_spec_base:             'https://raw.githubusercontent.com/citadel-tech/Coinswap-Protocol-Specification/main',
   docs_ffi_base:              'https://raw.githubusercontent.com/citadel-tech/coinswap-ffi/main',

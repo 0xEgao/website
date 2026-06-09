@@ -452,7 +452,7 @@ export default function Makers() {
             {[
               <>
                 <strong className="text-cream">Bitcoin Core</strong> running on{' '}
-                <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer" className="simple-link">Mutinynet</a>
+                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer" className="simple-link">Signet</a>
                 {' '}(custom signet) for testing — synced, non-pruned,{' '}
                 <code className="inline-code">-txindex</code> enabled
               </>,
@@ -604,25 +604,25 @@ export default function Makers() {
           </div>
         </section>
 
-        {/* ── Test on Mutinynet ── */}
+        {/* ── Test on Signet ── */}
         <section className="section-rule">
           <div className="flex items-start gap-4">
             <span className="text-2xl">⚡</span>
             <div>
               <h2 className="font-display text-xl font-semibold text-cream mb-2">
-                Test on Mutinynet (Signet)
+                Test on Signet
               </h2>
               <p className="text-cream/70 font-body text-sm leading-relaxed mb-4">
-                Start on Mutinynet — the live CoinSwap marketplace on custom signet with ~2-minute blocks.
+                Start on Signet — the live CoinSwap marketplace on custom signet with ~2-minute blocks.
                 Get test coins from the faucet to fund your fidelity bond and start routing swaps.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href={LINKS.mutinynet} target="_blank" rel="noopener noreferrer"
+                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
                   Explorer
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
-                <a href={LINKS.mutinynet_faucet} target="_blank" rel="noopener noreferrer"
+                <a href={LINKS.signet_faucet} target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
                   Faucet
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />

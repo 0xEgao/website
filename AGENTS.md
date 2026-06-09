@@ -56,7 +56,7 @@
 - `CodeBlock.jsx` is the shared wrapper for code snippets.
 - `TabGroup.jsx` is used for the Takers and Makers install/deployment tabs.
 - `Collapsible.jsx` is used for the technical deep dive on the How It Works page.
-- `StatusBanner.jsx` shows the live Mutinynet status and the mainnet caution banner.
+  - `StatusBanner.jsx` shows the live Signet status and the mainnet caution banner.
 - `useLatestRelease.js` calls the GitHub releases API for `citadel-tech/coinswap` and powers the Home hero release badge.
 
 ## Important Reality Checks
