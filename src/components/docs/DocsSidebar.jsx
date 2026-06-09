@@ -31,7 +31,7 @@ export default function DocsSidebar({ activeDocId, onSelect }) {
   const nav = getNavWithDocIds()
 
   return (
-    <nav className="overflow-y-auto">
+    <nav className="h-full overflow-y-auto pb-6">
       {nav.map(section => {
         // Static entry (Get Started)
         if (section.static) {
