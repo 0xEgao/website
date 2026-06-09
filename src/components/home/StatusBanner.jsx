@@ -1,4 +1,5 @@
 import { ExternalLink } from 'lucide-react'
+import { LINKS } from '../../constants/links'
 
 export default function StatusBanner({ releaseTag, releaseUrl }) {
   return (
@@ -24,7 +25,12 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
             STATUS: LIVE ON SIGNET
           </span>
 
-          <span className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)]">
+          <a
+            href={LINKS.signet}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)]"
+          >
             <svg
               aria-hidden="true"
               viewBox="0 0 20 20"
@@ -33,8 +39,27 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
             >
               <path d="M10 2.5 18 17H2L10 2.5Zm0 4.2a.9.9 0 0 0-.9.9v4.1a.9.9 0 1 0 1.8 0V7.6a.9.9 0 0 0-.9-.9Zm0 8.1a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z" />
             </svg>
-            MAINNET: USE_WITH_CAUTION
-          </span>
+            SIGNET: MEMPOOL
+            <ExternalLink size={12} strokeWidth={1.9} aria-hidden="true" />
+          </a>
+
+          <a
+            href={LINKS.signet_faucet}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)]"
+          >
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 20 20"
+              className="h-3.5 w-3.5 text-[#fbbf24] drop-shadow-[0_0_6px_rgba(251,191,36,0.5)]"
+              fill="currentColor"
+            >
+              <path d="M10 2.5 18 17H2L10 2.5Zm0 4.2a.9.9 0 0 0-.9.9v4.1a.9.9 0 1 0 1.8 0V7.6a.9.9 0 0 0-.9-.9Zm0 8.1a1.1 1.1 0 1 0 0-2.2 1.1 1.1 0 0 0 0 2.2Z" />
+            </svg>
+            SIGNET: FAUCET
+            <ExternalLink size={12} strokeWidth={1.9} aria-hidden="true" />
+          </a>
 
         </div>
       </div>
