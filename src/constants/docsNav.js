@@ -24,7 +24,6 @@ export const NAV = [
       { label: 'Docker',     url: `${base}/docker.md` },
       { label: 'Taproot',    url: `${base}/taproot.md` },
       { label: 'Demo',       url: `${base}/demo.md` },
-      { label: 'Workshop',   url: `${base}/workshop.md` },
     ],
   },
   {
