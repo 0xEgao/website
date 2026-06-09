@@ -30,3 +30,6 @@ plan/
 *.njsproj
 *.sln
 *.sw?
+
+AGENTS.md
+CLAUDE.md
