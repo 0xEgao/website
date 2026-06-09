@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { HashRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 
 const Home = lazy(() => import('./pages/Home'))
@@ -12,7 +12,7 @@ const NotFound = lazy(() => import('./pages/NotFound'))
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <Suspense fallback={null}>
         <Routes>
           <Route element={<Layout />}>
@@ -26,6 +26,6 @@ export default function App() {
           </Route>
         </Routes>
       </Suspense>
-    </HashRouter>
+    </BrowserRouter>
   )
 }
