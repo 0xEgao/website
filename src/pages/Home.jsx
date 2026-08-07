@@ -9,7 +9,7 @@ import QuickLinks from '../components/home/QuickLinks'
 import { LINKS } from '../constants/links'
 import { useLatestRelease } from '../hooks/useLatestRelease'
 
-const OG_IMAGE = 'https://citadel-tech.github.io/website/social-preview.png'
+const OG_IMAGE = 'https://citadelfoss.xyz/social-preview.png'
 
 export default function Home() {
   const { tag, url } = useLatestRelease()
