@@ -257,10 +257,10 @@ export default function Market() {
 
   return (
     <>
-      <title>Market — CoinSwap</title>
+      <title>Market — Coinswap</title>
       <meta
         name="description"
-        content="Live CoinSwap maker market: public maker data, liquidity depth, fidelity bonds, fees, and Tor maker addresses."
+        content="Live Coinswap maker market: public maker data, liquidity depth, fidelity bonds, fees, and Tor maker addresses."
       />
 
       <div className="site-shell py-8">
@@ -283,7 +283,7 @@ export default function Market() {
               <div>
                 <h1 className="type-page-title font-display font-bold text-black">Market</h1>
                 <p className="type-body mt-2 max-w-3xl font-body text-black/65">
-                  Live view of CoinSwap makers routing through the public market endpoint.
+                  Live view of Coinswap makers routing through the public market endpoint.
                 </p>
               </div>
 

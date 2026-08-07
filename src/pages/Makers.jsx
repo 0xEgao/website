@@ -12,7 +12,7 @@ sudo install ./target/release/makerd /usr/local/bin/
 sudo install ./target/release/maker-cli /usr/local/bin/`
 
 const CODE_MAKERD_HELP = `$ makerd --help
-CoinSwap Maker Server
+Coinswap Maker Server
 
 The server requires a Bitcoin Core RPC connection running in Testnet4. It requires some
 starting balance, around 50,000 sats for Fidelity + Swap Liquidity (suggested 50,000 sats).
@@ -290,7 +290,7 @@ const MAKER_CARDS = [
   {
     label: 'Backbone of the Market',
     heading: 'Every hop in every swap routes through a maker',
-    body: 'Makers are the infrastructure CoinSwap runs on. No active management needed — makerd handles bond creation, renewal, and directory registration automatically. More makers mean stronger privacy guarantees for everyone.',
+    body: 'Makers are the infrastructure Coinswap runs on. No active management needed — makerd handles bond creation, renewal, and directory registration automatically. More makers mean stronger privacy guarantees for everyone.',
   },
 ]
 
@@ -308,8 +308,8 @@ const BOND_FACTORS = [
 export default function Makers() {
   return (
     <>
-      <title>Makers — CoinSwap</title>
-      <meta name="description" content="Run a CoinSwap maker node. Post a fidelity bond, earn fees passively on every swap routed through you, and strengthen Bitcoin privacy without active maintenance." />
+      <title>Makers — Coinswap</title>
+      <meta name="description" content="Run a Coinswap maker node. Post a fidelity bond, earn fees passively on every swap routed through you, and strengthen Bitcoin privacy without active maintenance." />
 
       <div className="site-shell py-8 space-y-7">
 
@@ -613,7 +613,7 @@ export default function Makers() {
                 Test on Signet
               </h2>
               <p className="text-cream/70 font-body text-sm leading-relaxed mb-4">
-                Start on Signet — the live CoinSwap marketplace on custom signet with ~2-minute blocks.
+                Start on Signet — the live Coinswap marketplace on custom signet with ~2-minute blocks.
                 Get test coins from the faucet to fund your fidelity bond and start routing swaps.
               </p>
               <div className="flex flex-wrap gap-3">
@@ -639,7 +639,7 @@ export default function Makers() {
             { href: LINKS.makerd_docs,       label: 'makerd docs' },
             { href: LINKS.maker_cli_docs,    label: 'maker-cli docs' },
             { href: LINKS.maker_docker_docs, label: 'Docker docs' },
-            { href: LINKS.coinswap_repo,     label: 'CoinSwap core' },
+            { href: LINKS.coinswap_repo,     label: 'Coinswap core' },
             { href: LINKS.issues,            label: 'Open an issue' },
           ].map(({ href, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"

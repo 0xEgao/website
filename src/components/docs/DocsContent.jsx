@@ -97,10 +97,10 @@ function GetStartedPanel() {
     <div className="space-y-8">
       <div>
         <h1 className="type-page-title font-display font-semibold text-black">
-          CoinSwap Documentation
+          Coinswap Documentation
         </h1>
         <p className="type-body mt-4 max-w-2xl text-black/65">
-          Everything you need to understand, deploy, and build on the CoinSwap protocol —
+          Everything you need to understand, deploy, and build on the Coinswap protocol —
           a non-custodial, atomic, multi-hop Bitcoin swap system built on Taproot and MuSig2.
         </p>
       </div>

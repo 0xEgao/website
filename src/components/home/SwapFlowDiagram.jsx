@@ -282,7 +282,7 @@ export default function SwapFlowDiagram() {
             viewBox={`0 0 ${SVG_W} ${SVG_H}`}
             width="100%"
             style={{ maxWidth: SVG_DISPLAY_W, display: 'block', margin: '0 auto' }}
-            aria-label="CoinSwap triangle flow: taker routes funds through two makers and returns with unrelated coins"
+            aria-label="Coinswap triangle flow: taker routes funds through two makers and returns with unrelated coins"
             role="img"
           >
           <defs>

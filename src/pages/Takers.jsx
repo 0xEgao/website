@@ -13,7 +13,7 @@ cargo build --release
 const CODE_CLI_INSTALL = `sudo install ./target/release/taker /usr/local/bin/`
 
 const CODE_TAKER_HELP = `$ taker --help
-A simple command-line app for CoinSwap clients.
+A simple command-line app for Coinswap clients.
 
 Usage: taker [OPTIONS] <COMMAND>
 
@@ -486,8 +486,8 @@ const SCREENSHOTS = [
 export default function Takers() {
   return (
     <>
-      <title>Takers — CoinSwap</title>
-      <meta name="description" content="Run CoinSwap as a taker. Install the taker CLI or desktop GUI, route your coins through independent makers, and receive clean UTXOs with no on-chain history." />
+      <title>Takers — Coinswap</title>
+      <meta name="description" content="Run Coinswap as a taker. Install the taker CLI or desktop GUI, route your coins through independent makers, and receive clean UTXOs with no on-chain history." />
 
       <div className="site-shell py-8 space-y-7">
 
@@ -740,7 +740,7 @@ export default function Takers() {
           </div>
         </section>
 
-        {/* ── Build with CoinSwap FFI ── */}
+        {/* ── Build with Coinswap FFI ── */}
         <section className="section-rule">
           <p className="section-label mb-3">// For Developers</p>
           <h2 className="type-section-title font-display font-semibold text-cream mb-3">Build Your Own Taker App</h2>
@@ -784,7 +784,7 @@ export default function Takers() {
         <section className="section-rule flex flex-wrap gap-4">
           {[
             { href: LINKS.taker_app,     label: 'Taker App repo' },
-            { href: LINKS.coinswap_repo, label: 'CoinSwap core' },
+            { href: LINKS.coinswap_repo, label: 'Coinswap core' },
             { href: LINKS.coinswap_ffi,  label: 'FFI bindings' },
             { href: LINKS.taker_docs,    label: 'CLI docs' },
             { href: LINKS.issues,        label: 'Open an issue' },

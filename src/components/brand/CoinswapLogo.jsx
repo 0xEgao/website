@@ -1,6 +1,6 @@
 const LOGO_SRC = `${import.meta.env.BASE_URL}coinswap-bw.svg`
 
-export default function CoinSwapLogo({ className = '', ...props }) {
+export default function CoinswapLogo({ className = '', ...props }) {
   return (
     <img
       src={LOGO_SRC}

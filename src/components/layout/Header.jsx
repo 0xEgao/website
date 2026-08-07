@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import CoinSwapLogo from '../brand/CoinSwapLogo'
+import CoinswapLogo from '../brand/CoinswapLogo'
 
 const THEME_STORAGE_KEY = 'coinswap-theme'
 
@@ -87,10 +87,10 @@ export default function Header() {
       <div className="site-shell flex min-h-18 items-center justify-between gap-6">
 
         <NavLink to="/" className="group flex items-center gap-3">
-          <CoinSwapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
+          <CoinswapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
           <span className="leading-none">
             <span className="type-brand block font-display font-semibold tracking-[0.04em] text-black">
-              <span className="text-black">CoinSwap</span>
+              <span className="text-black">Coinswap</span>
             </span>
             <span className="type-caption mt-2 block font-mono uppercase tracking-[0.18em] text-black/65">
               Make Bitcoin Fungible Again

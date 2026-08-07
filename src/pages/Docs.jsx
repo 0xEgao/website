@@ -11,10 +11,10 @@ export default function Docs() {
   const activeDoc = findDocById(activeDocId)
 
   useEffect(() => {
-    document.title = 'Docs | CoinSwap'
+    document.title = 'Docs | Coinswap'
     const meta = document.querySelector('meta[name="description"]')
     if (meta) {
-      meta.setAttribute('content', 'CoinSwap documentation — manuals, protocol specifications, code examples, FFI bindings, and GUI guides for the privacy-preserving Bitcoin swap protocol.')
+      meta.setAttribute('content', 'Coinswap documentation — manuals, protocol specifications, code examples, FFI bindings, and GUI guides for the privacy-preserving Bitcoin swap protocol.')
     }
   }, [])
 

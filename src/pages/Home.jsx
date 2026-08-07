@@ -9,7 +9,7 @@ import QuickLinks from '../components/home/QuickLinks'
 import { LINKS } from '../constants/links'
 import { useLatestRelease } from '../hooks/useLatestRelease'
 
-const OG_IMAGE = 'https://coinswap.network/og.png' // placeholder — replace when asset exists
+const OG_IMAGE = 'https://citadel-tech.github.io/website/social-preview.png'
 
 export default function Home() {
   const { tag, url } = useLatestRelease()
@@ -17,15 +17,15 @@ export default function Home() {
   return (
     <>
       {/* SEO */}
-      <title>CoinSwap</title>
-      <meta name="description" content="CoinSwap is a non-custodial, atomic, multi-hop Bitcoin swap protocol. Break the transaction graph over Tor — no trust, no custodian, no shared history." />
+      <title>Coinswap</title>
+      <meta name="description" content="Coinswap is a non-custodial, atomic, multi-hop Bitcoin swap protocol. Break the transaction graph over Tor — no trust, no custodian, no shared history." />
 
       {/* Open Graph */}
       <meta property="og:type"        content="website" />
       <meta property="og:title"       content="An Actually Decentralized Atomic-Swap Marketplace" />
       <meta property="og:description" content="Non-custodial, atomic, multi-hop Bitcoin swaps over Tor. Break the transaction graph at the protocol level." />
       <meta property="og:image"       content={OG_IMAGE} />
-      <meta property="og:site_name"   content="CoinSwap" />
+      <meta property="og:site_name"   content="Coinswap" />
       <meta name="twitter:card"       content="summary_large_image" />
       <meta name="twitter:title"      content="An Actually Decentralized Atomic-Swap Marketplace" />
       <meta name="twitter:description" content="Non-custodial, atomic, multi-hop Bitcoin swaps over Tor." />

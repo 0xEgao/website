@@ -122,20 +122,20 @@ function DeepDiveSection({ heading, children }) {
 export default function HowItWorks() {
   return (
     <>
-      <title>How It Works — CoinSwap</title>
+      <title>How It Works — Coinswap</title>
       <meta
         name="description"
-        content="A concise walkthrough of the CoinSwap v2 protocol: taker-driven route discovery, Taproot contract setup, MuSig2 key-path spends, and atomic recovery paths."
+        content="A concise walkthrough of the Coinswap v2 protocol: taker-driven route discovery, Taproot contract setup, MuSig2 key-path spends, and atomic recovery paths."
       />
 
       <div className="site-shell py-8 space-y-7">
         <section>
           <p className="section-label mb-3">// Protocol V2</p>
           <h1 className="type-page-title font-display font-bold text-cream mb-3">
-            How CoinSwap V2 Actually Runs
+            How Coinswap V2 Actually Runs
           </h1>
           <p className="type-subtitle text-cream/60 font-body max-w-4xl">
-            CoinSwap v2 is a taker-coordinated, multi-hop atomic swap protocol built around Taproot
+            Coinswap v2 is a taker-coordinated, multi-hop atomic swap protocol built around Taproot
             contracts and MuSig2. You route value through independent makers, receive different
             coins back, and keep a recovery path if anyone disappears mid-swap.
           </p>
