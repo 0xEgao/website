@@ -3,7 +3,6 @@ import { LINKS } from '../constants/links'
 
 const STATUS_TABS = [
   { id: 'good', label: 'Good Makers' },
-  { id: 'bad', label: 'Bad Makers' },
   { id: 'unresponsive', label: 'Unresponsive' },
 ]
 
@@ -257,10 +256,10 @@ export default function Market() {
 
   return (
     <>
-      <title>Market — Coinswap</title>
+      <title>Market — OpenSwap</title>
       <meta
         name="description"
-        content="Live Coinswap maker market: public maker data, liquidity depth, fidelity bonds, fees, and Tor maker addresses."
+        content="Live OpenSwap maker market: public maker data, liquidity depth, fidelity bonds, fees, and Tor maker addresses."
       />
 
       <div className="site-shell py-8">
@@ -271,7 +270,7 @@ export default function Market() {
               <span className="h-3 w-3 rounded-full bg-[#ffbd2e]" />
               <span className="h-3 w-3 rounded-full bg-[#28c840]" />
             </div>
-            <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-black/55">Coinswap - Market</p>
+            <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-black/55">OpenSwap - Market</p>
             <div className="hidden items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-black/50 sm:flex">
               <span className="h-2 w-2 rounded-full bg-green shadow-[0_0_14px_rgba(0,255,102,0.8)]" />
               <span>Live API</span>
@@ -283,7 +282,7 @@ export default function Market() {
               <div>
                 <h1 className="type-page-title font-display font-bold text-black">Market</h1>
                 <p className="type-body mt-2 max-w-3xl font-body text-black/65">
-                  Live view of Coinswap makers routing through the public market endpoint.
+                  Live view of OpenSwap makers routing through the public market endpoint.
                 </p>
               </div>
 
@@ -315,7 +314,7 @@ export default function Market() {
                 accent="bg-blue-l"
                 label="Active Makers"
                 value={stats.counts.good}
-                note={`${stats.counts.good} good - ${stats.counts.bad} bad - ${stats.counts.unresponsive} unresponsive in this window.`}
+                note={`${stats.counts.good} good - ${stats.counts.unresponsive} unresponsive in this window.`}
               />
             </div>
 

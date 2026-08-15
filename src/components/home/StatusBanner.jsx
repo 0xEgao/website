@@ -1,4 +1,5 @@
 import { ExternalLink } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { LINKS } from '../../constants/links'
 
 export default function StatusBanner({ releaseTag, releaseUrl }) {
@@ -18,18 +19,21 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
             </a>
           )}
 
-          <span className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.07] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.3),0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm">
+          <Link
+            to="/market"
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.07] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.3),0_10px_30px_rgba(0,0,0,0.08)] backdrop-blur-sm transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]"
+          >
             <span className="relative flex h-1.5 w-1.5">
               <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[#fbbf24] shadow-[0_0_10px_rgba(251,191,36,0.65)]" />
             </span>
             STATUS: LIVE ON SIGNET
-          </span>
+          </Link>
 
           <a
             href={LINKS.signet}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)]"
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)] transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]"
           >
             <svg
               aria-hidden="true"
@@ -47,7 +51,7 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
             href={LINKS.signet_faucet}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)]"
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)] transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]"
           >
             <svg
               aria-hidden="true"
@@ -60,6 +64,14 @@ export default function StatusBanner({ releaseTag, releaseUrl }) {
             SIGNET: FAUCET
             <ExternalLink size={12} strokeWidth={1.9} aria-hidden="true" />
           </a>
+
+          <Link
+            to={`/docs?doc=${encodeURIComponent('manuals/demo')}`}
+            className="inline-flex items-center gap-1.5 border border-black/15 bg-black/[0.045] px-3 py-1.5 text-cream shadow-[0_0_0_1px_rgba(255,255,255,0.24),0_10px_28px_rgba(0,0,0,0.06)] transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]"
+          >
+            Demo Doc
+            <ExternalLink size={12} strokeWidth={1.9} aria-hidden="true" />
+          </Link>
 
         </div>
       </div>

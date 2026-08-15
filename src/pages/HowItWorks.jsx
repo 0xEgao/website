@@ -41,17 +41,17 @@ PHASE 3 - PRIVATE KEY HANDOVER AND SWEEPING
 17. Maker2 -> Taker  : PrivateKeyHandover
 18. Swap completes successfully`
 
-const FEE_FORMULA = `coinswap_fee =
+const FEE_FORMULA = `openswap_fee =
   base_fee
   + (swap_amount * amount_relative_fee_pct) / 100
   + (swap_amount * refund_locktime * time_relative_fee_pct) / 100`
 
-const V2_HIGHLIGHTS = [
+const HIGHLIGHTS = [
   {
     label: 'Single contract',
     heading: 'Each hop is one Taproot output',
     body:
-      'V2 folds the multisig and HTLC logic into a single P2TR contract output. That cuts failure overhead, reduces coordination, and keeps the on-chain shape tighter than the older two-transaction design.',
+      'OpenSwap folds the multisig and HTLC logic into a single P2TR contract output. That cuts failure overhead, reduces coordination, and keeps the on-chain shape tighter than the older two-transaction design.',
   },
   {
     label: 'MuSig2 key path',
@@ -122,20 +122,20 @@ function DeepDiveSection({ heading, children }) {
 export default function HowItWorks() {
   return (
     <>
-      <title>How It Works — Coinswap</title>
+      <title>How It Works — OpenSwap</title>
       <meta
         name="description"
-        content="A concise walkthrough of the Coinswap v2 protocol: taker-driven route discovery, Taproot contract setup, MuSig2 key-path spends, and atomic recovery paths."
+        content="A concise walkthrough of the OpenSwap protocol: taker-driven route discovery, Taproot contract setup, MuSig2 key-path spends, and atomic recovery paths."
       />
 
       <div className="site-shell py-8 space-y-7">
         <section>
-          <p className="section-label mb-3">// Protocol V2</p>
+          <p className="section-label mb-3">// Protocol</p>
           <h1 className="type-page-title font-display font-bold text-cream mb-3">
-            How Coinswap V2 Actually Runs
+            How OpenSwap Actually Runs
           </h1>
           <p className="type-subtitle text-cream/60 font-body max-w-4xl">
-            Coinswap v2 is a taker-coordinated, multi-hop atomic swap protocol built around Taproot
+            OpenSwap is a taker-coordinated, multi-hop atomic swap protocol built around Taproot
             contracts and MuSig2. You route value through independent makers, receive different
             coins back, and keep a recovery path if anyone disappears mid-swap.
           </p>
@@ -143,7 +143,7 @@ export default function HowItWorks() {
 
         <section className="section-rule">
           <div className="grid gap-4 lg:grid-cols-3">
-            {V2_HIGHLIGHTS.map(({ label, heading, body }) => (
+            {HIGHLIGHTS.map(({ label, heading, body }) => (
               <div key={heading} className="border border-dotted border-black/20 bg-black/[0.02] p-5">
                 <p className="type-caption mb-2 font-mono uppercase tracking-[0.18em] text-cream/65">
                   {label}
@@ -229,18 +229,18 @@ export default function HowItWorks() {
                   Why the private key handover matters
                 </h3>
                 <p className="type-small font-body text-cream/68">
-                  V2 ends the swap by transferring the outgoing contract secret key forward. The next
+                  OpenSwap ends the swap by transferring the outgoing contract secret key forward. The next
                   hop can then derive the cooperative spend for its incoming contract locally instead
                   of waiting through a longer multi-round signing exchange.
                 </p>
               </div>
               <div className="border border-dotted border-black/20 bg-black/[0.02] p-5">
                 <h3 className="type-card-title mb-2 font-display font-semibold text-cream">
-                  Why Taproot lowers recovery cost vs V1
+                  Why Taproot lowers recovery cost
                 </h3>
                 <p className="type-small font-body text-cream/68">
-                  V1 used a separate funding transaction plus a separate contract transaction for
-                  each hop. V2 collapses that into one Taproot contract output, so an aborted swap
+                  The older design used a separate funding transaction plus a separate contract transaction for
+                  each hop. OpenSwap collapses that into one Taproot contract output, so an aborted swap
                   has fewer on-chain transactions to publish and unwind.
                 </p>
                 <p className="type-small font-body text-cream/68">
@@ -302,7 +302,7 @@ export default function HowItWorks() {
           <div className="space-y-6">
             <DeepDiveSection heading="Message set">
               <p>
-                The v2 diagram uses a tight seven-message vocabulary:{' '}
+                The diagram uses a tight seven-message vocabulary:{' '}
                 <InlineCode>GetOffer</InlineCode>, <InlineCode>RespOffer</InlineCode>,{' '}
                 <InlineCode>SwapDetails</InlineCode>, <InlineCode>AckResponse</InlineCode>,{' '}
                 <InlineCode>SendersContract</InlineCode>,{' '}
@@ -313,7 +313,7 @@ export default function HowItWorks() {
               <p>
                 This is the cooperative happy-path flow from the image. Recovery still relies on the
                 hashlock and timelock branches, but those fallback spends are not drawn as separate
-                network messages in the v2 diagram.
+                network messages in the diagram.
               </p>
               <CodeBlock code={MESSAGE_FLOW} language="text" />
             </DeepDiveSection>
@@ -378,15 +378,6 @@ export default function HowItWorks() {
 
         <section className="section-rule flex flex-wrap gap-4">
           <a
-            href={LINKS.protocol_v2}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="simple-link type-ui inline-flex items-center gap-1.5 font-body"
-          >
-            Protocol v2 spec
-            <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
-          </a>
-          <a
             href={LINKS.protocol_spec}
             target="_blank"
             rel="noopener noreferrer"
@@ -396,7 +387,7 @@ export default function HowItWorks() {
             <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
           <a
-            href={LINKS.coinswap_repo}
+            href={LINKS.openswap_repo}
             target="_blank"
             rel="noopener noreferrer"
             className="simple-link type-ui inline-flex items-center gap-1.5 font-body"

@@ -1,6 +1,6 @@
-# Coinswap Website
+# OpenSwap Website
 
-Marketing and documentation site for [Coinswap](https://github.com/citadel-tech/coinswap) — an Atomic-Swap protocol using Taproot + MuSig2 over a decentralized censorship-resistant marketplace.
+Marketing and documentation site for [OpenSwap](https://github.com/citadel-foss/openswap) — an Atomic-Swap protocol using Taproot + MuSig2 over a decentralized censorship-resistant marketplace.
 
 ## Stack
 

@@ -1,18 +1,19 @@
 import { ArrowRight, ExternalLink } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { LINKS } from '../constants/links'
 import CodeBlock from '../components/ui/CodeBlock'
 import TabGroup from '../components/ui/TabGroup'
 
 // ─── Code snippets ────────────────────────────────────────────────────────────
 
-const CODE_BUILD = `git clone ${LINKS.coinswap_repo}
-cd coinswap
+const CODE_BUILD = `git clone ${LINKS.openswap_repo}
+cd openswap
 cargo build --release --bin makerd --bin maker-cli
 sudo install ./target/release/makerd /usr/local/bin/
 sudo install ./target/release/maker-cli /usr/local/bin/`
 
 const CODE_MAKERD_HELP = `$ makerd --help
-Coinswap Maker Server
+OpenSwap Maker Server
 
 The server requires a Bitcoin Core RPC connection running in Testnet4. It requires some
 starting balance, around 50,000 sats for Fidelity + Swap Liquidity (suggested 50,000 sats).
@@ -26,17 +27,17 @@ for incoming swap requests. As it performs swaps for clients, it keeps earning f
 The server is operated with the maker-cli app, for all basic wallet related operations.
 
 For more detailed usage information, please refer to the Maker docs:
-https://github.com/citadel-tech/coinswap/blob/master/docs/makerd.md
+https://github.com/citadel-foss/openswap/blob/master/docs/makerd.md
 
 This is an early beta, and there are known and unknown bugs. Please report issues in the
-Project Issue Board: https://github.com/citadel-tech/coinswap/issues
+Project Issue Board: https://github.com/citadel-foss/openswap/issues
 
 USAGE:
     makerd [OPTIONS]
 
 OPTIONS:
     -d, --data-directory <DATA_DIRECTORY>  Data directory
-                                           [default: ~/.coinswap/maker]
+                                           [default: ~/.openswap/maker]
     -r, --ADDRESS:PORT <ADDRESS:PORT>      Bitcoin Core RPC address
                                            [default: 127.0.0.1:38332]
     -z, --ZMQ <ZMQ>                        Bitcoin Core ZMQ address:port value
@@ -57,26 +58,26 @@ makerd
 # Custom Bitcoin Core RPC
 makerd -r 127.0.0.1:38332 -a user:password`
 
-const CODE_STARTUP_LOG = `INFO coinswap::wallet::api - Backup the Wallet Mnemonics:
+const CODE_STARTUP_LOG = `INFO openswap::wallet::api - Backup the Wallet Mnemonics:
 ["harvest","trust","catalog","degree","oxygen","business","crawl","enemy","hamster","music","this","idle"]
 
-INFO coinswap::maker::server - No active Fidelity Bonds found. Creating one.
-INFO coinswap::maker::server - Fidelity value chosen = 0.0005 BTC, Tx fee = 1000 sats
-INFO coinswap::maker::server - Fund the wallet at: bcrt1q...
+INFO openswap::maker::server - No active Fidelity Bonds found. Creating one.
+INFO openswap::maker::server - Fidelity value chosen = 0.0005 BTC, Tx fee = 1000 sats
+INFO openswap::maker::server - Fund the wallet at: bcrt1q...
 
 # After funding (confirm on chain):
-INFO coinswap::wallet::fidelity - Fidelity Transaction confirmed at blockheight: 229349
-INFO coinswap::maker::server  - [6102] Server listening at <onion>.onion:6102
-INFO coinswap::maker::server  - [6102] Server Setup completed!!
-INFO coinswap::maker::server  - Swap Liquidity: 950000 sats | Min: 10000 sats | Listening for requests.`
+INFO openswap::wallet::fidelity - Fidelity Transaction confirmed at blockheight: 229349
+INFO openswap::maker::server  - [6102] Server listening at <onion>.onion:6102
+INFO openswap::maker::server  - [6102] Server Setup completed!!
+INFO openswap::maker::server  - Swap Liquidity: 950000 sats | Min: 10000 sats | Listening for requests.`
 
-const CODE_DOCKER = `git clone ${LINKS.coinswap_repo}
-cd coinswap
+const CODE_DOCKER = `git clone ${LINKS.openswap_repo}
+cd openswap
 
 # Interactive setup — choose your Bitcoin + Tor mode
 ./docker-setup configure
 
-# Build the coinswap image
+# Build the openswap image
 ./docker-setup build
 
 # (Only needed if using Docker-managed Bitcoin)
@@ -228,7 +229,7 @@ const DEPLOY_TABS = [
         <p className="type-meta text-cream/65 font-body">
           Repo:{' '}
           <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-            citadel-tech/maker-dashboard
+            citadel-foss/maker-dashboard
             <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
@@ -268,10 +269,10 @@ const BALANCE_TYPES = [
 // ─── Maker Dashboard screenshots ─────────────────────────────────────────────
 
 const DASHBOARD_SHOTS = [
-  { src: `${import.meta.env.BASE_URL}maker-db-1.png`, caption: 'maker-db-1.png — dashboard overview' },
-  { src: `${import.meta.env.BASE_URL}maker-db-2.png`, caption: 'maker-db-2.png — balances and status' },
-  { src: `${import.meta.env.BASE_URL}maker-db-3.png`, caption: 'maker-db-3.png — swap activity' },
-  { src: `${import.meta.env.BASE_URL}maker-db-4.png`, caption: 'maker-db-4.png — node management' },
+  { src: `${import.meta.env.BASE_URL}maker-db-1.png`, caption: 'dashboard overview' },
+  { src: `${import.meta.env.BASE_URL}maker-db-2.png`, caption: 'balances and status' },
+  { src: `${import.meta.env.BASE_URL}maker-db-3.png`, caption: 'swap activity' },
+  { src: `${import.meta.env.BASE_URL}maker-db-4.png`, caption: 'wallet activity' },
 ]
 
 // ─── What is a Maker cards ────────────────────────────────────────────────────
@@ -290,7 +291,7 @@ const MAKER_CARDS = [
   {
     label: 'Backbone of the Market',
     heading: 'Every hop in every swap routes through a maker',
-    body: 'Makers are the infrastructure Coinswap runs on. No active management needed — makerd handles bond creation, renewal, and directory registration automatically. More makers mean stronger privacy guarantees for everyone.',
+    body: 'Makers are the infrastructure OpenSwap runs on. No active management needed — makerd handles bond creation, renewal, and directory registration automatically. More makers mean stronger privacy guarantees for everyone.',
   },
 ]
 
@@ -308,15 +309,15 @@ const BOND_FACTORS = [
 export default function Makers() {
   return (
     <>
-      <title>Makers — Coinswap</title>
-      <meta name="description" content="Run a Coinswap maker node. Post a fidelity bond, earn fees passively on every swap routed through you, and strengthen Bitcoin privacy without active maintenance." />
+      <title>Makers — OpenSwap</title>
+      <meta name="description" content="Run an OpenSwap maker node. Post a fidelity bond, earn fees passively on every swap routed through you, and strengthen Bitcoin privacy without active maintenance." />
 
       <div className="site-shell py-8 space-y-7">
 
         {/* ── Hero ── */}
         <section>
           <h1 className="type-page-title font-display font-bold text-cream mb-3">
-            Earn Fees. Strengthen Privacy.
+            Earn Fees. Strengthen The Network.
           </h1>
           <p className="type-subtitle text-cream/60 font-body max-w-4xl">
             Run a maker node, post a fidelity bond, and route swaps passively.
@@ -492,7 +493,7 @@ export default function Makers() {
             A browser-based dashboard for tracking balances, swap history, fidelity bond state,
             and node status while <code className="inline-code">makerd</code> is running.{' '}
             <a href={LINKS.maker_dashboard} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-              citadel-tech/maker-dashboard
+              citadel-foss/maker-dashboard
               <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
@@ -502,10 +503,10 @@ export default function Makers() {
                 <img
                   src={src}
                   alt={caption}
-                  className="w-full block"
+                  className="w-full aspect-[2/1] object-contain block"
                   loading="lazy"
                 />
-                <p className="type-caption font-mono text-cream/65 px-3 py-2">{caption}</p>
+                <p className="type-caption font-mono text-cream/65 px-3 py-2 border-t border-dotted border-cream/15">{caption}</p>
               </div>
             ))}
           </div>
@@ -613,20 +614,29 @@ export default function Makers() {
                 Test on Signet
               </h2>
               <p className="text-cream/70 font-body text-sm leading-relaxed mb-4">
-                Start on Signet — the live Coinswap marketplace on custom signet with ~2-minute blocks.
+                Start on Signet — the live OpenSwap marketplace on custom signet.
                 Get test coins from the faucet to fund your fidelity bond and start routing swaps.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href={LINKS.signet} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
                   Explorer
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
                 <a href={LINKS.signet_faucet} target="_blank" rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-colors hover:bg-black/4">
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
                   Faucet
                   <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
                 </a>
+                <Link to={`/docs?doc=${encodeURIComponent('manuals/demo')}`}
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Demo Doc
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+                </Link>
+                <Link to="/market"
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Market
+                </Link>
               </div>
             </div>
           </div>
@@ -639,7 +649,7 @@ export default function Makers() {
             { href: LINKS.makerd_docs,       label: 'makerd docs' },
             { href: LINKS.maker_cli_docs,    label: 'maker-cli docs' },
             { href: LINKS.maker_docker_docs, label: 'Docker docs' },
-            { href: LINKS.coinswap_repo,     label: 'Coinswap core' },
+            { href: LINKS.openswap_repo,     label: 'OpenSwap core' },
             { href: LINKS.issues,            label: 'Open an issue' },
           ].map(({ href, label }) => (
             <a key={label} href={href} target="_blank" rel="noopener noreferrer"

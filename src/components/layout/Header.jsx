@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
-import CoinswapLogo from '../brand/CoinswapLogo'
+import OpenSwapLogo from '../brand/OpenSwapLogo'
 
-const THEME_STORAGE_KEY = 'coinswap-theme'
+const THEME_STORAGE_KEY = 'openswap-theme'
 
 const NAV_LINKS = [
   { to: '/',             label: 'home' },
@@ -53,7 +53,7 @@ function ThemeToggle({ theme, onToggle }) {
       onClick={onToggle}
       aria-label={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
       title={theme === 'dark' ? 'Light mode' : 'Dark mode'}
-      className="theme-toggle inline-flex h-10 w-10 items-center justify-center rounded-full border border-black/15 text-black/70 transition-colors hover:text-black"
+      className="theme-toggle inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-black/15 text-black/70 transition-colors hover:text-black"
     >
       {theme === 'dark' ? <SunIcon /> : <MoonIcon />}
     </button>
@@ -87,13 +87,13 @@ export default function Header() {
       <div className="site-shell flex min-h-18 items-center justify-between gap-6">
 
         <NavLink to="/" className="group flex items-center gap-3">
-          <CoinswapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
+          <OpenSwapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
           <span className="leading-none">
             <span className="type-brand block font-display font-semibold tracking-[0.04em] text-black">
-              <span className="text-black">Coinswap</span>
+              <span className="text-black">OpenSwap</span>
             </span>
             <span className="type-caption mt-2 block font-mono uppercase tracking-[0.18em] text-black/65">
-              Make Bitcoin Fungible Again
+              Open Network for Atomic Swaps
             </span>
           </span>
         </NavLink>

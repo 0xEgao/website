@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { LINKS } from '../../constants/links'
-import CoinswapLogo from '../brand/CoinswapLogo'
+import OpenSwapLogo from '../brand/OpenSwapLogo'
 
 const INTERNAL = [
   { to: '/how-it-works', label: 'how-it-works' },
@@ -11,7 +11,7 @@ const INTERNAL = [
 ]
 
 const EXTERNAL = [
-  { href: LINKS.coinswap_repo,  label: 'github' },
+  { href: LINKS.openswap_repo,  label: 'github' },
   { href: LINKS.protocol_spec,  label: 'protocol-spec' },
   { href: LINKS.releases,       label: 'releases' },
   { href: LINKS.contributing,   label: 'contributing' },
@@ -23,7 +23,7 @@ export default function Footer() {
       <div className="site-shell py-8">
 
         <p className="type-small mb-5 font-mono text-black/65">
-          <span className="text-black/80">user@coinswap</span>
+          <span className="text-black/80">user@openswap</span>
           <span className="text-black/65">:~$</span>
           <span className="text-black/65"> cat ./network-footer.sys</span>
         </p>
@@ -31,13 +31,13 @@ export default function Footer() {
         <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
           <div>
             <Link to="/" className="group flex items-center gap-3">
-              <CoinswapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
+              <OpenSwapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
               <span className="leading-none">
                 <span className="type-brand block font-display font-semibold tracking-[0.04em] text-black">
-                  <span className="text-black">Coinswap</span>
+                  <span className="text-black">OpenSwap</span>
                 </span>
                 <span className="type-caption mt-2 block font-mono uppercase tracking-[0.18em] text-black/65">
-                  Make Bitcoin Fungible Again
+                  Open Network for Atomic Swaps
                 </span>
               </span>
             </Link>

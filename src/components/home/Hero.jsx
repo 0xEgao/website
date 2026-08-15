@@ -15,7 +15,7 @@ export default function Hero() {
 
           <p className="type-subtitle mb-5 max-w-[72rem] text-cream/75">
             <span className="font-mono text-cream/65"></span>
-            The Coinswap protocol creates a sybil-resistant, decentralized swap market hosted in
+            The OpenSwap protocol creates a sybil-resistant, decentralized swap market hosted in
             the Bitcoin blockchain and discoverable over Nostr, enabling trustless atomic swaps
             over Bitcoin and other protocols.
             <br />

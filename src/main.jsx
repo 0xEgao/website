@@ -3,9 +3,9 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 
-const faviconVersion = 'coinswap-bw-v1'
+const faviconVersion = 'openswap-bw-v1'
 const baseUrl = import.meta.env.BASE_URL
-const faviconHref = `${baseUrl}coinswap-bw.svg?v=${faviconVersion}`
+const faviconHref = `${baseUrl}openswap-bw.svg?v=${faviconVersion}`
 
 function applyFavicons() {
   document

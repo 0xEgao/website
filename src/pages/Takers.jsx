@@ -1,19 +1,20 @@
 import { ArrowRight, ExternalLink } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import { LINKS } from '../constants/links'
 import CodeBlock from '../components/ui/CodeBlock'
 import TabGroup from '../components/ui/TabGroup'
 
 // ─── CLI snippets ─────────────────────────────────────────────────────────────
 
-const CODE_CLI_BUILD = `git clone ${LINKS.coinswap_repo}
-cd coinswap
+const CODE_CLI_BUILD = `git clone ${LINKS.openswap_repo}
+cd openswap
 cargo build --release
 # builds: taker, makerd, maker-cli, directoryd`
 
 const CODE_CLI_INSTALL = `sudo install ./target/release/taker /usr/local/bin/`
 
 const CODE_TAKER_HELP = `$ taker --help
-A simple command-line app for Coinswap clients.
+A simple command-line app for OpenSwap clients.
 
 Usage: taker [OPTIONS] <COMMAND>
 
@@ -26,14 +27,14 @@ Commands:
   get-new-address     Returns a new address
   send-to-address     Send to an external wallet address
   fetch-offers        Update the offerbook with current market offers and display them
-  coinswap            Initiate the coinswap process
+  openswap            Initiate the openswap process
   recover             Recover from all failed swaps
   backup              Backup the selected wallet
   restore             Restore a wallet from a backup file
   help                Print this message or the help of the given subcommand(s)
 
 Options:
-  -d, --data-directory <DATA_DIRECTORY>   [default: ~/.coinswap/taker]
+  -d, --data-directory <DATA_DIRECTORY>   [default: ~/.openswap/taker]
   -r, --ADDRESS:PORT <ADDRESS:PORT>       [default: 127.0.0.1:38332]
   -z, --ZMQ <ZMQ>                        [default: tcp://127.0.0.1:28332]
   -a, --USER:PASSWORD <USER:PASSWORD>    [default: user:password]
@@ -303,7 +304,7 @@ const INSTALL_TABS = [
     content: (
       <div className="space-y-5">
         <p className="type-small text-cream/70 font-body">
-          The Taker App is an Electron desktop application built on top of <code className="inline-code">coinswap-ffi</code>.
+          The Taker App is an Electron desktop application built on top of <code className="inline-code">openswap-ffi</code>.
           No terminal required for day-to-day use. Initial install compiles a Rust native module — allow 2–3 minutes.
         </p>
         <div>
@@ -317,7 +318,7 @@ const INSTALL_TABS = [
         <p className="type-meta text-cream/65 font-body">
           Repo:{' '}
           <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-            citadel-tech/taker-app
+            citadel-foss/taker-app
             <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
@@ -433,7 +434,7 @@ const SUBCOMMANDS = [
   { cmd: 'get-new-address',    desc: 'Generate a receiving address to fund your wallet' },
   { cmd: 'get-balances',       desc: 'Show balance by category (regular, swap, contract, spendable)' },
   { cmd: 'fetch-offers',       desc: 'Sync the offer book with current maker offers' },
-  { cmd: 'coinswap',           desc: 'Initiate a coinswap with available makers' },
+  { cmd: 'openswap',           desc: 'Initiate an openswap with available makers' },
   { cmd: 'list-utxo',          desc: 'List all UTXOs with type and spend info' },
   { cmd: 'list-utxo-regular',  desc: 'Regular (non-swap) wallet UTXOs only' },
   { cmd: 'list-utxo-swap',     desc: 'UTXOs received from completed swaps' },
@@ -475,10 +476,10 @@ const TAKER_CARDS = [
 // ─── Screenshots ──────────────────────────────────────────────────────────────
 
 const SCREENSHOTS = [
-  { src: LINKS.screenshot_wallet, caption: 'wallet.png — balance overview' },
-  { src: LINKS.screenshot_swap,   caption: 'swap.png — initiate swap' },
-  { src: LINKS.screenshot_swap1,  caption: 'swap1.png — swap in progress' },
-  { src: LINKS.screenshot_report, caption: 'report.png — swap report' },
+  { src: LINKS.screenshot_wallet, caption: 'balance overview' },
+  { src: LINKS.screenshot_swap,   caption: 'initiate swap' },
+  { src: LINKS.screenshot_swap1,  caption: 'swap in progress' },
+  { src: LINKS.screenshot_report, caption: 'swap report' },
 ]
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -486,8 +487,8 @@ const SCREENSHOTS = [
 export default function Takers() {
   return (
     <>
-      <title>Takers — Coinswap</title>
-      <meta name="description" content="Run Coinswap as a taker. Install the taker CLI or desktop GUI, route your coins through independent makers, and receive clean UTXOs with no on-chain history." />
+      <title>Takers — OpenSwap</title>
+      <meta name="description" content="Run OpenSwap as a taker. Install the taker CLI or desktop GUI, route your coins through independent makers, and receive clean UTXOs with no on-chain history." />
 
       <div className="site-shell py-8 space-y-7">
 
@@ -527,7 +528,7 @@ export default function Takers() {
               <h3 className="type-card-title font-display font-semibold text-cream mb-2">Taker App</h3>
               <p className="type-small font-body text-cream/68 mb-4 flex-1">
                 Electron desktop application. No terminal required for day-to-day use.
-                Built on <code className="inline-code">coinswap-ffi</code> — the same library powering all language bindings.
+                Built on <code className="inline-code">openswap-ffi</code> — the same library powering all language bindings.
               </p>
               <p className="type-meta inline-flex items-center gap-1.5 text-cream/65 font-mono">
                 npm install
@@ -590,10 +591,10 @@ export default function Takers() {
           <p className="section-label mb-3">// Desktop App</p>
           <h2 className="type-section-title font-display font-semibold text-cream mb-2">Taker App</h2>
           <p className="type-small text-cream/60 font-body mb-5">
-            An Electron GUI built on <code className="inline-code">coinswap-ffi</code>. Manages wallet balance,
+            An Electron GUI built on <code className="inline-code">openswap-ffi</code>. Manages wallet balance,
             offer discovery, and swap execution without touching the terminal.{' '}
             <a href={LINKS.taker_app} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-              citadel-tech/taker-app
+              citadel-foss/taker-app
               <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
@@ -603,10 +604,10 @@ export default function Takers() {
                 <img
                   src={src}
                   alt={caption}
-                  className="w-full block"
+                  className="w-full aspect-[2/1] object-contain block"
                   loading="lazy"
                 />
-                <p className="type-caption font-mono text-cream/65 px-3 py-2">{caption}</p>
+                <p className="type-caption font-mono text-cream/65 px-3 py-2 border-t border-dotted border-cream/15">{caption}</p>
               </div>
             ))}
           </div>
@@ -712,40 +713,12 @@ export default function Takers() {
           </div>
         </section>
 
-        {/* ── Test on Signet ── */}
-        <section className="section-rule">
-          <div className="flex items-start gap-4">
-            <span className="text-2xl">⚡</span>
-            <div>
-              <h2 className="type-card-title font-display font-semibold text-cream mb-2">
-                Test on Signet
-              </h2>
-              <p className="type-small text-cream/70 font-body mb-4">
-                Signet is a public custom signet with ~2-minute block times — the live marketplace for testing.
-                Get test coins from the faucet, then run through a full swap before touching mainnet.
-              </p>
-              <div className="flex flex-wrap gap-3">
-                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer"
-                  className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Explorer
-                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
-                </a>
-                <a href={LINKS.signet_faucet} target="_blank" rel="noopener noreferrer"
-                  className="type-ui inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 font-body font-medium text-cream transition-colors hover:bg-black/4">
-                  Faucet
-                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
-                </a>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── Build with Coinswap FFI ── */}
+        {/* ── Build with OpenSwap FFI ── */}
         <section className="section-rule">
           <p className="section-label mb-3">// For Developers</p>
           <h2 className="type-section-title font-display font-semibold text-cream mb-3">Build Your Own Taker App</h2>
           <p className="type-body text-cream/70 font-body max-w-2xl mb-5">
-            <a href={LINKS.coinswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link">coinswap-ffi</a>{' '}
+            <a href={LINKS.openswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link">openswap-ffi</a>{' '}
             wraps the core Rust taker logic in a UniFFI-generated foreign function interface, exposing{' '}
             <code className="inline-code">Taker.init()</code>, <code className="inline-code">getBalances()</code>,{' '}
             <code className="inline-code">fetchOffers()</code>, and <code className="inline-code">doSwap()</code>{' '}
@@ -773,19 +746,56 @@ export default function Takers() {
 
           <p className="type-meta text-cream/65 font-body mt-4">
             Full repo:{' '}
-            <a href={LINKS.coinswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-              citadel-tech/coinswap-ffi
+            <a href={LINKS.openswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
+              citadel-foss/openswap-ffi
               <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
             </a>
           </p>
+        </section>
+
+        {/* ── Test on Signet ── */}
+        <section className="section-rule">
+          <div className="flex items-start gap-4">
+            <span className="text-2xl">⚡</span>
+            <div>
+              <h2 className="font-display text-xl font-semibold text-cream mb-2">
+                Test on Signet
+              </h2>
+              <p className="text-cream/70 font-body text-sm leading-relaxed mb-4">
+                Start on Signet — the live OpenSwap marketplace on custom signet.
+                Get test coins from the faucet to fund your wallet and try your first swap.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <a href={LINKS.signet} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Explorer
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+                </a>
+                <a href={LINKS.signet_faucet} target="_blank" rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Faucet
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+                </a>
+                <Link to={`/docs?doc=${encodeURIComponent('manuals/demo')}`}
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Demo Doc
+                  <ExternalLink size={14} strokeWidth={1.8} aria-hidden="true" />
+                </Link>
+                <Link to="/market"
+                  className="inline-flex items-center gap-1.5 border border-black/20 px-4 py-2 text-sm font-body font-medium text-cream transition-all duration-200 hover:bg-[#f7931a]/16 hover:shadow-[0_0_0_1px_rgba(255,255,255,0.18),0_14px_34px_rgba(247,147,26,0.2),0_0_24px_rgba(247,147,26,0.16)]">
+                  Market
+                </Link>
+              </div>
+            </div>
+          </div>
         </section>
 
         {/* ── Footer links ── */}
         <section className="section-rule flex flex-wrap gap-4">
           {[
             { href: LINKS.taker_app,     label: 'Taker App repo' },
-            { href: LINKS.coinswap_repo, label: 'Coinswap core' },
-            { href: LINKS.coinswap_ffi,  label: 'FFI bindings' },
+            { href: LINKS.openswap_repo, label: 'OpenSwap core' },
+            { href: LINKS.openswap_ffi,  label: 'FFI bindings' },
             { href: LINKS.taker_docs,    label: 'CLI docs' },
             { href: LINKS.issues,        label: 'Open an issue' },
           ].map(({ href, label }) => (

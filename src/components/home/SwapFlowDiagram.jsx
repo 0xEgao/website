@@ -129,7 +129,7 @@ const HOP2_CONNECTOR_GAP = 12
 
 const POINTERS = [
   {
-    label: 'Customize your swap as per need.',
+    label: 'Route swaps through multiple makers. Customizable swap flow.',
     description: 'Tune the route shape and swap flow to match the exact use case.',
   },
   {
@@ -137,21 +137,15 @@ const POINTERS = [
     description: 'Break shared ancestry so inputs and outputs do not remain linked.',
   },
   {
-    label: 'Swap Payments. Decoupling Sender and Receiver history.',
+    label: 'Make a payment via swaps. Maintain sender privacy.',
     description: 'Use swaps to break sender and receiver linkage in a clean transfer.',
   },
   {
     label: 'Consolidate or Split UTXOs via swaps.',
-    description: 'Coming soon: reshape UTXO sets while swapping.',
-    soon: true,
+    description: 'Reshape UTXO sets while swapping.',
   },
   {
-    label: 'eCash mint interoperability.',
-    description: 'Coming soon: connect with eCash mint flows.',
-    soon: true,
-  },
-  {
-    label: 'Lightning and other integrations.',
+    label: 'Send/Receive Lightning invoice from onchain wallet.',
     description: 'Coming soon: extend into Lightning and more integrations.',
     soon: true,
   },
@@ -282,7 +276,7 @@ export default function SwapFlowDiagram() {
             viewBox={`0 0 ${SVG_W} ${SVG_H}`}
             width="100%"
             style={{ maxWidth: SVG_DISPLAY_W, display: 'block', margin: '0 auto' }}
-            aria-label="Coinswap triangle flow: taker routes funds through two makers and returns with unrelated coins"
+            aria-label="OpenSwap triangle flow: taker routes funds through two makers and returns with unrelated coins"
             role="img"
           >
           <defs>
