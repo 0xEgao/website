@@ -76,64 +76,95 @@ signetchallenge=0014a3ec9c731da66d9725d54947aede5c830623f33d`
 
 // ─── FFI code snippets ────────────────────────────────────────────────────────
 
-const CODE_FFI_JS_INSTALL = `npm install coinswap-js
-# or: yarn add coinswap-js`
+const CODE_FFI_JS_INSTALL = `npm install openswap-js
+# or: yarn add openswap-js`
 
-const CODE_FFI_JS = `import { Taker } from 'coinswap-js';
+const CODE_FFI_JS = `import { AddressType, Taker } from 'openswap-js';
 
-const taker = await Taker.init(
-  null,
-  'taker_wallet',
-  { url: 'http://127.0.0.1:38332', username: 'user', password: 'password', walletName: 'my_wallet' },
-  [9051],
-  null,
-  ['tcp://127.0.0.1:28332'],
-  'your_password'
+const rpcConfig = {
+  url: 'http://127.0.0.1:18442',   // Bitcoin Core RPC endpoint
+  username: 'user',
+  password: 'password',
+  walletName: 'taker_wallet',
+};
+
+const taker = new Taker(
+  null,                            // null uses the default taker data directory
+  'taker_wallet',                  // wallet file to load or create
+  rpcConfig,
+  9051,                            // Tor control port
+  'openswap',                      // Tor control password
+  'tcp://127.0.0.1:28332',         // Bitcoin Core ZMQ endpoint
+  ''                               // optional wallet encryption password
 );
 
-const balances = await taker.getBalances();
-console.log(\`Spendable: \${balances.swapBalance} sats\`);
+Taker.setupLogging(null, 'info');
+taker.syncAndSave();
+taker.syncOfferbookAndWait();
 
-const offers = await taker.fetchOffers();
-console.log(\`Found \${offers.offers.length} makers\`);
+const balances = taker.getBalances();
+console.log(\`spendable: \${balances.spendable} sats\`);
 
-const report = await taker.doSwap({
-  sendAmount: 1_000_000,
-  makerCount: 2,
-  manuallySelectedOutpoints: null,
-});
-console.log(\`Swap completed in \${report.swapDurationSeconds}s\`);`
+const swapParams = {
+  sendAmount: 1_000_000,           // total sats to swap
+  makerCount: 2,                   // number of maker hops
+  txCount: 1,                      // funding transaction splits
+  requiredConfirms: 1,             // minimum funding confirmations
+};
 
-const CODE_FFI_KOTLIN_BUILD = `cd ffi-commons
-chmod +x create_bindings.sh
-./create_bindings.sh`
+const swapId = taker.prepareOpenswap(swapParams);
+const report = taker.startOpenswap(swapId);
+console.log(\`swap id: \${report.swapId} — status: \${report.status}\`);`
 
-const CODE_FFI_KOTLIN = `import org.coinswap.*
+const CODE_FFI_KOTLIN_BUILD = `cd openswap-kotlin
+
+# Dev build (Linux host, native JVM)
+bash ./build-scripts/development/build-dev-linux-jvm.sh
+
+# Package the library
+./gradlew :lib:assembleRelease`
+
+const CODE_FFI_KOTLIN = `import org.openswap.*
+
+val rpcConfig = RpcConfig(
+    url = "http://127.0.0.1:18442",
+    username = "user",
+    password = "password",
+    walletName = "taker_wallet"
+)
 
 val taker = Taker.init(
     dataDir = "/path/to/data",
     walletFileName = "taker_wallet",
-    rpcConfig = RpcConfig(
-        url = "localhost:38332",
-        username = "user",
-        password = "password",
-        walletName = "taker_wallet"
-    ),
+    rpcConfig = rpcConfig,
     controlPort = 9051u,
-    torAuthPassword = null,
-    zmqAddr = "tcp://localhost:28332",
-    password = "your_password"
+    torAuthPassword = "openswap",
+    zmqAddr = "tcp://127.0.0.1:28332",
+    password = ""
 )
+
+taker.setupLogging(dataDir = "/path/to/data", logLevel = "info")
+taker.syncAndSave()
+taker.syncOfferbookAndWait()
 
 val balances = taker.getBalances()
-println("Spendable: \${balances.spendable} sats")
+println("spendable: \${balances.spendable} sats")
 
-val report = taker.doCoinswap(
-    SwapParams(sendAmount = 1_000_000u, makerCount = 2u, manuallySelectedOutpoints = null)
+val swapParams = SwapParams(
+    protocol = null,
+    sendAmount = 1_000_000u,
+    makerCount = 2u,
+    txCount = 1u,
+    requiredConfirms = 1u,
+    manuallySelectedOutpoints = null,
+    preferredMakers = null
 )
-println("Swap ID: \${report?.swapId}")`
 
-const CODE_FFI_REACT_NATIVE_BUILD = `cd coinswap-react-native
+val swapId = taker.prepareOpenswap(swapParams)
+val report = taker.startOpenswap(swapId)
+println("swap id: \${report.swapId}")`
+
+const CODE_FFI_REACT_NATIVE_BUILD = `cd openswap-react-native
 npm install
 
 # Build Rust library and generate Android JSI/TurboModule glue
@@ -145,21 +176,21 @@ npm run ubrn:ios
 npm run typecheck
 npm test`
 
-const CODE_FFI_REACT_NATIVE = `import { AddressType, CoinswapTaker } from 'coinswap-react-native'
+const CODE_FFI_REACT_NATIVE = `import { AddressType, OpenswapTaker } from 'openswap-react-native'
 
-await CoinswapTaker.setupLogging(null, 'info')
+await OpenswapTaker.setupLogging(null, 'info')
 
-const taker = await CoinswapTaker.init({
+const taker = await OpenswapTaker.init({
   dataDir: null,
   walletFileName: 'taker_wallet',
   rpcConfig: {
-    url: 'localhost:38332',
+    url: 'localhost:18442',
     username: 'user',
     password: 'password',
     walletName: 'taker_wallet',
   },
   controlPort: 9051,
-  torAuthPassword: 'coinswap',
+  torAuthPassword: 'openswap',
   zmqAddr: 'tcp://127.0.0.1:28332',
   password: '',
 })
@@ -170,7 +201,7 @@ await taker.syncAndSave()
 const balances = await taker.getBalances()
 const address = await taker.getNextExternalAddress(AddressType.P2WPKH)
 
-const swapId = await taker.prepareCoinswap({
+const swapId = await taker.prepareOpenswap({
   protocol: 'Taproot',
   sendAmount: 1_000_000n,
   makerCount: 2,
@@ -178,10 +209,10 @@ const swapId = await taker.prepareCoinswap({
   requiredConfirms: 1,
 })
 
-const report = await taker.startCoinswap(swapId)
+const report = await taker.startOpenswap(swapId)
 
 console.log('spendable:', balances.spendable, 'sats')
-console.log('receive to:', address.address)
+console.log('receive to:', address.addr)
 console.log('swap id:', report.swapId)
 
 await taker.dispose()`
@@ -190,92 +221,139 @@ const CODE_FFI_SWIFT_BUILD = `# Dev build (fast; targets host + iOS device + iOS
 bash ./build-xcframework-dev.sh`
 
 const CODE_FFI_SWIFT = `import Foundation
+import Openswap
+
+let rpcConfig = RpcConfig(
+    url: "http://127.0.0.1:18442",
+    username: "user",
+    password: "password",
+    walletName: "taker_wallet"
+)
 
 let taker = try Taker.\`init\`(
     dataDir: "/path/to/data",
     walletFileName: "taker_wallet",
-    rpcConfig: RPCConfig(
-        url: "http://localhost:38332",
-        user: "user",
-        password: "password",
-        walletName: "taker_wallet"
-    ),
+    rpcConfig: rpcConfig,
     controlPort: 9051,
-    torAuthPassword: nil,
-    zmqAddr: "tcp://localhost:28332",
-    password: "your_password"
+    torAuthPassword: "openswap",
+    zmqAddr: "tcp://127.0.0.1:28332",
+    password: ""
 )
+
+try taker.setupLogging(dataDir: "/path/to/data", logLevel: "info")
+try taker.syncAndSave()
+try taker.syncOfferbookAndWait()
 
 let balances = try taker.getBalances()
-print("Spendable: \\(balances.spendable) sats")
+print("spendable: \\(balances.spendable) sats")
 
-if let report = try taker.doCoinswap(
-    swapParams: SwapParams(sendAmount: 1_000_000, makerCount: 2, manuallySelectedOutpoints: nil)
-) {
-    print("Swap completed: \\(report.swapId)")
-}`
+let swapParams = SwapParams(
+    protocol: nil,
+    sendAmount: 1_000_000,
+    makerCount: 2,
+    txCount: 1,
+    requiredConfirms: 1,
+    manuallySelectedOutpoints: nil,
+    preferredMakers: nil
+)
 
-const CODE_FFI_PYTHON_BUILD = `cd ffi-commons
-chmod +x create_bindings.sh
-./create_bindings.sh
+let swapId = try taker.prepareOpenswap(swapParams: swapParams)
+let report = try taker.startOpenswap(swapId: swapId)
+print("swap id: \\(report.swapId)")`
 
-cd ../coinswap-python
-pip install .`
+const CODE_FFI_PYTHON_BUILD = `cd openswap-python
 
-const CODE_FFI_PYTHON = `import coinswap
+# Dev build (Linux host)
+bash ./build-scripts/development/build-dev-linux-x86_64.sh
 
-taker = coinswap.Taker.init(
+# Build wheel / sdist
+python -m build`
+
+const CODE_FFI_PYTHON = `from openswap import AddressType, RpcConfig, SwapParams, Taker
+
+rpc_config = RpcConfig(
+    url="http://127.0.0.1:18442",
+    username="user",
+    password="password",
+    wallet_name="taker_wallet"
+)
+
+taker = Taker.init(
     data_dir="/path/to/data",
     wallet_file_name="taker_wallet",
-    rpc_config=coinswap.RPCConfig(
-        url="http://localhost:38332",
-        user="user",
-        password="password",
-        wallet_name="taker_wallet"
-    ),
+    rpc_config=rpc_config,
     control_port=9051,
-    tor_auth_password=None,
-    zmq_addr="tcp://localhost:28332",
-    password="your_password"
+    tor_auth_password="openswap",
+    zmq_addr="tcp://127.0.0.1:28332",
+    password=""
 )
+
+taker.setup_logging(data_dir="/path/to/data", log_level="Info")
+taker.sync_and_save()
+taker.sync_offerbook_and_wait()
 
 balances = taker.get_balances()
-print(f"Spendable: {balances.spendable} sats")
+print(f"spendable: {balances.spendable} sats")
 
-report = taker.do_coinswap(
-    coinswap.SwapParams(send_amount=1_000_000, maker_count=2, manually_selected_outpoints=None)
+swap_params = SwapParams(
+    protocol=None,
+    send_amount=1_000_000,
+    maker_count=2,
+    tx_count=1,
+    required_confirms=1,
+    manually_selected_outpoints=None,
+    preferred_makers=None
 )
-print(f"Swap ID: {report.swap_id}")`
 
-const CODE_FFI_RUBY_BUILD = `cd ffi-commons
-chmod +x create_bindings.sh
-./create_bindings.sh
+swap_id = taker.prepare_openswap(swap_params=swap_params)
+report = taker.start_openswap(swap_id=swap_id)
+print(f"swap id: {report.swap_id}")`
 
-cd ../coinswap-ruby
-bundle install`
+const CODE_FFI_RUBY_BUILD = `cd openswap-ruby
 
-const CODE_FFI_RUBY = `require 'coinswap'
+# Dev build (Linux host) — builds ffi-commons, regenerates openswap.rb,
+# and stages the native library at the package root
+bash ./build-scripts/development/build-dev-linux-x86_64.sh`
 
-taker = Coinswap::Taker.init(
-  data_dir: '/path/to/data',
-  wallet_file_name: 'taker_wallet',
-  rpc_config: Coinswap::RPCConfig.new(
-    url: 'http://localhost:38332',
-    user: 'user',
-    password: 'password',
-    wallet_name: 'taker_wallet'
-  ),
-  control_port: 9051,
-  tor_auth_password: nil,
-  zmq_addr: 'tcp://localhost:28332',
-  password: 'your_password'
+const CODE_FFI_RUBY = `require 'openswap'
+
+rpc_config = Openswap::RpcConfig.new(
+  url: 'http://127.0.0.1:18442',
+  username: 'user',
+  password: 'password',
+  wallet_name: 'taker_wallet'
 )
+
+taker = Openswap::Taker.init(
+  '/path/to/data',
+  'taker_wallet',
+  rpc_config,
+  9051,
+  'openswap',
+  'tcp://127.0.0.1:28332',
+  ''
+)
+
+taker.setup_logging('/path/to/data', 'info')
+taker.sync_and_save
+taker.sync_offerbook_and_wait
 
 balances = taker.get_balances
-puts "Spendable: #{balances.spendable} sats"
+puts "spendable: #{balances.spendable} sats"
 
-report = taker.do_coinswap(send_amount: 1_000_000, maker_count: 2)
-puts "Swap ID: #{report.swap_id}"`
+swap_params = Openswap::SwapParams.new(
+  protocol: nil,
+  send_amount: 1_000_000,
+  maker_count: 2,
+  tx_count: 1,
+  required_confirms: 1,
+  manually_selected_outpoints: nil,
+  preferred_makers: nil
+)
+
+swap_id = taker.prepare_openswap(swap_params)
+report = taker.start_openswap(swap_id)
+puts "swap id: #{report.swap_id}"`
 
 // ─── Install tabs ─────────────────────────────────────────────────────────────
 
@@ -370,7 +448,7 @@ const FFI_TABS = [
         <p className="type-meta text-cream/65 font-body">
           Full README:{' '}
           <a href={LINKS.ffi_react_native_repo} target="_blank" rel="noopener noreferrer" className="simple-link inline-flex items-center gap-1.5">
-            coinswap-react-native
+            openswap-react-native
             <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
           </a>
         </p>
@@ -721,7 +799,7 @@ export default function Takers() {
             <a href={LINKS.openswap_ffi} target="_blank" rel="noopener noreferrer" className="simple-link">openswap-ffi</a>{' '}
             wraps the core Rust taker logic in a UniFFI-generated foreign function interface, exposing{' '}
             <code className="inline-code">Taker.init()</code>, <code className="inline-code">getBalances()</code>,{' '}
-            <code className="inline-code">fetchOffers()</code>, and <code className="inline-code">doSwap()</code>{' '}
+            <code className="inline-code">fetchOffers()</code>, and <code className="inline-code">prepareOpenswap()</code> / <code className="inline-code">startOpenswap()</code>{' '}
             across desktop, mobile, and server-side bindings. The Electron Taker App is itself built on top of the JS binding.
           </p>
 

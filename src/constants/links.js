@@ -55,12 +55,12 @@ export const LINKS = {
   docs_maker_dashboard_packaging_base: 'https://raw.githubusercontent.com/citadel-foss/maker-dashboard/main/packaging',
 
   // FFI GitHub repo links (for "view on GitHub" buttons)
-  ffi_js_repo:     'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-js',
-  ffi_python_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-python',
-  ffi_kotlin_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-kotlin',
-  ffi_react_native_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-react-native',
-  ffi_swift_repo:  'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-swift',
-  ffi_ruby_repo:   'https://github.com/citadel-foss/openswap-ffi/tree/main/coinswap-ruby',
+  ffi_js_repo:     'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-js',
+  ffi_python_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-python',
+  ffi_kotlin_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-kotlin',
+  ffi_react_native_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-react-native',
+  ffi_swift_repo:  'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-swift',
+  ffi_ruby_repo:   'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-ruby',
   maker_dashboard_mynode_repo: 'https://github.com/citadel-foss/maker-dashboard/tree/main/packaging/mynode',
   maker_dashboard_umbrel_repo: 'https://github.com/citadel-foss/maker-dashboard/tree/main/packaging/umbrel',
 };
