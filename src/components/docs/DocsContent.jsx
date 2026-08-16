@@ -127,10 +127,11 @@ function GetStartedPanel() {
             </dd>
           </div>
           <div>
-            <dt className="font-mono text-sm font-semibold uppercase tracking-wider text-black/65">Directory Server</dt>
+            <dt className="font-mono text-sm font-semibold uppercase tracking-wider text-black/65">Nostr Relays</dt>
             <dd className="mt-1">
-              The <code className="inline-code">directoryd</code> binary maintains a public list of
-              registered makers and their fidelity bonds. Takers query the directory to discover available makers.
+              Makers announce their fidelity bonds as events on public nostr relays.
+              Takers discover makers by reading these announcements and verifying each
+              bond on-chain — no central directory server required.
             </dd>
           </div>
         </dl>

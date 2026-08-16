@@ -9,12 +9,16 @@ import TabGroup from '../components/ui/TabGroup'
 const CODE_CLI_BUILD = `git clone ${LINKS.openswap_repo}
 cd openswap
 cargo build --release
-# builds: taker, makerd, maker-cli, directoryd`
+# builds: taker, makerd, maker-cli`
 
 const CODE_CLI_INSTALL = `sudo install ./target/release/taker /usr/local/bin/`
 
 const CODE_TAKER_HELP = `$ taker --help
-A simple command-line app for OpenSwap clients.
+A simple command line app to operate as openswap client.
+
+The app works as a regular Bitcoin wallet with the added capability to perform
+openswaps. It can talk to either a Bitcoin Core node (over RPC + ZMQ — the default)
+or an Electrum-protocol server (via \`--electrum\`).
 
 Usage: taker [OPTIONS] <COMMAND>
 
@@ -27,21 +31,30 @@ Commands:
   get-new-address     Returns a new address
   send-to-address     Send to an external wallet address
   fetch-offers        Update the offerbook with current market offers and display them
-  openswap            Initiate the openswap process
+  list-offers         List makers from the cached offerbook without a network sync
+  poll-maker          Fetch and verify an offer from a single maker address
+  remove-maker        Remove a maker from the local offerbook
+  open-swap           Initiate the openswap process
   recover             Recover from all failed swaps
   backup              Backup the selected wallet
   restore             Restore a wallet from a backup file
+  verify-deniability  Verify the deniability proof for a specific swap
   help                Print this message or the help of the given subcommand(s)
 
 Options:
   -d, --data-directory <DATA_DIRECTORY>   [default: ~/.openswap/taker]
-  -r, --ADDRESS:PORT <ADDRESS:PORT>       [default: 127.0.0.1:38332]
-  -z, --ZMQ <ZMQ>                        [default: tcp://127.0.0.1:28332]
-  -a, --USER:PASSWORD <USER:PASSWORD>    [default: user:password]
-  -w, --WALLET <WALLET>                  [default: taker-wallet]
-  -p, --PASSWORD <PASSWORD>
-  -v, --verbosity <VERBOSITY>            [default: info]
-                                         [possible values: off, error, warn, info, debug, trace]`
+  -r, --ADDRESS:PORT <ADDRESS:PORT>       Bitcoin Core RPC  [default: 127.0.0.1:38332]
+  -z, --ZMQ <ZMQ>                         Bitcoin Core ZMQ  [default: RPC host, port 28332]
+  -a, --USER:PASSWORD <USER:PASSWORD>     Bitcoin Core RPC auth  [default: user:password]
+  -t, --tor-auth <TOR_AUTH>               Tor control authentication
+      --electrum <ELECTRUM_URL>           Use an Electrum backend instead of Bitcoin Core
+      --electrum-tor                      Route Electrum through the Tor SOCKS proxy
+  -w, --WALLET <WALLET>                   [default: taker-wallet]
+  -p, --PASSWORD <PASSWORD>               Optional wallet encryption password
+  -v, --verbosity <VERBOSITY>             [default: info]
+                                          [possible values: off, error, warn, info, debug, trace]
+  -h, --help                              Print help
+  -V, --version                           Print version`
 
 const CODE_CLI_RECOVER = `# List funds locked in failed swap contracts
 taker list-utxo-contract
@@ -512,7 +525,10 @@ const SUBCOMMANDS = [
   { cmd: 'get-new-address',    desc: 'Generate a receiving address to fund your wallet' },
   { cmd: 'get-balances',       desc: 'Show balance by category (regular, swap, contract, spendable)' },
   { cmd: 'fetch-offers',       desc: 'Sync the offer book with current maker offers' },
-  { cmd: 'openswap',           desc: 'Initiate an openswap with available makers' },
+  { cmd: 'list-offers',        desc: 'List makers from the cached offer book without a network sync' },
+  { cmd: 'poll-maker',         desc: 'Fetch and verify an offer from a single maker address' },
+  { cmd: 'remove-maker',       desc: 'Remove a maker from the local offer book' },
+  { cmd: 'open-swap',          desc: 'Initiate an openswap with available makers' },
   { cmd: 'list-utxo',          desc: 'List all UTXOs with type and spend info' },
   { cmd: 'list-utxo-regular',  desc: 'Regular (non-swap) wallet UTXOs only' },
   { cmd: 'list-utxo-swap',     desc: 'UTXOs received from completed swaps' },
@@ -521,6 +537,7 @@ const SUBCOMMANDS = [
   { cmd: 'send-to-address',    desc: 'Send sats to an external address' },
   { cmd: 'backup',             desc: 'Backup the selected wallet to a file' },
   { cmd: 'restore',            desc: 'Restore a wallet from a backup file' },
+  { cmd: 'verify-deniability', desc: 'Verify the deniability proof for a specific swap' },
 ]
 
 // ─── Fee table (1% maker fee, 250 sat mining per hop) ─────────────────────────

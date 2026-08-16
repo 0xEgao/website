@@ -15,42 +15,34 @@ sudo install ./target/release/maker-cli /usr/local/bin/`
 const CODE_MAKERD_HELP = `$ makerd --help
 OpenSwap Maker Server
 
-The server requires a Bitcoin Core RPC connection running in Testnet4. It requires some
-starting balance, around 50,000 sats for Fidelity + Swap Liquidity (suggested 50,000 sats).
-So top up with at least 0.001 BTC to start all the node processes. Suggested faucet here:
+The server requires a Bitcoin Core RPC connection running in Testnet4. It needs some
+starting balance — around 50,000 sats for Fidelity + Swap Liquidity. Top up with at
+least 0.001 BTC to start all the node processes. Suggested faucet:
 https://mempool.space/testnet4/faucet
 
-All server processes will start after the fidelity bond transaction is confirmed. This may
-take some time. Approximately 10 minutes. Once the bond is confirmed, the server starts listening
-for incoming swap requests. As it performs swaps for clients, it keeps earning fees.
+All server processes start after the fidelity bond transaction is confirmed (approx.
+10 mins). Once the bond is confirmed, the server starts listening for incoming swap
+requests. As it performs swaps for clients, it keeps earning fees.
 
 The server is operated with the maker-cli app, for all basic wallet related operations.
 
-For more detailed usage information, please refer to the Maker docs:
-https://github.com/citadel-foss/openswap/blob/master/docs/makerd.md
+Docs:   https://github.com/citadel-foss/openswap/blob/master/docs/makerd.md
+Issues: https://github.com/citadel-foss/openswap/issues
 
-This is an early beta, and there are known and unknown bugs. Please report issues in the
-Project Issue Board: https://github.com/citadel-foss/openswap/issues
+Usage: makerd [OPTIONS]
 
-USAGE:
-    makerd [OPTIONS]
-
-OPTIONS:
-    -d, --data-directory <DATA_DIRECTORY>  Data directory
-                                           [default: ~/.openswap/maker]
-    -r, --ADDRESS:PORT <ADDRESS:PORT>      Bitcoin Core RPC address
-                                           [default: 127.0.0.1:38332]
-    -z, --ZMQ <ZMQ>                        Bitcoin Core ZMQ address:port value
-                                           [default: tcp://127.0.0.1:28332]
-    -a, --USER:PASSWORD <USER:PASSWORD>    Bitcoin Core RPC authentication string
-                                           [default: user:password]
-    -t, --tor-auth <TOR_AUTH>
-    -w, --WALLET <WALLET>                  Optional wallet name. If the wallet exists,
-                                           load the wallet, else create a new wallet with
-                                           the given name. Default: maker-wallet
-    -p, --PASSWORD <PASSWORD>              Optional Password for the encryption of the wallet
-    -h, --help                             Print help information
-    -V, --version                          Print version`
+Options:
+  -d, --data-directory <DATA_DIRECTORY>   [default: ~/.openswap/maker]
+  -r, --ADDRESS:PORT <ADDRESS:PORT>       Bitcoin Core RPC  [default: 127.0.0.1:38332]
+  -z, --ZMQ <ZMQ>                         Bitcoin Core ZMQ  [default: RPC host, port 28332]
+  -a, --USER:PASSWORD <USER:PASSWORD>     Bitcoin Core RPC auth  [default: user:password]
+      --electrum <ELECTRUM_URL>           Use an Electrum backend instead of Bitcoin Core
+      --electrum-tor                      Route Electrum through the Tor SOCKS proxy
+  -t, --tor-auth <TOR_AUTH>               Tor control authentication
+  -w, --WALLET <WALLET>                   [default: maker]
+  -p, --PASSWORD <PASSWORD>               Optional wallet encryption password
+  -h, --help                              Print help
+  -V, --version                           Print version`
 
 const CODE_START = `# Start with defaults
 makerd
@@ -99,28 +91,35 @@ make run
 # Web UI at http://127.0.0.1:3000`
 
 const CODE_MAKER_CLI_HELP = `$ maker-cli --help
-A simple command-line app for operating the makerd server.
+A simple command line app to operate the makerd server.
 
-USAGE:
-    maker-cli [OPTIONS] <SUBCOMMAND>
+The app works as an RPC client for makerd, useful to access the server,
+retrieve information, and manage server operations.
 
-OPTIONS:
-    -p, --rpc-port <RPC_PORT>    RPC port of makerd  [default: 127.0.0.1:6103]
+Usage: maker-cli [OPTIONS] <COMMAND>
 
-SUBCOMMANDS:
-    send-ping            Health check — returns "success"
-    get-balances         Balance by category (regular, swap, contract, fidelity, spendable)
-    get-new-address      Generate a deposit address
-    show-fidelity        Fidelity bond status, outpoint, and value
-    show-tor-address     Your .onion address
-    show-data-dir        Data directory path
-    list-utxo            All UTXOs including fidelity
-    list-utxo-swap       UTXOs from completed swaps
-    list-utxo-contract   Locked HTLC UTXOs
-    list-utxo-fidelity   Fidelity bond UTXO
-    sync-wallet          Sync wallet with chain state
-    send-to-address      Send funds to an external address
-    stop                 Graceful shutdown`
+Commands:
+  send-ping           Sends a ping to makerd — returns "success"
+  list-utxo           Lists all UTXOs in the wallet, including fidelity bonds
+  list-utxo-swap      Lists UTXOs received from incoming swaps
+  list-utxo-contract  Lists HTLC contract UTXOs
+  list-utxo-fidelity  Lists fidelity bond UTXOs
+  get-balances        Balance by category (regular, swap, contract, fidelity, spendable)
+  get-new-address     Gets a new bitcoin receiving address
+  send-to-address     Send Bitcoin to an external address and return the txid
+  show-tor-address    Show the server .onion address
+  show-data-dir       Show the data directory path
+  stop                Shutdown the makerd server
+  show-fidelity       Show all fidelity bonds, current and previous
+  sync-wallet         Sync the wallet with the current blockchain state
+  verify-deniability  Verify the deniability proof for a specific swap
+  help                Print this message or the help of the given subcommand(s)
+
+Options:
+  -p, --rpc-port <RPC_PORT>               makerd RPC address  [default: 127.0.0.1:6103]
+  -d, --data-directory <DATA_DIRECTORY>   Maker data dir (used to read the RPC auth cookie)
+  -h, --help                              Print help
+  -V, --version                           Print version`
 
 // ─── Docker config modes ──────────────────────────────────────────────────────
 
@@ -254,6 +253,7 @@ const SUBCOMMANDS = [
   { cmd: 'sync-wallet',        desc: 'Sync wallet with current chain state' },
   { cmd: 'send-to-address',    desc: 'Send funds to an external address' },
   { cmd: 'stop',               desc: 'Graceful shutdown of makerd' },
+  { cmd: 'verify-deniability', desc: 'Verify the deniability proof for a specific swap' },
 ]
 
 // ─── Balance categories ───────────────────────────────────────────────────────
@@ -378,7 +378,7 @@ export default function Makers() {
                 {[
                   <><code className="inline-code">makerd</code> creates the bond automatically once the wallet is funded</>,
                   <>Bond value decays as expiry approaches — <code className="inline-code">makerd</code> auto-renews before it drops too low</>,
-                  <><code className="inline-code">directoryd</code> verifies the fidelity proof before listing your <code className="inline-code">.onion</code> address</>,
+                  <><code className="inline-code">makerd</code> announces the bond to public nostr relays — takers verify the proof before swapping</>,
                   <>Expired bonds are redeemed and a new bond is created automatically</>,
                 ].map((item, i) => (
                   <div key={i} className="flex items-start gap-3">
