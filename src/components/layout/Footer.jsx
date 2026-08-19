@@ -7,6 +7,7 @@ const INTERNAL = [
   { to: '/how-it-works', label: 'how-it-works' },
   { to: '/takers',       label: 'takers' },
   { to: '/makers',       label: 'makers' },
+  { to: '/market',       label: 'market' },
   { to: '/docs',         label: 'docs' },
 ]
 
@@ -19,8 +20,9 @@ const EXTERNAL = [
 
 export default function Footer() {
   return (
-    <footer className="mt-auto border-t border-dotted border-black/15 bg-transparent">
-      <div className="site-shell py-8">
+    <footer className="site-footer mt-auto border-t border-dotted border-black/15 bg-transparent">
+      <div className="site-footer__beam" aria-hidden="true" />
+      <div className="site-shell py-10">
 
         <p className="type-small mb-5 font-mono text-black/65">
           <span className="text-black/80">user@openswap</span>
@@ -28,7 +30,7 @@ export default function Footer() {
           <span className="text-black/65"> cat ./network-footer.sys</span>
         </p>
 
-        <div className="mb-6 grid grid-cols-1 gap-6 sm:grid-cols-3">
+        <div className="site-footer__grid mb-10 grid grid-cols-1 gap-10 md:grid-cols-[1.5fr_0.8fr_0.8fr] md:gap-16">
           <div>
             <Link to="/" className="group flex items-center gap-3">
               <OpenSwapLogo className="h-10 w-10 shrink-0 drop-shadow-[0_2px_10px_rgba(0,0,0,0.12)]" />
@@ -43,12 +45,12 @@ export default function Footer() {
             </Link>
           </div>
 
-          <div>
-          <p className="type-ui mb-3 font-mono uppercase tracking-[0.2em] text-black/65">// routes</p>
-            <ul className="space-y-2">
+          <div className="site-footer__nav">
+            <p className="site-footer__heading mb-4 font-mono uppercase text-black/65">// routes</p>
+            <ul className="space-y-2.5">
               {INTERNAL.map(({ to, label }) => (
                 <li key={to}>
-                  <Link to={to} className="type-small font-mono text-black/65 transition-colors hover:text-black">
+                  <Link to={to} className="site-footer__link font-mono text-black/65 transition-colors hover:text-black">
                     &gt; {label}
                   </Link>
                 </li>
@@ -56,9 +58,9 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
-          <p className="type-ui mb-3 font-mono uppercase tracking-[0.2em] text-black/65">// external</p>
-            <ul className="space-y-2">
+          <div className="site-footer__nav">
+            <p className="site-footer__heading mb-4 font-mono uppercase text-black/65">// external</p>
+            <ul className="space-y-2.5">
               {EXTERNAL.map(({ href, label }) => (
                 href && (
                   <li key={label}>
@@ -66,7 +68,7 @@ export default function Footer() {
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="type-small inline-flex items-center gap-1.5 font-mono text-black/65 transition-colors hover:text-black"
+                      className="site-footer__link inline-flex items-center gap-1.5 font-mono text-black/65 transition-colors hover:text-black"
                     >
                       &gt; {label}
                       <ExternalLink size={13} strokeWidth={1.8} aria-hidden="true" />
@@ -76,11 +78,15 @@ export default function Footer() {
               ))}
             </ul>
           </div>
+
         </div>
 
         <div className="flex flex-col items-center justify-between gap-2 border-t border-dotted border-black/15 pt-4 sm:flex-row">
-          <p className="type-ui font-mono text-black/65">
-            // Built by Citadel Tech. Open source under MIT.
+          <p className="site-footer__legal font-mono text-black/65">
+            // Built by Citadel FOSS. Open source under MIT.
+          </p>
+          <p className="site-footer__meta font-mono uppercase text-black/45">
+            Non-custodial · Atomic · Multi-hop
           </p>
         </div>
       </div>
