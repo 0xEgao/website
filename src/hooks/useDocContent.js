@@ -7,22 +7,12 @@ export function clearCache() {
 }
 
 export function useDocContent(url) {
-  const [content, setContent] = useState(null)
-  const [loading, setLoading] = useState(false)
-  const [error, setError]     = useState(null)
+  const [result, setResult] = useState({ url: null, content: null, error: null })
 
   useEffect(() => {
-    if (!url) return
-    if (cache.has(url)) {
-      setContent(cache.get(url))
-      setLoading(false)
-      setError(null)
-      return
-    }
+    if (!url || cache.has(url)) return
+
     let cancelled = false
-    setLoading(true)
-    setContent(null)
-    setError(null)
     fetch(url)
       .then(res => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
@@ -31,16 +21,18 @@ export function useDocContent(url) {
       .then(text => {
         if (cancelled) return
         cache.set(url, text)
-        setContent(text)
-        setLoading(false)
+        setResult({ url, content: text, error: null })
       })
       .catch(err => {
         if (cancelled) return
-        setError(err.message)
-        setLoading(false)
+        setResult({ url, content: null, error: err.message })
       })
     return () => { cancelled = true }
   }, [url])
 
-  return { content, loading, error }
+  if (!url) return { content: null, loading: false, error: null }
+  if (cache.has(url)) return { content: cache.get(url), loading: false, error: null }
+  if (result.url === url) return { content: result.content, loading: false, error: result.error }
+
+  return { content: null, loading: true, error: null }
 }

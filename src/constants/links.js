@@ -5,6 +5,9 @@ export const LINKS = {
   // Core repos
   github_org:       "https://github.com/citadel-foss",
   openswap_repo:    "https://github.com/citadel-foss/openswap",
+  portal_repo:      "https://github.com/citadel-foss/portal",
+  portal_releases:  "https://github.com/citadel-foss/portal/releases",
+  tauri_prerequisites: "https://tauri.app/start/prerequisites/",
   taker_app:        "https://github.com/citadel-foss/taker-app",
   maker_dashboard:  "https://github.com/citadel-foss/maker-dashboard",
   maker_dashboard_packaging: "https://github.com/citadel-foss/maker-dashboard/tree/main/packaging",
@@ -21,13 +24,15 @@ export const LINKS = {
   protocol_spec:    "https://github.com/citadel-foss/OpenSwap-Protocol-Specification",
   protocol_v2:      "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/tree/main/v2%20protocol",
   protocol_flow:    "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v1%20protocol/protocol-flow.md",
+  protocol_legacy_contract: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v1%20protocol/contract.md",
+  protocol_taproot_contract: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v2%20protocol/contract.md",
+  protocol_payswap: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/general%20specs/payswap.md",
   releases:         "https://github.com/citadel-foss/openswap/releases",
   contributing:     "https://github.com/citadel-foss/openswap/blob/master/CONTRIBUTING.md",
   issues:           "https://github.com/citadel-foss/openswap/issues",
 
   // Community (Matrix alias as published on the org profile — "ciatdel" is intentional)
   matrix:           "https://matrix.to/#/#ciatdel-foss:matrix.org",
-  deep_wiki:        "https://deepwiki.com/citadel-foss/openswap",
 
   // Testnet (Signet)
   signet:        "https://mempool.citadelfoss.xyz/",
@@ -61,6 +66,7 @@ export const LINKS = {
   ffi_react_native_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-react-native',
   ffi_swift_repo:  'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-swift',
   ffi_ruby_repo:   'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-ruby',
+  ffi_csharp_repo: 'https://github.com/citadel-foss/openswap-ffi/tree/main/openswap-csharp',
   maker_dashboard_mynode_repo: 'https://github.com/citadel-foss/maker-dashboard/tree/main/packaging/mynode',
   maker_dashboard_umbrel_repo: 'https://github.com/citadel-foss/maker-dashboard/tree/main/packaging/umbrel',
 };

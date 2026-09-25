@@ -1976,3 +1976,939 @@ html[data-theme='dark'] .app-docs-sidebar {
   line-height: 1.4;
   letter-spacing: 0.12em;
 }
+
+/* ── Product portal pages ───────────────────────────────────────── */
+.portal-page {
+  --portal-border: rgba(44, 36, 27, 0.14);
+  --portal-border-strong: rgba(44, 36, 27, 0.24);
+  --portal-surface: rgba(255, 252, 246, 0.48);
+  --portal-surface-strong: rgba(255, 252, 246, 0.72);
+  padding-top: clamp(1.5rem, 4vw, 3rem);
+  padding-bottom: clamp(4rem, 8vw, 7rem);
+}
+
+html[data-theme='dark'] .portal-page {
+  --portal-border: rgba(142, 178, 202, 0.15);
+  --portal-border-strong: rgba(142, 178, 202, 0.28);
+  --portal-surface: rgba(12, 18, 27, 0.62);
+  --portal-surface-strong: rgba(16, 24, 35, 0.84);
+}
+
+.portal-hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.3rem, 6vw, 5.5rem);
+  border: 1px solid var(--portal-border);
+  border-radius: clamp(1.5rem, 3vw, 2.5rem);
+  background:
+    radial-gradient(circle at 92% 10%, rgba(247, 147, 26, 0.14), transparent 28rem),
+    linear-gradient(135deg, var(--portal-surface-strong), var(--portal-surface));
+  box-shadow: 0 28px 90px rgba(44, 36, 27, 0.08);
+}
+
+html[data-theme='dark'] .portal-hero {
+  background:
+    radial-gradient(circle at 92% 8%, rgba(247, 147, 26, 0.14), transparent 28rem),
+    radial-gradient(circle at 10% 110%, rgba(59, 130, 246, 0.12), transparent 32rem),
+    linear-gradient(135deg, rgba(15, 22, 32, 0.95), rgba(7, 10, 16, 0.86));
+  box-shadow: 0 34px 100px rgba(0, 0, 0, 0.3);
+}
+
+.portal-hero__signal {
+  position: absolute;
+  top: 0;
+  left: clamp(2.3rem, 6vw, 5.5rem);
+  width: clamp(4rem, 10vw, 8rem);
+  height: 3px;
+  background: var(--orange);
+  box-shadow: 0 0 22px color-mix(in srgb, var(--orange) 48%, transparent);
+}
+
+.portal-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(18rem, 0.72fr);
+  gap: clamp(2rem, 7vw, 7rem);
+  align-items: end;
+}
+
+.portal-hero__title {
+  max-width: 13ch;
+  font-size: clamp(3rem, 7vw, 6.75rem);
+  line-height: 0.94;
+  letter-spacing: -0.055em;
+}
+
+.portal-hero__description {
+  max-width: 39rem;
+  font-size: clamp(1.06rem, 1.5vw, 1.28rem);
+  line-height: 1.7;
+}
+
+.portal-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: fit-content;
+  min-height: 2.65rem;
+  padding: 0.65rem 0.95rem;
+  border: 1px solid var(--portal-border-strong);
+  border-radius: 999px;
+  color: var(--cream);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  transition: transform 180ms ease, border-color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+}
+
+.portal-link:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--orange) 60%, var(--portal-border-strong));
+  background: color-mix(in srgb, var(--orange) 9%, transparent);
+  box-shadow: 0 12px 30px color-mix(in srgb, var(--orange) 13%, transparent);
+}
+
+.portal-link--filled {
+  border-color: var(--orange);
+  background: var(--orange);
+  color: var(--navy);
+}
+
+.portal-section,
+.product-story,
+.download-group {
+  border-top: 1px solid var(--portal-border);
+}
+
+.portal-section {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+.portal-section--split {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(26rem, 1.15fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  align-items: center;
+  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+}
+
+.portal-section__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 3rem;
+}
+
+.portal-section__title,
+.product-story__title {
+  max-width: 18ch;
+  font-size: clamp(2rem, 4vw, 3.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.portal-copy {
+  font-size: 1.05rem;
+  line-height: 1.75;
+}
+
+.portal-requirements {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.portal-requirements span {
+  padding: 0.55rem 0.72rem;
+  border: 1px solid var(--portal-border);
+  border-radius: 0.65rem;
+  background: var(--portal-surface);
+  color: color-mix(in srgb, var(--cream) 72%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.76rem;
+}
+
+.portal-code {
+  border-radius: 1.25rem;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.16);
+}
+
+.ffi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  border-top: 1px solid var(--portal-border);
+  border-left: 1px solid var(--portal-border);
+}
+
+.ffi-card {
+  position: relative;
+  display: flex;
+  min-height: 18rem;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1.5rem;
+  border-right: 1px solid var(--portal-border);
+  border-bottom: 1px solid var(--portal-border);
+  background: var(--portal-surface);
+  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.ffi-card:hover {
+  z-index: 1;
+  transform: translateY(-4px);
+  background: var(--portal-surface-strong);
+  box-shadow: 0 22px 54px rgba(44, 36, 27, 0.1);
+}
+
+html[data-theme='dark'] .ffi-card:hover {
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+}
+
+.ffi-card__index,
+.download-group__index {
+  color: color-mix(in srgb, var(--cream) 38%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+}
+
+.ffi-card__support {
+  margin-bottom: 0.55rem;
+  color: color-mix(in srgb, var(--cream) 52%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.ffi-card__title {
+  font-size: clamp(1.55rem, 2.4vw, 2.2rem);
+}
+
+.ffi-card__copy {
+  margin-top: 0.75rem;
+  line-height: 1.6;
+}
+
+.ffi-card__arrow {
+  position: absolute;
+  top: 1.4rem;
+  right: 1.4rem;
+  color: color-mix(in srgb, var(--cream) 50%, transparent);
+  transition: transform 180ms ease, color 180ms ease;
+}
+
+.ffi-card:hover .ffi-card__arrow {
+  transform: translate(3px, -3px);
+  color: var(--orange);
+}
+
+.docs-directory {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.docs-directory__group {
+  min-height: 20rem;
+  padding: 1.5rem;
+  border: 1px solid var(--portal-border);
+  border-radius: 1.25rem;
+  background: var(--portal-surface);
+}
+
+.docs-directory__heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+  color: var(--cream);
+}
+
+.docs-directory__heading h3 {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.docs-directory__group ul {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.docs-directory__group .portal-link {
+  min-height: auto;
+  padding: 0.35rem 0;
+  border: 0;
+  border-radius: 0;
+  color: color-mix(in srgb, var(--cream) 68%, transparent);
+  text-transform: none;
+}
+
+.docs-directory__group .portal-link:hover {
+  transform: translateX(3px);
+  background: transparent;
+  box-shadow: none;
+  color: var(--cream);
+}
+
+.product-story {
+  display: grid;
+  grid-template-columns: minmax(19rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2.5rem, 7vw, 7rem);
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+}
+
+.product-story:first-of-type {
+  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+}
+
+.product-story__intro {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 1fr);
+  gap: 1.25rem;
+  align-content: start;
+}
+
+.product-story__number {
+  padding-top: 0.2rem;
+  color: color-mix(in srgb, var(--cream) 38%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.75rem;
+  letter-spacing: 0.18em;
+}
+
+.product-features {
+  display: grid;
+  gap: 0.8rem;
+  margin-top: 1.75rem;
+  color: color-mix(in srgb, var(--cream) 68%, transparent);
+}
+
+.product-features li {
+  display: flex;
+  gap: 0.75rem;
+  line-height: 1.55;
+}
+
+.product-features span {
+  color: var(--orange);
+  font-family: 'IBM Plex Mono', monospace;
+}
+
+.product-gallery {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  align-content: start;
+}
+
+.product-shot {
+  overflow: hidden;
+  border: 1px solid var(--portal-border);
+  border-radius: 1.2rem;
+  background: var(--portal-surface);
+  box-shadow: 0 18px 46px rgba(44, 36, 27, 0.08);
+}
+
+html[data-theme='dark'] .product-shot {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.26);
+}
+
+.product-shot img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 1.82 / 1;
+  object-fit: cover;
+  object-position: top left;
+}
+
+.product-shot figcaption {
+  padding: 0.8rem 1rem;
+  border-top: 1px solid var(--portal-border);
+  color: color-mix(in srgb, var(--cream) 56%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.download-catalog {
+  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+}
+
+.download-group {
+  display: grid;
+  grid-template-columns: minmax(18rem, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(2rem, 7vw, 6rem);
+  padding-block: clamp(3rem, 6vw, 5.5rem);
+}
+
+.download-group__intro {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.8rem 1rem;
+  align-content: start;
+}
+
+.download-group__intro > svg {
+  grid-column: 1;
+  margin-top: 0.15rem;
+  color: var(--orange);
+}
+
+.download-group__intro h2 {
+  grid-column: 2;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1;
+}
+
+.download-group__intro p {
+  grid-column: 2;
+  max-width: 30rem;
+  line-height: 1.65;
+}
+
+.download-group__files {
+  overflow: hidden;
+  border: 1px solid var(--portal-border);
+  border-radius: 1.2rem;
+  background: var(--portal-surface);
+}
+
+.download-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(9rem, auto);
+  gap: 1.25rem;
+  align-items: center;
+  min-height: 6.2rem;
+  padding: 1.1rem 1.3rem;
+  border-bottom: 1px solid var(--portal-border);
+  color: var(--cream);
+  transition: background-color 180ms ease;
+}
+
+.download-row:last-child {
+  border-bottom: 0;
+}
+
+.download-row:hover {
+  background: var(--portal-surface-strong);
+}
+
+.download-row__name {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.download-row__detail {
+  margin-top: 0.2rem;
+  color: color-mix(in srgb, var(--cream) 55%, transparent);
+  font-size: 0.9rem;
+}
+
+.download-row__format,
+.download-row__action {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.download-row__format {
+  color: color-mix(in srgb, var(--cream) 45%, transparent);
+}
+
+.download-row__action {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  color: color-mix(in srgb, var(--cream) 62%, transparent);
+}
+
+.download-note {
+  display: grid;
+  grid-template-columns: 1fr 0.75fr;
+  gap: clamp(2rem, 6vw, 6rem);
+  align-items: end;
+  margin-top: clamp(2rem, 5vw, 4rem);
+  padding: clamp(2rem, 5vw, 4rem);
+  border: 1px solid var(--portal-border);
+  border-radius: 1.5rem;
+  background: var(--portal-surface);
+}
+
+.download-note__label {
+  margin-bottom: 0.6rem;
+  color: var(--orange);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.download-note h2 {
+  max-width: 22ch;
+  font-size: clamp(1.7rem, 3vw, 2.7rem);
+  line-height: 1.08;
+}
+
+.download-note > p {
+  line-height: 1.7;
+}
+
+@media (max-width: 960px) {
+  .portal-hero__grid,
+  .portal-section--split,
+  .product-story,
+  .download-group {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-hero__title {
+    max-width: 15ch;
+  }
+
+  .portal-section__heading {
+    display: grid;
+    gap: 1.25rem;
+  }
+
+  .ffi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .product-story__intro {
+    max-width: 48rem;
+  }
+}
+
+@media (max-width: 700px) {
+  .portal-hero {
+    padding: 2rem 1.35rem;
+    border-radius: 1.35rem;
+  }
+
+  .portal-hero__signal {
+    left: 1.35rem;
+  }
+
+  .portal-hero__grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.5rem;
+  }
+
+  .portal-hero__title {
+    font-size: clamp(2.7rem, 14vw, 4.5rem);
+  }
+
+  .ffi-grid,
+  .docs-directory,
+  .product-gallery,
+  .download-note {
+    grid-template-columns: 1fr;
+  }
+
+  .ffi-card {
+    min-height: 15rem;
+  }
+
+  .product-story__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .product-story__number {
+    display: none;
+  }
+
+  .download-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.75rem;
+  }
+
+  .download-row__format {
+    justify-self: end;
+  }
+
+  .download-row__action {
+    grid-column: 1 / -1;
+    justify-content: flex-start;
+  }
+}
+
+/* ── Protocol modes ─────────────────────────────────────────────────────── */
+.home-protocols__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.home-protocols__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid var(--portal-border);
+  border-left: 1px solid var(--portal-border);
+}
+
+.protocol-mode {
+  display: flex;
+  min-height: 21rem;
+  flex-direction: column;
+  padding: clamp(1.35rem, 2.5vw, 2rem);
+  border-right: 1px solid var(--portal-border);
+  border-bottom: 1px solid var(--portal-border);
+  background: var(--portal-surface);
+  transition: background-color 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+}
+
+.protocol-mode:hover {
+  z-index: 1;
+  transform: translateY(-4px);
+  background: var(--portal-surface-strong);
+  box-shadow: 0 22px 54px rgba(44, 36, 27, 0.1);
+}
+
+html[data-theme='dark'] .protocol-mode:hover {
+  box-shadow: 0 22px 54px rgba(0, 0, 0, 0.28);
+}
+
+.protocol-mode__meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: color-mix(in srgb, var(--cream) 48%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.protocol-mode h3 {
+  margin-top: 3.5rem;
+  font-size: clamp(1.8rem, 3vw, 2.65rem);
+  line-height: 1;
+}
+
+.protocol-mode > p {
+  margin-top: 1rem;
+  line-height: 1.65;
+}
+
+.protocol-mode__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: auto;
+  padding-top: 2rem;
+  color: var(--orange);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.7rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Portal application page ────────────────────────────────────────────── */
+.portal-intro {
+  padding-bottom: clamp(3.5rem, 7vw, 6rem);
+}
+
+.portal-capabilities {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 2.5rem;
+  border-top: 1px solid var(--portal-border);
+  border-left: 1px solid var(--portal-border);
+}
+
+.portal-role {
+  position: relative;
+  min-height: 22rem;
+  padding: clamp(1.5rem, 3vw, 2.4rem);
+  border-right: 1px solid var(--portal-border);
+  border-bottom: 1px solid var(--portal-border);
+  background: var(--portal-surface);
+}
+
+.portal-role > svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  color: var(--orange);
+}
+
+.portal-role__eyebrow {
+  margin-top: 4rem;
+  color: color-mix(in srgb, var(--cream) 48%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.portal-role h3 {
+  margin-top: 0.55rem;
+  font-size: clamp(2rem, 4vw, 3.4rem);
+  line-height: 1;
+}
+
+.portal-role > h3 + p {
+  max-width: 44rem;
+  margin-top: 1.2rem;
+  line-height: 1.7;
+}
+
+.portal-role__points {
+  display: grid;
+  gap: 0;
+  margin-top: 2rem;
+  border-top: 1px solid var(--portal-border);
+}
+
+.portal-role__points li {
+  display: grid;
+  grid-template-columns: minmax(10rem, 0.72fr) minmax(0, 1.28fr);
+  gap: 1.25rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--portal-border);
+}
+
+.portal-role__points strong {
+  color: var(--cream);
+  font-family: 'Fredoka', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.portal-role__points span {
+  color: color-mix(in srgb, var(--cream) 62%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.55;
+}
+
+.portal-safety-note {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: 1rem;
+  padding: 1rem 1.15rem;
+  border: 1px solid color-mix(in srgb, var(--orange) 28%, var(--portal-border));
+  border-radius: 0.9rem;
+  background: color-mix(in srgb, var(--orange) 6%, var(--portal-surface));
+  color: color-mix(in srgb, var(--cream) 70%, transparent);
+  font-size: 0.9rem;
+}
+
+.portal-safety-note svg {
+  flex: 0 0 auto;
+  color: var(--orange);
+}
+
+.portal-safety-note strong {
+  color: var(--cream);
+}
+
+.portal-host {
+  padding-block: clamp(4rem, 8vw, 7rem);
+  border-top: 1px solid var(--portal-border);
+}
+
+.portal-host__intro {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 0.9fr) minmax(20rem, 0.78fr);
+  gap: clamp(1.25rem, 4vw, 3.5rem);
+  align-items: start;
+}
+
+.portal-host__icon {
+  display: grid;
+  width: 3rem;
+  height: 3rem;
+  place-items: center;
+  border: 1px solid var(--portal-border);
+  border-radius: 0.8rem;
+  background: var(--portal-surface);
+  color: var(--orange);
+}
+
+.portal-host__icon svg {
+  width: 1.25rem;
+}
+
+.portal-host__intro .portal-code {
+  align-self: stretch;
+}
+
+.portal-host__heading {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-top: clamp(3.5rem, 7vw, 6.5rem);
+  margin-bottom: 1.25rem;
+}
+
+.portal-walkthrough {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.portal-step {
+  overflow: hidden;
+  border: 1px solid var(--portal-border);
+  border-radius: 1.2rem;
+  background: var(--portal-surface);
+  box-shadow: 0 18px 46px rgba(44, 36, 27, 0.07);
+}
+
+html[data-theme='dark'] .portal-step {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.24);
+}
+
+.portal-step__image {
+  display: grid;
+  aspect-ratio: 16 / 9;
+  place-items: center;
+  overflow: hidden;
+  background: #090e15;
+}
+
+.portal-step__image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.portal-step figcaption {
+  display: grid;
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.8rem;
+  min-height: 8.8rem;
+  padding: 1.2rem;
+  border-top: 1px solid var(--portal-border);
+}
+
+.portal-step figcaption > span {
+  padding-top: 0.18rem;
+  color: color-mix(in srgb, var(--cream) 38%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+}
+
+.portal-step h3 {
+  font-size: 1.15rem;
+}
+
+.portal-step figcaption p {
+  margin-top: 0.45rem;
+  line-height: 1.55;
+}
+
+.portal-endcap {
+  padding-block: clamp(4.5rem, 9vw, 8rem);
+  border-top: 1px solid var(--portal-border);
+}
+
+.portal-endcap__summary {
+  max-width: 36rem;
+}
+
+.portal-endcap__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-top: clamp(2.5rem, 5vw, 4.5rem);
+  border-top: 1px solid var(--portal-border);
+  border-left: 1px solid var(--portal-border);
+}
+
+.portal-endcap__grid article {
+  min-height: 19rem;
+  padding: clamp(1.4rem, 2.8vw, 2.25rem);
+  border-right: 1px solid var(--portal-border);
+  border-bottom: 1px solid var(--portal-border);
+  background: var(--portal-surface);
+}
+
+.portal-endcap__grid article > span {
+  color: color-mix(in srgb, var(--cream) 38%, transparent);
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+}
+
+.portal-endcap__grid h3 {
+  max-width: 18ch;
+  margin-top: 4rem;
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  line-height: 1.15;
+}
+
+.portal-endcap__grid p {
+  margin-top: 1rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 960px) {
+  .ffi-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-protocols__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .protocol-mode {
+    min-height: 17rem;
+  }
+
+  .portal-host__intro {
+    grid-template-columns: 3rem minmax(0, 1fr);
+  }
+
+  .portal-host__intro .portal-code {
+    grid-column: 2;
+  }
+}
+
+@media (max-width: 700px) {
+  .home-protocols__heading,
+  .portal-host__heading {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .portal-capabilities,
+  .portal-walkthrough,
+  .portal-endcap__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-role {
+    min-height: 19rem;
+  }
+
+  .portal-role__points li {
+    grid-template-columns: 1fr;
+    gap: 0.45rem;
+  }
+
+  .portal-host__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .portal-host__intro .portal-code {
+    grid-column: 1;
+  }
+
+  .portal-step figcaption {
+    min-height: auto;
+  }
+}

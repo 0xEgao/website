@@ -3,7 +3,7 @@ const CARDS = [
     label: 'Sybil resistance',
     value: 'Fidelity Bonds',
     description:
-      'Makers post fidelity bonds before they can register, which helps keep the market harder to game and easier to trust at a protocol level.',
+      'Routers post fidelity bonds before they can register, which helps keep the market harder to game and easier to trust at a protocol level.',
   },
   {
     label: 'Discovery',
@@ -18,22 +18,22 @@ const CARDS = [
       'Efficient atomic swaps with Taproot HTLCs and MuSig2, ensuring atomicity at the lowest possible cost. Recovery triggers automatically to prevent fund loss.',
   },
   {
-    label: 'Maker fees',
+    label: 'Router fees',
     value: 'Competitive pricing',
     description:
-      'Makers compete against each other for order flow, which helps keep market fees low while still rewarding operators for providing liquidity.',
+      'Routers compete for order flow, which helps keep market fees low while still rewarding operators for providing liquidity.',
+  },
+  {
+    label: 'Chain backend',
+    value: 'Bitcoin Core or Electrum',
+    description:
+      'Run the same OpenSwap routes through your own Bitcoin Core RPC node or an Electrum server. Portal supports both backends for wallet sync and swap execution.',
   },
   {
     label: 'Cross-chain swaps',
-    value: 'Hop Away From BTC',
+    value: 'Hop Across Layers',
     description:
-      'The market can be used to hop across other layers and protocols, like Lightning, eCash, Liquid, Ark, etc.',
-  },
-  {
-    label: 'Cross-chain swaps',
-    value: 'Hop Into BTC',
-    description:
-      'The same market can be used to hop into Bitcoin from other layers, like Lightning, eCash, Liquid, Ark, etc.',
+      'The market can support hops away from or into Bitcoin across layers and protocols such as Lightning, eCash, Liquid, and Ark.',
   },
 ]
 

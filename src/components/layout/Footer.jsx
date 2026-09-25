@@ -4,11 +4,9 @@ import { LINKS } from '../../constants/links'
 import OpenSwapLogo from '../brand/OpenSwapLogo'
 
 const INTERNAL = [
-  { to: '/how-it-works', label: 'how-it-works' },
-  { to: '/takers',       label: 'takers' },
-  { to: '/makers',       label: 'makers' },
-  { to: '/market',       label: 'market' },
-  { to: '/docs',         label: 'docs' },
+  { to: '/developers', label: 'developers' },
+  { to: '/apps',       label: 'apps' },
+  { to: '/downloads',  label: 'downloads' },
 ]
 
 const EXTERNAL = [
@@ -83,7 +81,7 @@ export default function Footer() {
 
         <div className="flex flex-col items-center justify-between gap-2 border-t border-dotted border-black/15 pt-4 sm:flex-row">
           <p className="site-footer__legal font-mono text-black/65">
-            // Built by Citadel FOSS. Open source under MIT.
+            // Built by Citadel Foss
           </p>
           <p className="site-footer__meta font-mono uppercase text-black/45">
             Non-custodial · Atomic · Multi-hop

@@ -27,27 +27,15 @@ const ITEMS = [
     ),
   },
   {
-    label: 'Docs',
-    sub: 'Local documentation',
-    to: '/docs',
+    label: 'Developers',
+    sub: 'Build & documentation',
+    to: '/developers',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" width="22" height="22">
         <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
         <polyline points="14 2 14 8 20 8" />
         <line x1="8" y1="13" x2="16" y2="13" />
         <line x1="8" y1="17" x2="14" y2="17" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Deep Wiki',
-    sub: 'AI-generated docs',
-    href: LINKS.deep_wiki,
-    icon: (
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" width="22" height="22">
-        <circle cx="12" cy="12" r="10" />
-        <line x1="12" y1="8" x2="12" y2="12" />
-        <line x1="12" y1="16" x2="12.01" y2="16" />
       </svg>
     ),
   },
@@ -75,7 +63,7 @@ export default function QuickLinks() {
         </div>
       </div>
 
-      <div className="home-links__grid grid grid-cols-2 gap-3 rounded-2xl border border-black/12 bg-white/20 p-3 shadow-[0_14px_40px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:grid-cols-3 sm:gap-4 sm:p-4 lg:grid-cols-5">
+      <div className="home-links__grid grid grid-cols-2 gap-3 rounded-2xl border border-black/12 bg-white/20 p-3 shadow-[0_14px_40px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:grid-cols-2 sm:gap-4 sm:p-4 lg:grid-cols-4">
         {ITEMS.map(({ label, sub, href, to, icon }) => {
           const className =
             'home-link-card group flex min-h-[8.5rem] flex-col items-start justify-between rounded-xl border border-black/10 bg-[rgba(255,255,255,0.18)] p-4 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#f7931a]/60 hover:bg-white/30 hover:shadow-[0_18px_42px_rgba(247,147,26,0.32)]'
