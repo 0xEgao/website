@@ -5,12 +5,11 @@ import OpenSwapLogo from '../brand/OpenSwapLogo'
 const THEME_STORAGE_KEY = 'openswap-theme'
 
 const NAV_LINKS = [
-  { to: '/',             label: 'home' },
-  { to: '/how-it-works', label: 'how-it-works' },
-  { to: '/takers',       label: 'takers' },
-  { to: '/makers',       label: 'makers' },
-  { to: '/market',       label: 'market' },
-  { to: '/docs',         label: 'docs' },
+  { to: '/',           label: 'home' },
+  { to: '/developers', label: 'developers' },
+  { to: '/apps',       label: 'apps' },
+  { to: '/market',     label: 'market' },
+  { to: '/downloads',  label: 'downloads' },
 ]
 
 function resolveInitialTheme() {

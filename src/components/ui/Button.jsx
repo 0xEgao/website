@@ -1,3 +1,5 @@
+import { createElement } from 'react'
+
 /**
  * Button
  * variant: 'primary' | 'outline' | 'ghost'
@@ -9,7 +11,7 @@ export default function Button({
   children,
   variant = 'primary',
   size = 'md',
-  as: Tag = 'button',
+  as: element = 'button',
   className = '',
   ...props
 }) {
@@ -27,9 +29,9 @@ export default function Button({
     lg: 'type-small px-6 py-3.5',
   }
 
-  return (
-    <Tag className={`${base} ${variants[variant]} ${sizes[size]} ${className}`} {...props}>
-      {children}
-    </Tag>
+  return createElement(
+    element,
+    { className: `${base} ${variants[variant]} ${sizes[size]} ${className}`, ...props },
+    children,
   )
 }

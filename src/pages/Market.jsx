@@ -3,7 +3,7 @@ import { LINKS } from '../constants/links'
 
 const STATUS_TABS = [
   { id: 'good', label: 'Good Makers' },
-  { id: 'unresponsive', label: 'Unresponsive' },
+  { id: 'unavailable', label: 'Unavailable' },
 ]
 
 function RefreshIcon({ spinning = false }) {
@@ -50,11 +50,13 @@ function ExternalLinkIcon() {
 }
 
 function formatSats(value) {
-  return `${Math.round(Number(value || 0)).toLocaleString()} sat`
+  if (value === null || value === undefined || value === '') return '—'
+  return `${Math.round(Number(value)).toLocaleString()} sat`
 }
 
 function formatPct(value, digits = 4) {
-  return Number(value || 0).toFixed(digits)
+  if (value === null || value === undefined || value === '') return '—'
+  return Number(value).toFixed(digits)
 }
 
 function formatTorAddress(address) {
@@ -92,6 +94,7 @@ function unwrapOffer(item) {
 
   return {
     ...offer,
+    name: offer.name || item.name || '',
     address,
     last_offer_update_ts: item.last_offer_update_ts || offer.last_offer_update_ts,
     next_offer_check_ts: item.next_offer_check_ts || offer.next_offer_check_ts,
@@ -101,17 +104,25 @@ function unwrapOffer(item) {
   }
 }
 
+function normalizeStatus(status) {
+  const value = String(status || 'good').toLowerCase()
+
+  if (value === 'unresponsive') return 'unavailable'
+  if (value === 'bad') return 'banned'
+  if (value === 'good' || value === 'unavailable' || value === 'banned') return value
+  return 'good'
+}
+
 function normalizeOfferBuckets(data) {
   if (Array.isArray(data)) {
     const buckets = {
       good: [],
-      bad: [],
-      unresponsive: [],
+      unavailable: [],
+      banned: [],
     }
 
     data.forEach((item) => {
-      const status = item?.state?.kind || item?.status || 'good'
-      const normalizedStatus = buckets[status] ? status : 'good'
+      const normalizedStatus = normalizeStatus(item?.state?.kind || item?.status)
       const offer = unwrapOffer(item)
 
       if (offer) buckets[normalizedStatus].push(offer)
@@ -128,26 +139,37 @@ function normalizeOfferBuckets(data) {
   }
 
   const good = offerbook.goodMakers || offerbook.good || offerbook.offers || []
-  const bad = offerbook.badMakers || offerbook.bad || []
-  const unresponsive =
+  const unavailable =
+    offerbook.unavailableMakers ||
+    offerbook.unavailable ||
+    offerbook.unavailable_makers ||
     offerbook.unresponsiveMakers ||
     offerbook.unresponsive ||
     offerbook.unresponsive_makers ||
     []
+  const banned =
+    offerbook.bannedMakers ||
+    offerbook.banned ||
+    offerbook.banned_makers ||
+    offerbook.badMakers ||
+    offerbook.bad ||
+    []
 
-  if (!Array.isArray(good) && !Array.isArray(bad) && !Array.isArray(unresponsive)) {
+  if (!Array.isArray(good) && !Array.isArray(unavailable) && !Array.isArray(banned)) {
     return {
       good: [],
-      bad: [],
-      unresponsive: [],
+      unavailable: [],
+      banned: [],
     }
   }
 
   return {
     good: Array.isArray(good) ? good.map(unwrapOffer).filter(Boolean) : [],
-    bad: Array.isArray(bad) ? bad.map(unwrapOffer).filter(Boolean) : [],
-    unresponsive: Array.isArray(unresponsive)
-      ? unresponsive.map(unwrapOffer).filter(Boolean)
+    unavailable: Array.isArray(unavailable)
+      ? unavailable.map(unwrapOffer).filter(Boolean)
+      : [],
+    banned: Array.isArray(banned)
+      ? banned.map(unwrapOffer).filter(Boolean)
       : [],
   }
 }
@@ -187,8 +209,8 @@ function EmptyState({ loading, error, statusLabel }) {
 export default function Market() {
   const [offerBuckets, setOfferBuckets] = useState({
     good: [],
-    bad: [],
-    unresponsive: [],
+    unavailable: [],
+    banned: [],
   })
   const [activeStatus, setActiveStatus] = useState('good')
   const [loading, setLoading] = useState(true)
@@ -223,7 +245,7 @@ export default function Market() {
       console.error('[market] failed to fetch makers', err)
       setError(
         err.message === 'Failed to fetch'
-          ? 'Could not fetch makers. If this page is served over HTTPS, the HTTP market endpoint may be blocked by the browser.'
+          ? 'Could not reach the public OpenSwap market endpoint.'
           : err.message
       )
     } finally {
@@ -245,8 +267,7 @@ export default function Market() {
       totalLiquidity,
       counts: {
         good: offerBuckets.good.length,
-        bad: offerBuckets.bad.length,
-        unresponsive: offerBuckets.unresponsive.length,
+        unavailable: offerBuckets.unavailable.length,
       },
     }
   }, [offerBuckets])
@@ -314,7 +335,7 @@ export default function Market() {
                 accent="bg-blue-l"
                 label="Active Makers"
                 value={stats.counts.good}
-                note={`${stats.counts.good} good - ${stats.counts.unresponsive} unresponsive in this window.`}
+                note={`${stats.counts.good} good - ${stats.counts.unavailable} unavailable in this window.`}
               />
             </div>
 
@@ -353,9 +374,10 @@ export default function Market() {
                   <EmptyState loading={loading} error={error} statusLabel={activeTab.label} />
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[980px] border-separate border-spacing-y-2 font-mono text-sm">
+                    <table className="w-full min-w-[1120px] border-separate border-spacing-y-2 font-mono text-sm">
                       <thead>
                         <tr className="text-left text-[0.68rem] uppercase tracking-[0.18em] text-black/45">
+                          <th className="px-4 py-2 font-medium">Name</th>
                           <th className="px-4 py-2 font-medium">Tor Address</th>
                           <th className="px-4 py-2 font-medium">Base Fee</th>
                           <th className="px-4 py-2 font-medium">Fee Rate</th>
@@ -374,7 +396,10 @@ export default function Market() {
 
                           return (
                             <tr key={`${activeStatus}-${offer.address}-${txid}-${index}`} className="group/row">
-                              <td className="rounded-l-xl border-y border-l border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5" title={offer.address}>
+                              <td className="rounded-l-xl border-y border-l border-black/10 bg-white/20 px-4 py-3 font-semibold text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">
+                                {offer.name || '—'}
+                              </td>
+                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5" title={offer.address}>
                                 {formatTorAddress(offer.address)}
                               </td>
                               <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{formatSats(offer.base_fee)}</td>
@@ -398,7 +423,7 @@ export default function Market() {
                                   formatSats(bond.amount)
                                 )}
                               </td>
-                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{Number(bond.lock_time || 0).toLocaleString()}</td>
+                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{bond.lock_time === null || bond.lock_time === undefined ? '—' : Number(bond.lock_time).toLocaleString()}</td>
                               <td className="rounded-r-xl border-y border-r border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{formatTimestamp(offer.timestamp)}</td>
                             </tr>
                           )

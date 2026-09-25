@@ -37,9 +37,9 @@ function cornerPoint(from, to, width, height) {
 }
 
 const NODES = [
-  { id: 'taker', label: 'Taker', sublabel: 'Initiate Swap', angle: 270, type: 'taker' },
-  { id: 'maker1', label: 'Maker 1', sublabel: 'Earn Fees', angle: 30, type: 'maker' },
-  { id: 'maker2', label: 'Maker 2', sublabel: 'Earn Fees', angle: 150, type: 'maker' },
+  { id: 'taker', label: 'Wallet', sublabel: 'Initiate Swap', angle: 270, type: 'taker' },
+  { id: 'maker1', label: 'Router 1', sublabel: 'Earn Fees', angle: 30, type: 'maker' },
+  { id: 'maker2', label: 'Router 2', sublabel: 'Earn Fees', angle: 150, type: 'maker' },
 ].map(node => ({
   ...node,
   ...polarToPoint(CENTER_X, CENTER_Y, TRIANGLE_R, node.angle),
@@ -118,7 +118,7 @@ const HOP2_CONNECTOR_GAP = 12
 
 const POINTERS = [
   {
-    label: 'Route swaps through multiple makers. Customizable swap flow.',
+    label: 'Route swaps through multiple routers. Customizable swap flow.',
     description: 'Tune the route shape and swap flow to match the exact use case.',
   },
   {
@@ -265,7 +265,7 @@ export default function SwapFlowDiagram() {
             viewBox={`0 0 ${SVG_W} ${SVG_H}`}
             width="100%"
             style={{ maxWidth: SVG_DISPLAY_W, display: 'block', margin: '0 auto' }}
-            aria-label="OpenSwap triangle flow: taker routes funds through two makers and returns with unrelated coins"
+            aria-label="OpenSwap triangle flow: a wallet routes funds through two routers and returns with unrelated coins"
             role="img"
           >
           <defs>

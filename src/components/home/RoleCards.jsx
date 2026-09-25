@@ -3,31 +3,31 @@ import Button from '../ui/Button'
 
 const CARDS = [
   {
-    role: 'Taker',
-    prompt: './taker --swap',
+    role: 'Wallet',
+    prompt: './wallet --swap',
     description:
-      'Request swaps from the marketplace. Design your swaps, set fee rates, select makers, manage UTXOs, and let the protocol do the rest.',
+      'Use Bitcoin normally, then create private routes when you need them. Choose a protocol, select routers, manage UTXOs, and follow every swap from one place.',
     highlights: [
-      'Minimum 2 makers per swap',
+      'Choose Legacy or Taproot',
       'Tor required — .onion routing',
-      'Desktop GUI or CLI',
+      'Desktop or self-hosted web app',
     ],
-    cta: { label: './Taker --SWAP', to: '/takers' },
+    cta: { label: './Wallet --SWAP', to: '/apps#wallet' },
     borderClass: 'border-white/10 hover:border-white/25',
     promptColor: 'text-cream/70',
     tagColor: 'text-cream/70 border-white/20',
   },
   {
-    role: 'Maker',
-    prompt: './makerd --start',
+    role: 'Router',
+    prompt: './router --run',
     description:
-      'A lightweight, low-maintenance swap server that earns fees. Create and manage fidelity bonds, and act as a bridge between layers.',
+      'Provide swap liquidity, keep a bonded service online, and earn fees when Wallet routes use it. Portal keeps the fleet, balances, reports, and logs together.',
     highlights: [
       'Fidelity bond = reputation',
       'Auto-renewing bond lifecycle',
-      'Docker or native binary',
+      'Manage one or many routers',
     ],
-    cta: { label: './Maker --RUN', to: '/makers' },
+    cta: { label: './Router --RUN', to: '/apps#router' },
     borderClass: 'border-white/10 hover:border-white/25',
     promptColor: 'text-cream/70',
     tagColor: 'text-cream/70 border-white/20',

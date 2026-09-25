@@ -50,21 +50,21 @@ export default function Hero() {
           <div className="hero-observatory__actions mb-4 flex flex-wrap items-center justify-center gap-3">
             <Button
               as={Link}
-              to="/takers"
+              to="/apps#wallet"
               variant="primary"
               size="lg"
               className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
             >
-              ./Taker --SWAP
+              ./Wallet --SWAP
             </Button>
             <Button
               as={Link}
-              to="/makers"
+              to="/apps#router"
               variant="outline"
               size="lg"
               className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
             >
-              ./Maker --RUN
+              ./Router --RUN
             </Button>
           </div>
         </div>

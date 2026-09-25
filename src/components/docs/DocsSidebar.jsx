@@ -27,8 +27,8 @@ function ItemList({ items, activeDocId, onSelect }) {
   ))
 }
 
-export default function DocsSidebar({ activeDocId, onSelect }) {
-  const nav = getNavWithDocIds()
+export default function DocsSidebar({ activeDocId, onSelect, nav: sourceNav }) {
+  const nav = getNavWithDocIds(sourceNav)
 
   return (
     <nav className="h-full overflow-y-auto pb-6 pt-3">

@@ -102,6 +102,69 @@ export const NAV = [
   },
 ]
 
+export const DEVELOPER_DOCS_NAV = [
+  {
+    id: 'manuals',
+    label: 'Manuals',
+    items: [
+      { label: 'Taker', url: `${base}/taker.md` },
+      { label: 'Makerd', url: `${base}/makerd.md` },
+      { label: 'Maker CLI', url: `${base}/maker-cli.md` },
+      { label: 'Bitcoin Core', url: `${base}/bitcoind.md` },
+      { label: 'Tor', url: `${base}/tor.md` },
+      { label: 'Docker', url: `${base}/docker.md` },
+      { label: 'Taproot', url: `${base}/taproot.md` },
+      { label: 'Blocklist', url: `${base}/blocklist.md` },
+      { label: 'Fee Policy', url: `${base}/fee-policy.md` },
+      { label: 'Wallet Security', url: `${base}/wallet-security.md` },
+      { label: 'Demo', url: `${base}/demo.md` },
+    ],
+  },
+  {
+    id: 'protocol-specs',
+    label: 'Protocol Specs',
+    items: [
+      { label: 'Introduction', url: `${specBase}/general%20specs/introduction.md` },
+      { label: 'Architecture', url: `${specBase}/general%20specs/architecture.md` },
+      { label: 'Fees',         url: `${specBase}/general%20specs/fees.md` },
+      { label: 'Fidelity',     url: `${specBase}/general%20specs/fidelity.md` },
+      { label: 'Privacy',      url: `${specBase}/general%20specs/privacy.md` },
+      { label: 'Security',     url: `${specBase}/general%20specs/security.md` },
+    ],
+  },
+  {
+    id: 'v1-protocol',
+    label: 'V1 Protocol',
+    items: [
+      { label: 'Protocol Flow', url: `${specBase}/v1%20protocol/protocol-flow.md` },
+      { label: 'Contract',      url: `${specBase}/v1%20protocol/contract.md` },
+      { label: 'Messages',      url: `${specBase}/v1%20protocol/messages.md` },
+    ],
+  },
+  {
+    id: 'v2-protocol',
+    label: 'V2 Protocol',
+    items: [
+      { label: 'Protocol Flow', url: `${specBase}/v2%20protocol/protocol-flow.md` },
+      { label: 'Contract',      url: `${specBase}/v2%20protocol/contract.md` },
+      { label: 'Messages',      url: `${specBase}/v2%20protocol/messages.md` },
+    ],
+  },
+  {
+    id: 'ffis',
+    label: 'FFIs',
+    items: [
+      { label: 'JavaScript', url: `${ffiBase}/openswap-js/README.md`, repoUrl: LINKS.ffi_js_repo },
+      { label: 'Kotlin', url: `${ffiBase}/openswap-kotlin/README.md`, repoUrl: LINKS.ffi_kotlin_repo },
+      { label: 'React Native', url: `${ffiBase}/openswap-react-native/README.md`, repoUrl: LINKS.ffi_react_native_repo },
+      { label: 'Swift', url: `${ffiBase}/openswap-swift/README.md`, repoUrl: LINKS.ffi_swift_repo },
+      { label: 'Python', url: `${ffiBase}/openswap-python/README.md`, repoUrl: LINKS.ffi_python_repo },
+      { label: 'Ruby', url: `${ffiBase}/openswap-ruby/README.md`, repoUrl: LINKS.ffi_ruby_repo },
+      { label: 'C#', url: `${ffiBase}/openswap-csharp/README.md`, repoUrl: LINKS.ffi_csharp_repo },
+    ],
+  },
+]
+
 function slugify(value) {
   return value
     .toLowerCase()
