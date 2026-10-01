@@ -6,10 +6,9 @@ const THEME_STORAGE_KEY = 'openswap-theme'
 
 const NAV_LINKS = [
   { to: '/',           label: 'home' },
-  { to: '/developers', label: 'developers' },
-  { to: '/apps',       label: 'apps' },
   { to: '/market',     label: 'market' },
-  { to: '/downloads',  label: 'downloads' },
+  { to: '/portal',     label: 'portal' },
+  { to: '/developers', label: 'developers' },
 ]
 
 function resolveInitialTheme() {

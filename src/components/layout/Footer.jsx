@@ -4,10 +4,9 @@ import { LINKS } from '../../constants/links'
 import OpenSwapLogo from '../brand/OpenSwapLogo'
 
 const INTERNAL = [
-  { to: '/developers', label: 'developers' },
-  { to: '/apps',       label: 'apps' },
   { to: '/market',     label: 'market' },
-  { to: '/downloads',  label: 'downloads' },
+  { to: '/portal',     label: 'portal' },
+  { to: '/developers', label: 'developers' },
 ]
 
 const EXTERNAL = [

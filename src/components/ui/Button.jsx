@@ -2,7 +2,7 @@ import { createElement } from 'react'
 
 /**
  * Button
- * variant: 'primary' | 'outline' | 'ghost'
+ * variant: 'primary' | 'outline' | 'accent' | 'ghost'
  * size: 'sm' | 'md' | 'lg'
  * as: element override ('a', 'button') — defaults to 'button'
  * All other props forwarded.
@@ -20,6 +20,7 @@ export default function Button({
   const variants = {
     primary: 'ui-button--primary border-orange bg-orange !text-[#07090d]',
     outline: 'ui-button--outline border-black/25 bg-transparent !text-cream',
+    accent:  'ui-button--accent border-blue-l bg-transparent !text-blue-l',
     ghost:   'ui-button--ghost border-transparent bg-transparent !text-black/70',
   }
 

@@ -1,3 +1,4 @@
+import { useLayoutEffect, useRef, useState } from 'react'
 import {
   ArrowRight,
   Cable,
@@ -9,8 +10,8 @@ import {
   ShieldCheck,
   WalletCards,
 } from 'lucide-react'
-import { Link } from 'react-router-dom'
 import PageHero from '../components/layout/PageHero'
+import PortalDownloads from '../components/portal/PortalDownloads'
 import CodeBlock from '../components/ui/CodeBlock'
 import { LINKS } from '../constants/links'
 
@@ -24,7 +25,7 @@ cd portal
 npm install
 npm run web:dev`
 
-const DESKTOP_STEPS = [
+const WALLET_STEPS = [
   {
     src: `${import.meta.env.BASE_URL}portal/desktop/connect.png`,
     title: 'Connect the backend',
@@ -50,38 +51,38 @@ const DESKTOP_STEPS = [
     title: 'Follow the swap',
     copy: 'Portal keeps the route and each stage visible until the final wallet output is confirmed.',
   },
-  {
-    src: `${import.meta.env.BASE_URL}portal/desktop/router-fleet.png`,
-    title: 'Operate router fleets',
-    copy: 'Start, stop, and inspect multiple Routers with their liquidity, bonds, earnings, and onion addresses in one console.',
-  },
 ]
 
-const SERVER_STEPS = [
+const ROUTER_STEPS = [
   {
-    src: `${import.meta.env.BASE_URL}portal/web/wallet.png`,
-    title: 'Wallet overview',
-    copy: 'Review regular and swap balances, UTXOs, transactions, and encrypted backup controls.',
+    src: `${import.meta.env.BASE_URL}portal/web/create-router.png`,
+    title: 'Create a Router',
+    copy: 'Choose its local identity and public market name, protect the Router wallet, and set the initial fidelity-bond parameters.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/market.png`,
-    title: 'Inspect the Router market',
-    copy: 'See available liquidity, fidelity bonds, limits, responsiveness, and the onion address behind each offer.',
+    src: `${import.meta.env.BASE_URL}portal/web/start-router.png`,
+    title: 'Unlock and start',
+    copy: 'Enter the encrypted Router wallet password and follow each startup stage from one screen.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/send-receive.png`,
-    title: 'Send and receive',
-    copy: 'Use the same wallet for regular Bitcoin payments, address generation, fee selection, and coin control.',
+    src: `${import.meta.env.BASE_URL}portal/web/fund-fidelity-bond.png`,
+    title: 'Fund the fidelity bond',
+    copy: 'Send the requested amount to the generated deposit address while Portal watches for the transaction.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/router-fleet.png`,
-    title: 'Run Routers',
-    copy: 'Open the Router Console to manage several services from the server-hosted Portal.',
+    src: `${import.meta.env.BASE_URL}portal/web/confirm-fidelity-bond.png`,
+    title: 'Confirm the bond',
+    copy: 'Portal creates and broadcasts the fidelity bond, then tracks confirmation before advertising the Router.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/router-logs.png`,
-    title: 'Trace operations',
-    copy: 'Filter live Router logs when you need to understand negotiation, confirmation, or recovery activity.',
+    src: `${import.meta.env.BASE_URL}portal/web/router-overview.png`,
+    title: 'Monitor operations',
+    copy: 'Review liquidity, spendable funds, earnings, bonds, contract balance, runtime configuration, and swap reports.',
+  },
+  {
+    src: `${import.meta.env.BASE_URL}portal/web/router-settings.png`,
+    title: 'Configure the Router',
+    copy: 'Manage network ports, confirmations, public fee policy, and the defaults used for future fidelity bonds.',
   },
 ]
 
@@ -111,20 +112,53 @@ function Walkthrough({ steps, label }) {
   return (
     <div className="portal-walkthrough" aria-label={label}>
       {steps.map(({ src, title, copy }, index) => (
-        <figure key={title} className="portal-step">
-          <div className="portal-step__image">
-            <img src={src} alt={`${title} in Portal`} loading="lazy" />
-          </div>
-          <figcaption>
-            <span>0{index + 1}</span>
-            <div>
-              <h3 className="font-display font-semibold text-cream">{title}</h3>
-              <p className="text-cream/65">{copy}</p>
-            </div>
-          </figcaption>
-        </figure>
+        <WalkthroughCard
+          key={title}
+          src={src}
+          title={title}
+          copy={copy}
+          number={index + 1}
+        />
       ))}
     </div>
+  )
+}
+
+function WalkthroughCard({ src, title, copy, number }) {
+  const cardRef = useRef(null)
+  const [rowSpan, setRowSpan] = useState(1)
+
+  useLayoutEffect(() => {
+    const card = cardRef.current
+    if (!card) return undefined
+
+    const updateSpan = () => {
+      const rowHeight = 8
+      const rowGap = 16
+      const height = card.getBoundingClientRect().height
+      setRowSpan(Math.ceil((height + rowGap) / (rowHeight + rowGap)))
+    }
+
+    updateSpan()
+    const observer = new ResizeObserver(updateSpan)
+    observer.observe(card)
+
+    return () => observer.disconnect()
+  }, [])
+
+  return (
+    <figure ref={cardRef} className="portal-step" style={{ gridRowEnd: `span ${rowSpan}` }}>
+      <div className="portal-step__image">
+        <img src={src} alt={`${title} in Portal`} loading="lazy" />
+      </div>
+      <figcaption>
+        <span>0{number}</span>
+        <div>
+          <h3 className="font-display font-semibold text-cream">{title}</h3>
+          <p className="text-cream/65">{copy}</p>
+        </div>
+      </figcaption>
+    </figure>
   )
 }
 
@@ -142,11 +176,11 @@ export default function Apps() {
         title="One App. Two Roles."
         description="The Portal App puts the OpenSwap Wallet and Router management in a single GUI. Send and receive Bitcoin, customize and perform swaps, run Routers, and earn fees from a native desktop app or a self-hosted personal server."
       >
-        <ProductLink href={LINKS.portal_repo}>Open Portal repository</ProductLink>
-        <Link to="/downloads#portal" className="portal-link portal-link--filled">
-          View downloads
+        <a href="#downloads" className="portal-link portal-link--filled">
+          Get Portal
           <ArrowRight size={15} aria-hidden="true" />
-        </Link>
+        </a>
+        <ProductLink href={LINKS.portal_repo}>View Source</ProductLink>
       </PageHero>
 
       <section className="portal-section portal-intro">
@@ -268,7 +302,7 @@ export default function Apps() {
       </section>
 
       <section id="desktop" className="portal-host scroll-mt-28">
-        <div className="portal-host__intro">
+        <div className="portal-host__intro portal-host__intro--single">
           <div className="portal-host__icon"><Monitor aria-hidden="true" /></div>
           <div>
             <p className="section-label mb-3">// Portal Desktop</p>
@@ -287,18 +321,11 @@ export default function Apps() {
               <ProductLink href={LINKS.tauri_prerequisites}>Platform prerequisites</ProductLink>
             </div>
           </div>
-          <CodeBlock code={DESKTOP_COMMAND} language="bash" className="portal-code" />
         </div>
-
-        <div className="portal-host__heading">
-          <p className="section-label">// Desktop walkthrough</p>
-          <p className="text-cream/60">Connect once, then move between Wallet and Router Console without changing applications.</p>
-        </div>
-        <Walkthrough steps={DESKTOP_STEPS} label="Portal Desktop walkthrough" />
       </section>
 
       <section id="server" className="portal-host scroll-mt-28">
-        <div className="portal-host__intro">
+        <div className="portal-host__intro portal-host__intro--single">
           <div className="portal-host__icon"><Server aria-hidden="true" /></div>
           <div>
             <p className="section-label mb-3">// Portal Server</p>
@@ -314,55 +341,51 @@ export default function Apps() {
               'Build Portal Server with npm run web:build',
             ]} />
           </div>
-          <CodeBlock code={SERVER_COMMAND} language="bash" className="portal-code" />
         </div>
-
-        <div className="portal-host__heading">
-          <p className="section-label">// Server walkthrough</p>
-          <p className="text-cream/60">Wallet and Router workflows stay together in the server-hosted interface.</p>
-        </div>
-        <Walkthrough steps={SERVER_STEPS} label="Portal Server walkthrough" />
       </section>
 
-      <section className="portal-endcap">
+      <section id="walkthrough" className="portal-host portal-walkthrough-section scroll-mt-28">
         <div className="portal-section__heading">
           <div>
-            <p className="section-label mb-3">// Designed for real operations</p>
+            <p className="section-label mb-3">// Portal</p>
             <h2 className="portal-section__title font-display font-semibold text-cream">
-              The interface can close. The work keeps going.
+              Portal walkthrough
             </h2>
           </div>
-          <div className="portal-endcap__summary">
-            <p className="portal-copy text-cream/65">
-              Swaps spend most of their time waiting for confirmations. Portal keeps long-running work safe without tying it to an open window.
-            </p>
-            <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/downloads#portal" className="portal-link portal-link--filled">
-                Download Portal <ArrowRight size={14} aria-hidden="true" />
-              </Link>
-              <ProductLink href={LINKS.portal_repo}>Inspect the source</ProductLink>
-            </div>
+          <p className="portal-copy max-w-xl text-cream/65">
+            Portal keeps both roles in one interface. This walkthrough creates a Wallet first, but that order is optional—you can begin with a Router instead.
+          </p>
+        </div>
+
+        <div className="portal-host__commands" aria-label="Portal development commands">
+          <div>
+            <p className="portal-command__label">Portal Desktop</p>
+            <CodeBlock code={DESKTOP_COMMAND} language="bash" className="portal-code" />
+          </div>
+          <div>
+            <p className="portal-command__label">Portal Server</p>
+            <CodeBlock code={SERVER_COMMAND} language="bash" className="portal-code" />
           </div>
         </div>
 
-        <div className="portal-endcap__grid">
-          <article>
-            <span>01</span>
-            <h3 className="font-display font-semibold text-cream">Keep swaps and Routers alive</h3>
-            <p className="text-cream/65">Closing the desktop window hides Portal to the tray. An explicit quit warns you when a swap or Router is still running.</p>
-          </article>
-          <article>
-            <span>02</span>
-            <h3 className="font-display font-semibold text-cream">Move between interfaces</h3>
-            <p className="text-cream/65">Portal wallet data is interchangeable with the OpenSwap command-line tools, and encrypted backups support recovery or migration.</p>
-          </article>
-          <article>
-            <span>03</span>
-            <h3 className="font-display font-semibold text-cream">Keep connection details local</h3>
-            <p className="text-cream/65">Portal starts Tor fresh for each session, and chain-backend connection settings are not written to disk.</p>
-          </article>
+        <div className="portal-walkthrough-group">
+          <div className="portal-host__heading">
+            <p className="section-label">// Wallet</p>
+            <p className="text-cream/60">Connect a backend, open a Wallet, configure a route, and follow the swap to completion.</p>
+          </div>
+          <Walkthrough steps={WALLET_STEPS} label="Portal Wallet walkthrough" />
+        </div>
+
+        <div className="portal-walkthrough-group">
+          <div className="portal-host__heading">
+            <p className="section-label">// Router</p>
+            <p className="text-cream/60">Create a Router, establish its fidelity bond, then operate and configure the running service.</p>
+          </div>
+          <Walkthrough steps={ROUTER_STEPS} label="Portal Router walkthrough" />
         </div>
       </section>
+
+      <PortalDownloads />
     </div>
   )
 }

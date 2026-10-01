@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import Button from '../ui/Button'
+import { LINKS } from '../../constants/links'
 
 export default function Hero() {
   return (
@@ -50,21 +51,23 @@ export default function Hero() {
           <div className="hero-observatory__actions mb-4 flex flex-wrap items-center justify-center gap-3">
             <Button
               as={Link}
-              to="/apps#wallet"
+              to="/portal"
               variant="primary"
               size="lg"
               className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
             >
-              ./Wallet --SWAP
+              Get Portal
             </Button>
             <Button
-              as={Link}
-              to="/apps#router"
-              variant="outline"
+              as="a"
+              href={LINKS.openswap_repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="accent"
               size="lg"
-              className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
+              className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.24)] hover:-translate-y-0.5"
             >
-              ./Router --RUN
+              OpenSwap Source
             </Button>
           </div>
         </div>
