@@ -27,7 +27,8 @@ export const LINKS = {
   protocol_flow:    "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v1%20protocol/protocol-flow.md",
   protocol_legacy_contract: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v1%20protocol/contract.md",
   protocol_taproot_contract: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v2%20protocol/contract.md",
-  protocol_payswap: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification",
+  protocol_payswap: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/general%20specs/payswap.md",
+  portal_development_docs: "https://github.com/citadel-foss/portal/blob/main/docs/DEVELOPMENT.md",
   releases:         "https://github.com/citadel-foss/openswap/releases",
   contributing:     "https://github.com/citadel-foss/openswap/blob/master/CONTRIBUTING.md",
   issues:           "https://github.com/citadel-foss/openswap/issues",
@@ -40,8 +41,12 @@ export const LINKS = {
   signet_faucet: "https://faucet.citadelfoss.xyz/",
 
   // Market data
-  market_makers_api: "https://market.openswap.live/api/makers",
-  market_explorer_tx_base: "https://mempool.citadelfoss.xyz/tx",
+  market_mainnet_makers_api: "https://market.openswap.live/api/mainnet/makers",
+  market_mainnet_health_api: "https://market.openswap.live/api/mainnet/health",
+  market_mainnet_explorer_tx_base: "https://mempool.space/tx",
+  market_signet_makers_api: "https://market.openswap.live/api/makers",
+  market_signet_health_api: "https://market.openswap.live/api/health",
+  market_signet_explorer_tx_base: "https://mempool.citadelfoss.xyz/tx",
 
   // Taker App screenshots (vendored from the taker-app repo — GitHub raw
   // hotlinks get rate-limited, which intermittently broke the preview)
@@ -55,6 +60,7 @@ export const LINKS = {
   docs_demo:                  'https://raw.githubusercontent.com/citadel-foss/openswap/master/docs/demo.md',
   docs_examples_base:         'https://raw.githubusercontent.com/citadel-foss/openswap/master/examples',
   docs_spec_base:             'https://raw.githubusercontent.com/citadel-foss/OpenSwap-Protocol-Specification/main',
+  docs_portal_base:           'https://raw.githubusercontent.com/citadel-foss/portal/main/docs',
   docs_ffi_base:              'https://raw.githubusercontent.com/citadel-foss/openswap-ffi/main',
   docs_taker_app_usage:       'https://raw.githubusercontent.com/citadel-foss/taker-app/main/docs/usage.md',
   docs_maker_dashboard_arch:  'https://raw.githubusercontent.com/citadel-foss/maker-dashboard/main/README.md',

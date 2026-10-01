@@ -3,6 +3,7 @@ import { LINKS } from './links.js'
 const base     = LINKS.docs_manuals_base
 const exBase   = LINKS.docs_examples_base
 const specBase = LINKS.docs_spec_base
+const portalBase = LINKS.docs_portal_base
 const ffiBase  = LINKS.docs_ffi_base
 const makerDashboardPackagingBase = LINKS.docs_maker_dashboard_packaging_base
 
@@ -36,6 +37,7 @@ export const NAV = [
       { label: 'Fidelity',     url: `${specBase}/general%20specs/fidelity.md` },
       { label: 'Privacy',      url: `${specBase}/general%20specs/privacy.md` },
       { label: 'Security',     url: `${specBase}/general%20specs/security.md` },
+      { label: 'PaySwap',      url: `${specBase}/general%20specs/payswap.md`, repoUrl: LINKS.protocol_payswap },
     ],
   },
   {
@@ -130,6 +132,7 @@ export const DEVELOPER_DOCS_NAV = [
       { label: 'Fidelity',     url: `${specBase}/general%20specs/fidelity.md` },
       { label: 'Privacy',      url: `${specBase}/general%20specs/privacy.md` },
       { label: 'Security',     url: `${specBase}/general%20specs/security.md` },
+      { label: 'PaySwap',      url: `${specBase}/general%20specs/payswap.md`, repoUrl: LINKS.protocol_payswap },
     ],
   },
   {
@@ -161,6 +164,17 @@ export const DEVELOPER_DOCS_NAV = [
       { label: 'Python', url: `${ffiBase}/openswap-python/README.md`, repoUrl: LINKS.ffi_python_repo },
       { label: 'Ruby', url: `${ffiBase}/openswap-ruby/README.md`, repoUrl: LINKS.ffi_ruby_repo },
       { label: 'C#', url: `${ffiBase}/openswap-csharp/README.md`, repoUrl: LINKS.ffi_csharp_repo },
+    ],
+  },
+  {
+    id: 'portal',
+    label: 'Portal',
+    items: [
+      {
+        label: 'Development',
+        url: `${portalBase}/DEVELOPMENT.md`,
+        repoUrl: LINKS.portal_development_docs,
+      },
     ],
   },
 ]
