@@ -1,7 +1,7 @@
 // src/constants/links.js
 // All external URLs in one place. Never hardcode these elsewhere.
 
-const PORTAL_MASTER_DOWNLOADS = "https://github.com/citadel-foss/portal/releases/download/openswap-master"
+const PORTAL_MASTER_DOWNLOADS = "https://github.com/citadel-foss/portal/releases/download/0.1.0-beta"
 
 export const LINKS = {
   // Core repos

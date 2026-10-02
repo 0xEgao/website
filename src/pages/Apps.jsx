@@ -19,6 +19,7 @@ import chooseRoleScreenshot from '../assets/portal/desktop/choose-role.webp'
 import createWalletScreenshot from '../assets/portal/desktop/create-wallet.webp'
 import configureSwapScreenshot from '../assets/portal/desktop/configure-swap.webp'
 import swapCompleteScreenshot from '../assets/portal/desktop/swap-complete.webp'
+import reportScreenshot from '../assets/portal/desktop/report.webp'
 import createRouterScreenshot from '../assets/portal/web/create-router.webp'
 import startRouterScreenshot from '../assets/portal/web/start-router.webp'
 import fundFidelityBondScreenshot from '../assets/portal/web/fund-fidelity-bond.webp'
@@ -69,8 +70,15 @@ const WALLET_STEPS = [
     src: swapCompleteScreenshot,
     width: 2062,
     height: 3204,
-    title: 'Follow the swap',
+    title: 'Swap complete',
     copy: 'Portal keeps the route and each stage visible until the final wallet output is confirmed.',
+  },
+  {
+    src: reportScreenshot,
+    width: 1888,
+    height: 956,
+    title: 'Review the swap report',
+    copy: 'Review the received amount, fees, swap partners, UTXOs, and on-chain deniability proof.',
   },
 ]
 
@@ -141,9 +149,9 @@ function ProductLink({ href, children }) {
   )
 }
 
-function Walkthrough({ steps, label }) {
+function Walkthrough({ steps, label, className = '' }) {
   return (
-    <div className="portal-walkthrough" aria-label={label}>
+    <div className={`portal-walkthrough ${className}`} aria-label={label}>
       {steps.map(({ src, width, height, title, copy }, index) => (
         <WalkthroughCard
           key={title}
@@ -184,14 +192,16 @@ function WalkthroughCard({ src, width, height, title, copy, number }) {
   return (
     <figure ref={cardRef} className="portal-step" style={{ gridRowEnd: `span ${rowSpan}` }}>
       <div className="portal-step__image">
-        <img
-          src={src}
-          width={width}
-          height={height}
-          alt={`${title} in Portal`}
-          loading="lazy"
-          decoding="async"
-        />
+        <a href={src} target="_blank" rel="noopener noreferrer" aria-label={`Open full-size screenshot: ${title}`}>
+          <img
+            src={src}
+            width={width}
+            height={height}
+            alt={`${title} in Portal`}
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
       </div>
       <figcaption>
         <span>0{number}</span>
@@ -415,7 +425,7 @@ export default function Apps() {
             <p className="section-label">// Wallet</p>
             <p className="text-cream/60">Connect a backend, open a Wallet, configure a route, and follow the swap to completion.</p>
           </div>
-          <Walkthrough steps={WALLET_STEPS} label="Portal Wallet walkthrough" />
+          <Walkthrough steps={WALLET_STEPS} label="Portal Wallet walkthrough" className="portal-walkthrough--wallet" />
         </div>
 
         <div className="portal-walkthrough-group">

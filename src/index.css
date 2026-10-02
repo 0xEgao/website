@@ -2945,6 +2945,22 @@ html[data-theme='dark'] .protocol-mode:hover {
   align-items: start;
 }
 
+@media (min-width: 701px) {
+  .portal-walkthrough--wallet {
+    /* Balance the portrait wallet screens against the wider route and report screens. */
+    grid-template-columns: minmax(16rem, 0.54fr) minmax(0, 1fr);
+    grid-auto-flow: dense;
+  }
+
+  .portal-walkthrough--wallet .portal-step:nth-child(odd) {
+    grid-column: 1;
+  }
+
+  .portal-walkthrough--wallet .portal-step:nth-child(even) {
+    grid-column: 2;
+  }
+}
+
 .portal-walkthrough-group {
   margin-top: clamp(3.5rem, 7vw, 6.5rem);
 }
@@ -2977,6 +2993,11 @@ html[data-theme='dark'] .portal-step {
   display: block;
   overflow: hidden;
   background: #090e15;
+}
+
+.portal-step__image a {
+  display: block;
+  cursor: zoom-in;
 }
 
 .portal-step__image img {
