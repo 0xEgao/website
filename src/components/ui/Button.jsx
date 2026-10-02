@@ -1,6 +1,8 @@
+import { createElement } from 'react'
+
 /**
  * Button
- * variant: 'primary' | 'outline' | 'ghost'
+ * variant: 'primary' | 'outline' | 'accent' | 'ghost'
  * size: 'sm' | 'md' | 'lg'
  * as: element override ('a', 'button') — defaults to 'button'
  * All other props forwarded.
@@ -9,16 +11,17 @@ export default function Button({
   children,
   variant = 'primary',
   size = 'md',
-  as: Tag = 'button',
+  as: element = 'button',
   className = '',
   ...props
 }) {
-  const base = 'inline-flex items-center justify-center gap-2 border font-mono font-medium uppercase tracking-[0.14em] text-white transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-black/20 focus-visible:ring-offset-2 focus-visible:ring-offset-[#f7f2e8]'
+  const base = 'ui-button inline-flex items-center justify-center gap-2 border font-mono font-medium uppercase tracking-[0.14em] transition duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange/60 focus-visible:ring-offset-2 focus-visible:ring-offset-navy'
 
   const variants = {
-    primary: 'border-black bg-black !text-white hover:bg-black active:bg-black',
-    outline: 'border-black bg-black !text-white hover:bg-black active:bg-black',
-    ghost:   'border-black bg-black !text-white hover:bg-black active:bg-black',
+    primary: 'ui-button--primary border-orange bg-orange !text-[#07090d]',
+    outline: 'ui-button--outline border-black/25 bg-transparent !text-cream',
+    accent:  'ui-button--accent border-blue-l bg-transparent !text-blue-l',
+    ghost:   'ui-button--ghost border-transparent bg-transparent !text-black/70',
   }
 
   const sizes = {
@@ -27,9 +30,9 @@ export default function Button({
     lg: 'type-small px-6 py-3.5',
   }
 
-  return (
-    <Tag className={`${base} ${variants[variant]} ${sizes[size]} ${className}`} {...props}>
-      {children}
-    </Tag>
+  return createElement(
+    element,
+    { className: `${base} ${variants[variant]} ${sizes[size]} ${className}`, ...props },
+    children,
   )
 }

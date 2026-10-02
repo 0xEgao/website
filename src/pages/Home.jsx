@@ -1,16 +1,13 @@
-import StatusBanner from '../components/home/StatusBanner'
 import Hero from '../components/home/Hero'
 import SwapMarket from '../components/home/SwapMarket'
 import SwapFlowDiagram from '../components/home/SwapFlowDiagram'
+import ProtocolModes from '../components/home/ProtocolModes'
 import RoleCards from '../components/home/RoleCards'
 import QuickLinks from '../components/home/QuickLinks'
-import { useLatestRelease } from '../hooks/useLatestRelease'
 
 const OG_IMAGE = 'https://citadelfoss.xyz/social-preview.png'
 
 export default function Home() {
-  const { tag, url } = useLatestRelease()
-
   return (
     <>
       {/* SEO */}
@@ -28,12 +25,11 @@ export default function Home() {
       <meta name="twitter:description" content="Non-custodial, atomic, multi-hop Bitcoin swaps over Tor." />
       <meta name="twitter:image"      content={OG_IMAGE} />
 
-      <StatusBanner releaseTag={tag} releaseUrl={url} />
-
-      <div className="relative overflow-hidden">
-        <div className="site-shell relative space-y-7 pb-16">
+      <div className="home-page relative overflow-hidden">
+        <div className="home-page__inner site-shell relative pb-20">
           <Hero />
           <SwapFlowDiagram />
+          <ProtocolModes />
           <SwapMarket />
           <RoleCards />
           <QuickLinks />

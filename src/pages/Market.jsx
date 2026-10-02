@@ -1,10 +1,37 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { LINKS } from '../constants/links'
 
 const STATUS_TABS = [
   { id: 'good', label: 'Good Makers' },
-  { id: 'unresponsive', label: 'Unresponsive' },
+  { id: 'unavailable', label: 'Unavailable' },
 ]
+
+const MARKET_NETWORKS = {
+  mainnet: {
+    label: 'Mainnet',
+    makersUrl: LINKS.market_mainnet_makers_api,
+    healthUrl: LINKS.market_mainnet_health_api,
+    explorerTxBase: LINKS.market_mainnet_explorer_tx_base,
+  },
+  signet: {
+    label: 'Signet',
+    makersUrl: LINKS.market_signet_makers_api,
+    healthUrl: LINKS.market_signet_health_api,
+    explorerTxBase: LINKS.market_signet_explorer_tx_base,
+  },
+}
+
+async function fetchJson(url) {
+  const response = await fetch(url, {
+    headers: { Accept: 'application/json' },
+  })
+
+  if (!response.ok) {
+    throw new Error(`Endpoint returned ${response.status}`)
+  }
+
+  return response.json()
+}
 
 function RefreshIcon({ spinning = false }) {
   return (
@@ -50,11 +77,13 @@ function ExternalLinkIcon() {
 }
 
 function formatSats(value) {
-  return `${Math.round(Number(value || 0)).toLocaleString()} sat`
+  if (value === null || value === undefined || value === '') return '—'
+  return `${Math.round(Number(value)).toLocaleString()} sat`
 }
 
 function formatPct(value, digits = 4) {
-  return Number(value || 0).toFixed(digits)
+  if (value === null || value === undefined || value === '') return '—'
+  return Number(value).toFixed(digits)
 }
 
 function formatTorAddress(address) {
@@ -92,6 +121,7 @@ function unwrapOffer(item) {
 
   return {
     ...offer,
+    name: offer.name || item.name || '',
     address,
     last_offer_update_ts: item.last_offer_update_ts || offer.last_offer_update_ts,
     next_offer_check_ts: item.next_offer_check_ts || offer.next_offer_check_ts,
@@ -101,17 +131,25 @@ function unwrapOffer(item) {
   }
 }
 
+function normalizeStatus(status) {
+  const value = String(status || 'good').toLowerCase()
+
+  if (value === 'unresponsive') return 'unavailable'
+  if (value === 'bad') return 'banned'
+  if (value === 'good' || value === 'unavailable' || value === 'banned') return value
+  return 'good'
+}
+
 function normalizeOfferBuckets(data) {
   if (Array.isArray(data)) {
     const buckets = {
       good: [],
-      bad: [],
-      unresponsive: [],
+      unavailable: [],
+      banned: [],
     }
 
     data.forEach((item) => {
-      const status = item?.state?.kind || item?.status || 'good'
-      const normalizedStatus = buckets[status] ? status : 'good'
+      const normalizedStatus = normalizeStatus(item?.state?.kind || item?.status)
       const offer = unwrapOffer(item)
 
       if (offer) buckets[normalizedStatus].push(offer)
@@ -128,26 +166,37 @@ function normalizeOfferBuckets(data) {
   }
 
   const good = offerbook.goodMakers || offerbook.good || offerbook.offers || []
-  const bad = offerbook.badMakers || offerbook.bad || []
-  const unresponsive =
+  const unavailable =
+    offerbook.unavailableMakers ||
+    offerbook.unavailable ||
+    offerbook.unavailable_makers ||
     offerbook.unresponsiveMakers ||
     offerbook.unresponsive ||
     offerbook.unresponsive_makers ||
     []
+  const banned =
+    offerbook.bannedMakers ||
+    offerbook.banned ||
+    offerbook.banned_makers ||
+    offerbook.badMakers ||
+    offerbook.bad ||
+    []
 
-  if (!Array.isArray(good) && !Array.isArray(bad) && !Array.isArray(unresponsive)) {
+  if (!Array.isArray(good) && !Array.isArray(unavailable) && !Array.isArray(banned)) {
     return {
       good: [],
-      bad: [],
-      unresponsive: [],
+      unavailable: [],
+      banned: [],
     }
   }
 
   return {
     good: Array.isArray(good) ? good.map(unwrapOffer).filter(Boolean) : [],
-    bad: Array.isArray(bad) ? bad.map(unwrapOffer).filter(Boolean) : [],
-    unresponsive: Array.isArray(unresponsive)
-      ? unresponsive.map(unwrapOffer).filter(Boolean)
+    unavailable: Array.isArray(unavailable)
+      ? unavailable.map(unwrapOffer).filter(Boolean)
+      : [],
+    banned: Array.isArray(banned)
+      ? banned.map(unwrapOffer).filter(Boolean)
       : [],
   }
 }
@@ -163,7 +212,7 @@ function StatCard({ accent, label, value, note }) {
   )
 }
 
-function EmptyState({ loading, error, statusLabel }) {
+function EmptyState({ loading, error, statusLabel, networkLabel }) {
   return (
     <div className="flex min-h-56 flex-col items-center justify-center gap-3 rounded-xl border border-dotted border-black/15 px-6 py-10 text-center">
       {loading ? (
@@ -176,7 +225,7 @@ function EmptyState({ loading, error, statusLabel }) {
         <>
           <strong className="font-display text-xl text-black">{error ? 'Market data unavailable' : 'No makers found'}</strong>
           <span className="type-small max-w-xl font-body text-black/55">
-            {error || `No ${statusLabel.toLowerCase()} makers in the current market snapshot.`}
+            {error || `No ${statusLabel.toLowerCase()} are listed in the current ${networkLabel} snapshot.`}
           </span>
         </>
       )}
@@ -185,55 +234,74 @@ function EmptyState({ loading, error, statusLabel }) {
 }
 
 export default function Market() {
+  const [network, setNetwork] = useState('mainnet')
   const [offerBuckets, setOfferBuckets] = useState({
     good: [],
-    bad: [],
-    unresponsive: [],
+    unavailable: [],
+    banned: [],
   })
   const [activeStatus, setActiveStatus] = useState('good')
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const [lastSynced, setLastSynced] = useState(null)
   const [responseTimeMs, setResponseTimeMs] = useState(null)
+  const [health, setHealth] = useState(null)
+  const requestIdRef = useRef(0)
 
-  async function fetchOffers() {
+  const fetchOffers = useCallback(async (selectedNetwork) => {
+    const requestId = ++requestIdRef.current
+    const networkConfig = MARKET_NETWORKS[selectedNetwork]
     setLoading(true)
     setError('')
+    setHealth(null)
+    setLastSynced(null)
+    setResponseTimeMs(null)
     const startedAt = performance.now()
 
     try {
-      const response = await fetch(LINKS.market_makers_api, {
-        headers: { Accept: 'application/json' },
-      })
+      const [makersResult, healthResult] = await Promise.allSettled([
+        fetchJson(networkConfig.makersUrl),
+        fetchJson(networkConfig.healthUrl),
+      ])
 
-      if (!response.ok) {
-        throw new Error(`Endpoint returned ${response.status}`)
+      if (requestId !== requestIdRef.current) return
+
+      if (healthResult.status === 'fulfilled') {
+        setHealth(healthResult.value)
+      } else {
+        setHealth({ status: 'unavailable' })
       }
 
-      const data = await response.json()
+      if (makersResult.status === 'rejected') {
+        throw makersResult.reason
+      }
+
+      const data = makersResult.value
       if (!Array.isArray(data) && (!data || typeof data !== 'object')) {
         throw new Error('Endpoint returned an unexpected payload')
       }
 
-      console.log('[market] makers', data)
       setOfferBuckets(normalizeOfferBuckets(data))
       setLastSynced(new Date())
       setResponseTimeMs(Math.round(performance.now() - startedAt))
     } catch (err) {
+      if (requestId !== requestIdRef.current) return
       console.error('[market] failed to fetch makers', err)
       setError(
         err.message === 'Failed to fetch'
-          ? 'Could not fetch makers. If this page is served over HTTPS, the HTTP market endpoint may be blocked by the browser.'
+          ? 'Could not reach the public OpenSwap market endpoint.'
           : err.message
       )
     } finally {
-      setLoading(false)
+      if (requestId === requestIdRef.current) setLoading(false)
     }
-  }
+  }, [])
 
   useEffect(() => {
-    fetchOffers()
-  }, [])
+    setActiveStatus('good')
+    setOfferBuckets({ good: [], unavailable: [], banned: [] })
+    fetchOffers(network)
+  }, [fetchOffers, network])
 
   const stats = useMemo(() => {
     const goodOffers = offerBuckets.good
@@ -245,14 +313,15 @@ export default function Market() {
       totalLiquidity,
       counts: {
         good: offerBuckets.good.length,
-        bad: offerBuckets.bad.length,
-        unresponsive: offerBuckets.unresponsive.length,
+        unavailable: offerBuckets.unavailable.length,
       },
     }
   }, [offerBuckets])
 
   const displayedOffers = offerBuckets[activeStatus] || []
   const activeTab = STATUS_TABS.find((tab) => tab.id === activeStatus) || STATUS_TABS[0]
+  const networkConfig = MARKET_NETWORKS[network]
+  const apiIsHealthy = health?.status === 'ok'
 
   return (
     <>
@@ -263,7 +332,7 @@ export default function Market() {
       />
 
       <div className="site-shell py-8">
-        <section className="overflow-hidden rounded-[1.5rem] border border-black/15 bg-white/20 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur-sm">
+        <section className="market-terminal overflow-hidden rounded-[1.5rem] border border-black/15 bg-white/20 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur-sm">
           <div className="flex items-center justify-between border-b border-dotted border-black/15 px-5 py-4">
             <div className="flex items-center gap-2" aria-hidden="true">
               <span className="h-3 w-3 rounded-full bg-[#ff5f57]" />
@@ -272,8 +341,8 @@ export default function Market() {
             </div>
             <p className="font-mono text-[0.68rem] uppercase tracking-[0.3em] text-black/55">OpenSwap - Market</p>
             <div className="hidden items-center gap-2 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-black/50 sm:flex">
-              <span className="h-2 w-2 rounded-full bg-green shadow-[0_0_14px_rgba(0,255,102,0.8)]" />
-              <span>Live API</span>
+              <span className={`h-2 w-2 rounded-full ${apiIsHealthy ? 'bg-green shadow-[0_0_14px_rgba(0,255,102,0.8)]' : 'bg-amber'}`} />
+              <span>{apiIsHealthy ? 'Live API' : loading ? 'Checking API' : 'API unavailable'}</span>
             </div>
           </div>
 
@@ -282,19 +351,43 @@ export default function Market() {
               <div>
                 <h1 className="type-page-title font-display font-bold text-black">Market</h1>
                 <p className="type-body mt-2 max-w-3xl font-body text-black/65">
-                  Live view of OpenSwap makers routing through the public market endpoint.
+                  Live view of OpenSwap makers on {networkConfig.label}.
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={fetchOffers}
-                disabled={loading}
-                className="inline-flex items-center justify-center gap-2 rounded-full bg-orange px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-navy transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70"
-              >
-                <RefreshIcon spinning={loading} />
-                {loading ? 'Refreshing' : 'Refresh'}
-              </button>
+              <div className="flex flex-wrap items-center gap-3">
+                <div className="inline-flex rounded-full border border-black/15 bg-black/[0.035] p-1" role="group" aria-label="Select Bitcoin network">
+                  {Object.entries(MARKET_NETWORKS).map(([id, config]) => {
+                    const selected = network === id
+
+                    return (
+                      <button
+                        key={id}
+                        type="button"
+                        onClick={() => setNetwork(id)}
+                        aria-pressed={selected}
+                        className={`rounded-full px-4 py-2 font-mono text-xs font-semibold uppercase tracking-[0.12em] transition ${
+                          selected
+                            ? 'bg-black text-white shadow-sm'
+                            : 'text-black/50 hover:bg-black/5 hover:text-black/80'
+                        }`}
+                      >
+                        {config.label}
+                      </button>
+                    )
+                  })}
+                </div>
+
+                <button
+                  type="button"
+                  onClick={() => fetchOffers(network)}
+                  disabled={loading}
+                  className="inline-flex items-center justify-center gap-2 rounded-full bg-orange px-5 py-3 font-mono text-xs font-semibold uppercase tracking-[0.12em] text-navy transition hover:-translate-y-0.5 disabled:cursor-wait disabled:opacity-70"
+                >
+                  <RefreshIcon spinning={loading} />
+                  {loading ? 'Refreshing' : 'Refresh'}
+                </button>
+              </div>
             </div>
 
             <div className="mb-6 grid gap-4 lg:grid-cols-3">
@@ -314,7 +407,7 @@ export default function Market() {
                 accent="bg-blue-l"
                 label="Active Makers"
                 value={stats.counts.good}
-                note={`${stats.counts.good} good - ${stats.counts.unresponsive} unresponsive in this window.`}
+                note={`${stats.counts.good} good - ${stats.counts.unavailable} unavailable in this window.`}
               />
             </div>
 
@@ -350,12 +443,13 @@ export default function Market() {
 
               <div className="p-5">
                 {loading || error || displayedOffers.length === 0 ? (
-                  <EmptyState loading={loading} error={error} statusLabel={activeTab.label} />
+                  <EmptyState loading={loading} error={error} statusLabel={activeTab.label} networkLabel={networkConfig.label} />
                 ) : (
                   <div className="overflow-x-auto">
-                    <table className="w-full min-w-[980px] border-separate border-spacing-y-2 font-mono text-sm">
+                    <table className="w-full min-w-[1120px] border-separate border-spacing-y-2 font-mono text-sm">
                       <thead>
                         <tr className="text-left text-[0.68rem] uppercase tracking-[0.18em] text-black/45">
+                          <th className="px-4 py-2 font-medium">Name</th>
                           <th className="px-4 py-2 font-medium">Tor Address</th>
                           <th className="px-4 py-2 font-medium">Base Fee</th>
                           <th className="px-4 py-2 font-medium">Fee Rate</th>
@@ -374,7 +468,10 @@ export default function Market() {
 
                           return (
                             <tr key={`${activeStatus}-${offer.address}-${txid}-${index}`} className="group/row">
-                              <td className="rounded-l-xl border-y border-l border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5" title={offer.address}>
+                              <td className="rounded-l-xl border-y border-l border-black/10 bg-white/20 px-4 py-3 font-semibold text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">
+                                {offer.name || '—'}
+                              </td>
+                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5" title={offer.address}>
                                 {formatTorAddress(offer.address)}
                               </td>
                               <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{formatSats(offer.base_fee)}</td>
@@ -385,7 +482,7 @@ export default function Market() {
                               <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5" title={txid}>
                                 {txid !== 'unknown' ? (
                                   <a
-                                    href={`${LINKS.market_explorer_tx_base}/${txid}`}
+                                    href={`${networkConfig.explorerTxBase}/${txid}`}
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     title="Open fidelity bond transaction"
@@ -398,7 +495,7 @@ export default function Market() {
                                   formatSats(bond.amount)
                                 )}
                               </td>
-                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{Number(bond.lock_time || 0).toLocaleString()}</td>
+                              <td className="border-y border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{bond.lock_time === null || bond.lock_time === undefined ? '—' : Number(bond.lock_time).toLocaleString()}</td>
                               <td className="rounded-r-xl border-y border-r border-black/10 bg-white/20 px-4 py-3 text-black/60 transition group-hover/row:border-orange/25 group-hover/row:bg-orange/5">{formatTimestamp(offer.timestamp)}</td>
                             </tr>
                           )

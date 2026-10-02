@@ -3,7 +3,7 @@ const CARDS = [
     label: 'Sybil resistance',
     value: 'Fidelity Bonds',
     description:
-      'Makers post fidelity bonds before they can register, which helps keep the market harder to game and easier to trust at a protocol level.',
+      'Routers post fidelity bonds before they can register, which helps keep the market harder to game and easier to trust at a protocol level.',
   },
   {
     label: 'Discovery',
@@ -18,28 +18,28 @@ const CARDS = [
       'Efficient atomic swaps with Taproot HTLCs and MuSig2, ensuring atomicity at the lowest possible cost. Recovery triggers automatically to prevent fund loss.',
   },
   {
-    label: 'Maker fees',
+    label: 'Router fees',
     value: 'Competitive pricing',
     description:
-      'Makers compete against each other for order flow, which helps keep market fees low while still rewarding operators for providing liquidity.',
+      'Routers compete for order flow, which helps keep market fees low while still rewarding operators for providing liquidity.',
+  },
+  {
+    label: 'Chain backend',
+    value: 'Bitcoin Core or Electrum',
+    description:
+      'Run the same OpenSwap routes through your own Bitcoin Core RPC node or an Electrum server. Portal supports both backends for wallet sync and swap execution.',
   },
   {
     label: 'Cross-chain swaps',
-    value: 'Hop Away From BTC',
+    value: 'Hop Across Layers',
     description:
-      'The market can be used to hop across other layers and protocols, like Lightning, eCash, Liquid, Ark, etc.',
-  },
-  {
-    label: 'Cross-chain swaps',
-    value: 'Hop Into BTC',
-    description:
-      'The same market can be used to hop into Bitcoin from other layers, like Lightning, eCash, Liquid, Ark, etc.',
+      'The market can support hops away from or into Bitcoin across layers and protocols such as Lightning, eCash, Liquid, and Ark.',
   },
 ]
 
 export default function SwapMarket() {
   return (
-    <section>
+    <section className="home-section home-market">
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
           <p className="section-label mb-2">// market layer</p>
@@ -49,11 +49,11 @@ export default function SwapMarket() {
         </div>
       </div>
 
-      <div className="grid gap-4 lg:grid-cols-3">
+      <div className="home-market__grid grid gap-4 lg:grid-cols-3">
         {CARDS.map(({ label, value, description }) => (
           <article
-            key={label}
-            className="section-rule flex h-full flex-col rounded-2xl border border-black/10 bg-white/15 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur-sm"
+            key={`${label}-${value}`}
+            className="home-market__card section-rule flex h-full flex-col rounded-2xl border border-black/10 bg-white/15 p-5 shadow-[0_10px_30px_rgba(0,0,0,0.04)] backdrop-blur-sm"
           >
             <p className="type-meta mb-3 font-mono uppercase tracking-[0.16em] text-cream/65">
               {label}

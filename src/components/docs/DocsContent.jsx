@@ -1,8 +1,20 @@
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { ExternalLink } from 'lucide-react'
 import { marked } from 'marked'
 import CodeBlock from '../ui/CodeBlock.jsx'
 import { useDocContent } from '../../hooks/useDocContent.js'
+
+let mermaidRenderId = 0
+
+function escapeHtml(value) {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
 
 function resolveDocUrl(baseUrl, target) {
   if (!target) return target
@@ -37,6 +49,7 @@ function resolveHtmlAssetUrls(html, baseUrl) {
 
 function renderMarkdown(content, baseUrl) {
   const renderer = new marked.Renderer()
+  const renderCode = renderer.code.bind(renderer)
 
   renderer.image = ({ href, title, text }) => {
     const src = resolveDocUrl(baseUrl, href)
@@ -50,6 +63,14 @@ function renderMarkdown(content, baseUrl) {
     const titleAttr = title ? ` title="${title}"` : ''
     const text = this.parser.parseInline(tokens)
     return `<a href="${resolvedHref}"${titleAttr}>${text}</a>`
+  }
+
+  renderer.code = token => {
+    if (token.lang?.trim().toLowerCase() === 'mermaid') {
+      return `<div class="mermaid-diagram" role="img" aria-label="Diagram">${escapeHtml(token.text)}</div>`
+    }
+
+    return renderCode(token)
   }
 
   const html = marked(content, { gfm: true, breaks: false, renderer })
@@ -171,6 +192,61 @@ function GetStartedPanel() {
 
 function MarkdownContent({ url, repoUrl }) {
   const { content, loading, error } = useDocContent(url)
+  const contentRef = useRef(null)
+
+  useEffect(() => {
+    if (!content || !contentRef.current) return undefined
+
+    const diagrams = Array.from(contentRef.current.querySelectorAll('.mermaid-diagram'))
+      .map(node => ({ node, source: node.textContent }))
+
+    if (diagrams.length === 0) return undefined
+
+    let cancelled = false
+
+    async function drawDiagrams() {
+      const { default: mermaid } = await import('mermaid')
+      const isDark = document.documentElement.dataset.theme === 'dark'
+
+      mermaid.initialize({
+        startOnLoad: false,
+        securityLevel: 'strict',
+        theme: isDark ? 'dark' : 'neutral',
+        fontFamily: 'IBM Plex Sans, sans-serif',
+      })
+
+      for (const { node, source } of diagrams) {
+        if (cancelled) return
+
+        try {
+          const id = `openswap-mermaid-${mermaidRenderId += 1}`
+          const { svg, bindFunctions } = await mermaid.render(id, source)
+          if (cancelled) return
+          node.innerHTML = svg
+          node.classList.remove('mermaid-diagram--error')
+          bindFunctions?.(node)
+        } catch {
+          node.textContent = source
+          node.classList.add('mermaid-diagram--error')
+        }
+      }
+    }
+
+    drawDiagrams()
+
+    const themeObserver = new MutationObserver(mutations => {
+      if (mutations.some(mutation => mutation.attributeName === 'data-theme')) {
+        drawDiagrams()
+      }
+    })
+
+    themeObserver.observe(document.documentElement, { attributes: true })
+
+    return () => {
+      cancelled = true
+      themeObserver.disconnect()
+    }
+  }, [content, url])
 
   if (loading) return <LoadingSpinner />
   if (error)   return <ErrorMessage message={error} />
@@ -186,6 +262,7 @@ function MarkdownContent({ url, repoUrl }) {
         </div>
       )}
       <div
+        ref={contentRef}
         className="prose-content"
         dangerouslySetInnerHTML={{ __html: html }}
       />

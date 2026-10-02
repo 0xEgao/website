@@ -1,10 +1,16 @@
 import { Link } from 'react-router-dom'
 import Button from '../ui/Button'
+import { LINKS } from '../../constants/links'
 
 export default function Hero() {
   return (
-    <section className="relative pt-8 pb-0">
-      <div className="px-0 py-4 text-center lg:py-8">
+    <section className="hero-observatory relative pt-8 pb-0">
+      <div className="hero-observatory__radar" aria-hidden="true">
+        <span />
+        <span />
+        <span />
+      </div>
+      <div className="hero-observatory__content px-0 py-4 text-center lg:py-8">
         <div className="relative mx-auto flex max-w-[72rem] flex-col items-center">
           <h1
             className="type-hero glitch mb-4 max-w-[72rem] font-display font-semibold tracking-[0.03em] text-cream"
@@ -42,24 +48,26 @@ export default function Hero() {
             </span>.
           </p>
 
-          <div className="mb-4 flex flex-wrap items-center justify-center gap-x-15 gap-y-3">
+          <div className="hero-observatory__actions mb-4 flex flex-wrap items-center justify-center gap-3">
             <Button
               as={Link}
-              to="/takers"
+              to="/portal"
               variant="primary"
               size="lg"
               className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
             >
-              ./Taker --SWAP
+              Get Portal
             </Button>
             <Button
-              as={Link}
-              to="/makers"
-              variant="outline"
+              as="a"
+              href={LINKS.openswap_repo}
+              target="_blank"
+              rel="noopener noreferrer"
+              variant="accent"
               size="lg"
-              className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.34),0_0_26px_rgba(247,147,26,0.2)] hover:-translate-y-0.5"
+              className="hover:shadow-[0_16px_34px_rgba(247,147,26,0.24)] hover:-translate-y-0.5"
             >
-              ./Maker --RUN
+              OpenSwap Source
             </Button>
           </div>
         </div>

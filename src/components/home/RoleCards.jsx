@@ -3,31 +3,31 @@ import Button from '../ui/Button'
 
 const CARDS = [
   {
-    role: 'Taker',
-    prompt: './taker --swap',
+    role: 'Wallet',
+    prompt: 'Portal / Wallet',
     description:
-      'Request swaps from the marketplace. Design your swaps, set fee rates, select makers, manage UTXOs, and let the protocol do the rest.',
+      'Use Portal as a self-custodial Bitcoin wallet, then create private swap routes when you need them. Choose a protocol, select Routers, manage UTXOs, and follow every swap from one interface.',
     highlights: [
-      'Minimum 2 makers per swap',
+      'Choose Legacy or Taproot',
       'Tor required — .onion routing',
-      'Desktop GUI or CLI',
+      'Desktop or self-hosted server',
     ],
-    cta: { label: './Taker --SWAP', to: '/takers' },
+    cta: { label: 'Explore Wallet', to: '/portal#wallet' },
     borderClass: 'border-white/10 hover:border-white/25',
     promptColor: 'text-cream/70',
     tagColor: 'text-cream/70 border-white/20',
   },
   {
-    role: 'Maker',
-    prompt: './makerd --start',
+    role: 'Router',
+    prompt: 'Portal / Router',
     description:
-      'A lightweight, low-maintenance swap server that earns fees. Create and manage fidelity bonds, and act as a bridge between layers.',
+      'Use Portal to provide swap liquidity, keep a bonded service online, and earn fees when Wallet routes use it. Manage the fleet, balances, reports, and logs together.',
     highlights: [
       'Fidelity bond = reputation',
       'Auto-renewing bond lifecycle',
-      'Docker or native binary',
+      'Manage one or many routers',
     ],
-    cta: { label: './Maker --RUN', to: '/makers' },
+    cta: { label: 'Explore Router', to: '/portal#router' },
     borderClass: 'border-white/10 hover:border-white/25',
     promptColor: 'text-cream/70',
     tagColor: 'text-cream/70 border-white/20',
@@ -36,21 +36,21 @@ const CARDS = [
 
 export default function RoleCards() {
   return (
-    <section>
+    <section className="home-section home-roles">
       <div className="mb-5 flex items-end justify-between gap-4">
         <div>
-          <p className="section-label mb-2">// choose your runtime</p>
+          <p className="section-label mb-2">// Inside Portal</p>
           <h2 className="type-section-title font-display font-semibold tracking-[0.04em] text-cream">
-            Two Roles, One Protocol
+            Two Roles, One App.
           </h2>
         </div>
       </div>
 
-      <div className="grid gap-8 sm:grid-cols-2">
+      <div className="home-roles__grid grid gap-8 sm:grid-cols-2">
         {CARDS.map(({ role, prompt, description, highlights, cta, borderClass, promptColor }) => (
           <div
             key={role}
-            className={`section-rule flex flex-col ${borderClass}`}
+            className={`home-role-card section-rule flex flex-col ${borderClass}`}
           >
             <div className="mb-3 flex items-center gap-2 pb-1">
               <span className={`type-meta ml-2 font-mono uppercase tracking-[0.14em] ${promptColor}`}>{prompt}</span>
