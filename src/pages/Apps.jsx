@@ -23,7 +23,7 @@ import reportScreenshot from '../assets/portal/desktop/report.webp'
 import createRouterScreenshot from '../assets/portal/web/create-router.webp'
 import startRouterScreenshot from '../assets/portal/web/start-router.webp'
 import fundFidelityBondScreenshot from '../assets/portal/web/fund-fidelity-bond.webp'
-import confirmFidelityBondScreenshot from '../assets/portal/web/confirm-fidelity-bond.webp'
+import routerFleetScreenshot from '../assets/portal/web/router-fleet.webp'
 import routerOverviewScreenshot from '../assets/portal/web/router-overview.webp'
 import routerSettingsScreenshot from '../assets/portal/web/router-settings.webp'
 
@@ -105,11 +105,11 @@ const ROUTER_STEPS = [
     copy: 'Send the requested amount to the generated deposit address while Portal watches for the transaction.',
   },
   {
-    src: confirmFidelityBondScreenshot,
-    width: 1496,
-    height: 1816,
-    title: 'Confirm the bond',
-    copy: 'Portal creates and broadcasts the fidelity bond, then tracks confirmation before advertising the Router.',
+    src: routerFleetScreenshot,
+    width: 3110,
+    height: 2218,
+    title: 'Router fleet',
+    copy: 'Manage multiple Routers from a single dashboard, with their status, wallet balances, and earnings at a glance.',
   },
   {
     src: routerOverviewScreenshot,
