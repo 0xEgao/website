@@ -14,6 +14,17 @@ import PageHero from '../components/layout/PageHero'
 import PortalDownloads from '../components/portal/PortalDownloads'
 import CodeBlock from '../components/ui/CodeBlock'
 import { LINKS } from '../constants/links'
+import connectScreenshot from '../assets/portal/desktop/connect.webp'
+import chooseRoleScreenshot from '../assets/portal/desktop/choose-role.webp'
+import createWalletScreenshot from '../assets/portal/desktop/create-wallet.webp'
+import configureSwapScreenshot from '../assets/portal/desktop/configure-swap.webp'
+import swapCompleteScreenshot from '../assets/portal/desktop/swap-complete.webp'
+import createRouterScreenshot from '../assets/portal/web/create-router.webp'
+import startRouterScreenshot from '../assets/portal/web/start-router.webp'
+import fundFidelityBondScreenshot from '../assets/portal/web/fund-fidelity-bond.webp'
+import confirmFidelityBondScreenshot from '../assets/portal/web/confirm-fidelity-bond.webp'
+import routerOverviewScreenshot from '../assets/portal/web/router-overview.webp'
+import routerSettingsScreenshot from '../assets/portal/web/router-settings.webp'
 
 const DESKTOP_COMMAND = `git clone https://github.com/citadel-foss/portal.git
 cd portal
@@ -27,27 +38,37 @@ npm run web:dev`
 
 const WALLET_STEPS = [
   {
-    src: `${import.meta.env.BASE_URL}portal/desktop/connect.png`,
+    src: connectScreenshot,
+    width: 2227,
+    height: 1816,
     title: 'Connect the backend',
     copy: 'Choose Electrum or Bitcoin Core for wallet sync and swap execution, then wait for the backend and bundled Tor process to become ready.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/desktop/choose-role.png`,
+    src: chooseRoleScreenshot,
+    width: 1824,
+    height: 1784,
     title: 'Choose a role',
     copy: 'Enter the Wallet for everyday Bitcoin and swaps, or the Router Console to operate liquidity services.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/desktop/create-wallet.png`,
+    src: createWalletScreenshot,
+    width: 1353,
+    height: 1428,
     title: 'Create or open a wallet',
     copy: 'Create an encrypted wallet or unlock an existing Portal/OpenSwap wallet, then let it synchronize.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/desktop/configure-swap.png`,
+    src: configureSwapScreenshot,
+    width: 5959,
+    height: 2658,
     title: 'Build the route',
     copy: 'Set the amount, contract protocol, router count, transaction splits, confirmations, and fee rate.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/desktop/swap-complete.png`,
+    src: swapCompleteScreenshot,
+    width: 2062,
+    height: 3204,
     title: 'Follow the swap',
     copy: 'Portal keeps the route and each stage visible until the final wallet output is confirmed.',
   },
@@ -55,32 +76,44 @@ const WALLET_STEPS = [
 
 const ROUTER_STEPS = [
   {
-    src: `${import.meta.env.BASE_URL}portal/web/create-router.png`,
+    src: createRouterScreenshot,
+    width: 1708,
+    height: 2186,
     title: 'Create a Router',
     copy: 'Choose its local identity and public market name, protect the Router wallet, and set the initial fidelity-bond parameters.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/start-router.png`,
+    src: startRouterScreenshot,
+    width: 1430,
+    height: 1914,
     title: 'Unlock and start',
     copy: 'Enter the encrypted Router wallet password and follow each startup stage from one screen.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/fund-fidelity-bond.png`,
+    src: fundFidelityBondScreenshot,
+    width: 1622,
+    height: 2064,
     title: 'Fund the fidelity bond',
     copy: 'Send the requested amount to the generated deposit address while Portal watches for the transaction.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/confirm-fidelity-bond.png`,
+    src: confirmFidelityBondScreenshot,
+    width: 1496,
+    height: 1816,
     title: 'Confirm the bond',
     copy: 'Portal creates and broadcasts the fidelity bond, then tracks confirmation before advertising the Router.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/router-overview.png`,
+    src: routerOverviewScreenshot,
+    width: 2938,
+    height: 1750,
     title: 'Monitor operations',
     copy: 'Review liquidity, spendable funds, earnings, bonds, contract balance, runtime configuration, and swap reports.',
   },
   {
-    src: `${import.meta.env.BASE_URL}portal/web/router-settings.png`,
+    src: routerSettingsScreenshot,
+    width: 2670,
+    height: 2228,
     title: 'Configure the Router',
     copy: 'Manage network ports, confirmations, public fee policy, and the defaults used for future fidelity bonds.',
   },
@@ -111,10 +144,12 @@ function ProductLink({ href, children }) {
 function Walkthrough({ steps, label }) {
   return (
     <div className="portal-walkthrough" aria-label={label}>
-      {steps.map(({ src, title, copy }, index) => (
+      {steps.map(({ src, width, height, title, copy }, index) => (
         <WalkthroughCard
           key={title}
           src={src}
+          width={width}
+          height={height}
           title={title}
           copy={copy}
           number={index + 1}
@@ -124,7 +159,7 @@ function Walkthrough({ steps, label }) {
   )
 }
 
-function WalkthroughCard({ src, title, copy, number }) {
+function WalkthroughCard({ src, width, height, title, copy, number }) {
   const cardRef = useRef(null)
   const [rowSpan, setRowSpan] = useState(1)
 
@@ -149,7 +184,14 @@ function WalkthroughCard({ src, title, copy, number }) {
   return (
     <figure ref={cardRef} className="portal-step" style={{ gridRowEnd: `span ${rowSpan}` }}>
       <div className="portal-step__image">
-        <img src={src} alt={`${title} in Portal`} loading="lazy" />
+        <img
+          src={src}
+          width={width}
+          height={height}
+          alt={`${title} in Portal`}
+          loading="lazy"
+          decoding="async"
+        />
       </div>
       <figcaption>
         <span>0{number}</span>
