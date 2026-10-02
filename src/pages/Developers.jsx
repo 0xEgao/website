@@ -85,11 +85,6 @@ export default function Developers() {
   return (
     <div className="developer-hub site-shell">
       <title>{activeDoc ? `${activeDoc.label} — OpenSwap Docs` : 'Developers — OpenSwap'}</title>
-      <meta
-        name="description"
-        content="Build with OpenSwap core, use its language bindings, and find the protocol and operator documentation."
-      />
-
       <button
         type="button"
         onClick={() => setDocsOpen(open => !open)}

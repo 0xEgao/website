@@ -325,12 +325,6 @@ export default function Market() {
 
   return (
     <>
-      <title>Market — OpenSwap</title>
-      <meta
-        name="description"
-        content="Live OpenSwap maker market: public maker data, liquidity depth, fidelity bonds, fees, and Tor maker addresses."
-      />
-
       <div className="site-shell py-8">
         <section className="market-terminal overflow-hidden rounded-[1.5rem] border border-black/15 bg-white/20 shadow-[0_24px_80px_rgba(0,0,0,0.16)] backdrop-blur-sm">
           <div className="flex items-center justify-between border-b border-dotted border-black/15 px-5 py-4">

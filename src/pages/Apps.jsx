@@ -217,12 +217,6 @@ function WalkthroughCard({ src, width, height, title, copy, number }) {
 export default function Apps() {
   return (
     <div className="portal-page site-shell">
-      <title>Portal — OpenSwap</title>
-      <meta
-        name="description"
-        content="Use OpenSwap through Portal: one Wallet and Router interface for desktop or a self-hosted personal server."
-      />
-
       <PageHero
         eyebrow="Portal"
         title="One App. Two Roles."
