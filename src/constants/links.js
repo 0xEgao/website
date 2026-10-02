@@ -1,20 +1,23 @@
 // src/constants/links.js
 // All external URLs in one place. Never hardcode these elsewhere.
 
+const PORTAL_MASTER_DOWNLOADS = "https://github.com/citadel-foss/portal/releases/download/openswap-master"
+
 export const LINKS = {
   // Core repos
   github_org:       "https://github.com/citadel-foss",
   openswap_repo:    "https://github.com/citadel-foss/openswap",
   portal_repo:      "https://github.com/citadel-foss/portal",
   portal_releases:  "https://github.com/citadel-foss/portal/releases",
-  portal_linux_amd64_appimage: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11120187866",
-  portal_linux_amd64_deb: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11119953192",
-  portal_linux_x86_64_rpm: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11120058182",
-  portal_mac_universal_app: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11123050371",
-  portal_mac_universal_dmg: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11122665502",
-  portal_server_linux_arm64: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11121675899",
-  portal_server_linux_x86_64: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11120237281",
-  portal_server_mac_universal: "https://github.com/citadel-foss/portal/actions/runs/36763744656/artifacts/11121186129",
+  // Fixed names are replaced by each successful OpenSwap master compatibility build.
+  portal_linux_x86_64_appimage: `${PORTAL_MASTER_DOWNLOADS}/portal-linux-x86_64.AppImage`,
+  portal_linux_x86_64_deb: `${PORTAL_MASTER_DOWNLOADS}/portal-linux-x86_64.deb`,
+  portal_linux_x86_64_rpm: `${PORTAL_MASTER_DOWNLOADS}/portal-linux-x86_64.rpm`,
+  portal_macos_universal_app: `${PORTAL_MASTER_DOWNLOADS}/portal-macos-universal.app.tar.gz`,
+  portal_macos_universal_dmg: `${PORTAL_MASTER_DOWNLOADS}/portal-macos-universal.dmg`,
+  portal_server_linux_arm64: `${PORTAL_MASTER_DOWNLOADS}/portal-server-linux-arm64.tar.gz`,
+  portal_server_linux_x86_64: `${PORTAL_MASTER_DOWNLOADS}/portal-server-linux-x86_64.tar.gz`,
+  portal_server_macos_universal: `${PORTAL_MASTER_DOWNLOADS}/portal-server-macos-universal.tar.gz`,
   tauri_prerequisites: "https://tauri.app/start/prerequisites/",
   taker_app:        "https://github.com/citadel-foss/taker-app",
   maker_dashboard:  "https://github.com/citadel-foss/maker-dashboard",

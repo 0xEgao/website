@@ -7,17 +7,17 @@ const STATUS_TABS = [
 ]
 
 const MARKET_NETWORKS = {
-  signet: {
-    label: 'Signet',
-    makersUrl: LINKS.market_signet_makers_api,
-    healthUrl: LINKS.market_signet_health_api,
-    explorerTxBase: LINKS.market_signet_explorer_tx_base,
-  },
   mainnet: {
     label: 'Mainnet',
     makersUrl: LINKS.market_mainnet_makers_api,
     healthUrl: LINKS.market_mainnet_health_api,
     explorerTxBase: LINKS.market_mainnet_explorer_tx_base,
+  },
+  signet: {
+    label: 'Signet',
+    makersUrl: LINKS.market_signet_makers_api,
+    healthUrl: LINKS.market_signet_health_api,
+    explorerTxBase: LINKS.market_signet_explorer_tx_base,
   },
 }
 

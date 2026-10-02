@@ -3,6 +3,16 @@ import { LINKS } from '../../constants/links'
 
 const ITEMS = [
   {
+    label: 'Developers',
+    sub: 'Build with OpenSwap',
+    to: '/developers',
+    icon: (
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.75" width="22" height="22" aria-hidden="true">
+        <path d="m8 7-5 5 5 5m8-10 5 5-5 5m-2-14-4 18" />
+      </svg>
+    ),
+  },
+  {
     label: 'Core Lib',
     sub: 'citadel-foss/openswap',
     href: LINKS.openswap_repo,
@@ -63,7 +73,7 @@ export default function QuickLinks() {
         </div>
       </div>
 
-      <div className="home-links__grid grid grid-cols-2 gap-3 rounded-2xl border border-black/12 bg-white/20 p-3 shadow-[0_14px_40px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:grid-cols-2 sm:gap-4 sm:p-4 lg:grid-cols-4">
+      <div className="home-links__grid grid grid-cols-2 gap-3 rounded-2xl border border-black/12 bg-white/20 p-3 shadow-[0_14px_40px_rgba(0,0,0,0.05)] backdrop-blur-sm sm:grid-cols-2 sm:gap-4 sm:p-4 lg:grid-cols-5">
         {ITEMS.map(({ label, sub, href, to, icon }) => {
           const className =
             'home-link-card group flex min-h-[8.5rem] flex-col items-start justify-between rounded-xl border border-black/10 bg-[rgba(255,255,255,0.18)] p-4 text-left transition-all duration-200 hover:-translate-y-1 hover:border-[#f7931a]/60 hover:bg-white/30 hover:shadow-[0_18px_42px_rgba(247,147,26,0.32)]'

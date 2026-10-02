@@ -8,22 +8,22 @@ const DOWNLOAD_GROUPS = [
     description: 'Install the native Wallet and Router application on macOS or Linux.',
     icon: 'monitor',
     files: [
-      { name: 'portal-linux-amd64-appimage', href: LINKS.portal_linux_amd64_appimage },
-      { name: 'portal-linux-amd64-deb', href: LINKS.portal_linux_amd64_deb },
-      { name: 'portal-linux-x86_64-rpm', href: LINKS.portal_linux_x86_64_rpm },
-      { name: 'portal-mac-universal-app', href: LINKS.portal_mac_universal_app },
-      { name: 'portal-mac-universal-dmg', href: LINKS.portal_mac_universal_dmg },
+      { name: 'portal-linux-x86_64.AppImage', href: LINKS.portal_linux_x86_64_appimage },
+      { name: 'portal-linux-x86_64.deb', href: LINKS.portal_linux_x86_64_deb },
+      { name: 'portal-linux-x86_64.rpm', href: LINKS.portal_linux_x86_64_rpm },
+      { name: 'portal-macos-universal.app.tar.gz', href: LINKS.portal_macos_universal_app },
+      { name: 'portal-macos-universal.dmg', href: LINKS.portal_macos_universal_dmg },
     ],
   },
   {
     id: 'portal-server-downloads',
     label: 'Portal Server',
-    description: 'Run the same Wallet and Router console from a self-hosted headless server.',
+    description: 'Extract the archive and run portal-server to use the Wallet and Router console in your browser.',
     icon: 'archive',
     files: [
-      { name: 'portal-server-linux-arm64', href: LINKS.portal_server_linux_arm64 },
-      { name: 'portal-server-linux-x86_64', href: LINKS.portal_server_linux_x86_64 },
-      { name: 'portal-server-mac-universal', href: LINKS.portal_server_mac_universal },
+      { name: 'portal-server-linux-arm64.tar.gz', href: LINKS.portal_server_linux_arm64 },
+      { name: 'portal-server-linux-x86_64.tar.gz', href: LINKS.portal_server_linux_x86_64 },
+      { name: 'portal-server-macos-universal.tar.gz', href: LINKS.portal_server_macos_universal },
     ],
   },
 ]
@@ -53,11 +53,11 @@ export default function PortalDownloads() {
         <div>
           <p className="section-label mb-3">// Get Portal</p>
           <h2 id="portal-downloads-title" className="portal-section__title font-display font-semibold text-cream">
-            Choose your Portal build.
+            Download the latest Portal builds.
           </h2>
         </div>
         <p className="portal-copy max-w-xl text-cream/65">
-          Install Portal Desktop for a native experience, or run Portal Server on a self-hosted machine.
+          Get the latest successful development builds. Install Portal Desktop for a native experience, or run Portal Server on a self-hosted machine.
         </p>
       </div>
 
