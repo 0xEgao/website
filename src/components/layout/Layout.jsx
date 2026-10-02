@@ -3,9 +3,33 @@ import { useEffect } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import MotionBackground from './MotionBackground'
+import { socialPageFor } from '../../constants/socialPages'
 
 export default function Layout() {
   const { pathname, hash } = useLocation()
+
+  useEffect(() => {
+    const page = socialPageFor(pathname)
+    const setMeta = (selector, value) => {
+      const tag = document.head.querySelector(selector)
+      if (tag) tag.setAttribute('content', value)
+    }
+
+    if (pathname.replace(/\/$/, '') !== '/developers') document.title = page.title
+    setMeta('meta[name="description"]', page.description)
+    setMeta('meta[property="og:title"]', page.title)
+    setMeta('meta[property="og:description"]', page.description)
+    setMeta('meta[property="og:url"]', page.url)
+    setMeta('meta[property="og:image"]', page.image)
+    setMeta('meta[property="og:image:alt"]', page.imageAlt)
+    setMeta('meta[name="twitter:title"]', page.title)
+    setMeta('meta[name="twitter:description"]', page.description)
+    setMeta('meta[name="twitter:image"]', page.image)
+    setMeta('meta[name="twitter:image:alt"]', page.imageAlt)
+
+    const canonical = document.head.querySelector('link[rel="canonical"]')
+    if (canonical) canonical.setAttribute('href', page.url)
+  }, [pathname])
 
   useEffect(() => {
     if (hash) {
