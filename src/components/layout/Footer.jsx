@@ -19,7 +19,6 @@ const EXTERNAL = [
 export default function Footer() {
   return (
     <footer className="site-footer mt-auto border-t border-dotted border-black/15 bg-transparent">
-      <div className="site-footer__beam" aria-hidden="true" />
       <div className="site-shell py-10">
 
         <p className="type-small mb-5 font-mono text-black/65">

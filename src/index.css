@@ -1327,8 +1327,7 @@ html[data-theme='dark'] .app-header {
   box-shadow: 0 18px 60px rgba(0, 0, 0, 0.3);
 }
 
-.header-signal,
-.site-footer__beam {
+.header-signal {
   position: absolute;
   inset: auto 0 0;
   height: 1px;
@@ -1336,8 +1335,7 @@ html[data-theme='dark'] .app-header {
   background: linear-gradient(90deg, transparent, var(--line-strong) 20% 80%, transparent);
 }
 
-.header-signal::after,
-.site-footer__beam::after {
+.header-signal::after {
   content: '';
   position: absolute;
   top: 0;
@@ -1810,11 +1808,6 @@ html[data-theme='dark'] .ui-button--accent {
   border-color: var(--line) !important;
   background:
     linear-gradient(180deg, transparent, color-mix(in srgb, var(--surface-strong) 80%, transparent));
-}
-
-.site-footer__beam {
-  top: 0;
-  bottom: auto;
 }
 
 /* Market table */
