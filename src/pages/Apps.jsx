@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   ArrowRight,
   Cable,
@@ -226,6 +227,10 @@ export default function Apps() {
           Get Portal
           <ArrowRight size={15} aria-hidden="true" />
         </a>
+        <Link to="/developers?doc=portal/user-guide" className="portal-link">
+          Setup Guide
+          <ArrowRight size={15} aria-hidden="true" />
+        </Link>
         <ProductLink href={LINKS.portal_repo}>View Source</ProductLink>
       </PageHero>
 

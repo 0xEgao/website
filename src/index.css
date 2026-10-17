@@ -969,6 +969,7 @@ html[data-theme='dark'] .route-snippet-panel p + p {
 
 /* ── Docs prose ────────────────────────────────────────────── */
 .prose-content { max-width: 72ch; }
+.prose-content [id] { scroll-margin-top: 7rem; }
 
 .prose-content h1 {
   font-family: 'Fredoka', sans-serif;
