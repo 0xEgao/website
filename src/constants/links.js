@@ -40,6 +40,7 @@ export const LINKS = {
   protocol_taproot_contract: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/v2%20protocol/contract.md",
   protocol_payswap: "https://github.com/citadel-foss/OpenSwap-Protocol-Specification/blob/main/general%20specs/payswap.md",
   portal_development_docs: "https://github.com/citadel-foss/portal/blob/main/docs/DEVELOPMENT.md",
+  portal_guide_docs: "https://github.com/citadel-foss/portal/blob/main/docs/guide.md",
   releases:         "https://github.com/citadel-foss/openswap/releases",
   contributing:     "https://github.com/citadel-foss/openswap/blob/master/CONTRIBUTING.md",
   issues:           "https://github.com/citadel-foss/openswap/issues",

@@ -171,6 +171,11 @@ export const DEVELOPER_DOCS_NAV = [
     label: 'Portal',
     items: [
       {
+        label: 'User Guide',
+        url: `${portalBase}/guide.md`,
+        repoUrl: LINKS.portal_guide_docs,
+      },
+      {
         label: 'Development',
         url: `${portalBase}/DEVELOPMENT.md`,
         repoUrl: LINKS.portal_development_docs,
